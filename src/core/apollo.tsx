@@ -11,27 +11,29 @@ import { setContext } from '@apollo/link-context';
 import { WebSocketLink } from '@apollo/link-ws';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 
-/* Instruments */
-import { AUTH_TOKEN, DEV_URI } from '../constants';
+const GQL_HTTP_URL = process.env.NEXT_PUBLIC_GQL_HTTP_URL;
+const GQL_WS_URL = process.env.NEXT_PUBLIC_GQL_WS_URL;
+const AUTH_TOKEN_NAME = process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME;
 
-const subscriptionClient = new SubscriptionClient(`ws://${DEV_URI}`, {
+// !TODO: replace to ws:// protocol
+const subscriptionClient = new SubscriptionClient(GQL_WS_URL, {
     reconnect: true,
     connectionParams: {
-        authToken: localStorage.getItem(AUTH_TOKEN),
+        authToken: localStorage.getItem(AUTH_TOKEN_NAME),
     },
 });
 const wsLink = new WebSocketLink(subscriptionClient);
 
 const httpLink = createHttpLink({
-    uri: `http://${DEV_URI}`,
+    uri: process.env.NEXT_PUBLIC_GQL_HTTP_URL,
 });
 
-const authLink = setContext((operation, previousContext) => {
-    const token = localStorage.getItem(AUTH_TOKEN);
+const authLink = setContext(() => {
+    const token = localStorage.getItem(AUTH_TOKEN_NAME);
 
     const headers = {
         headers: {
-            authorization: token ? `Bearer ${token}` : '',
+            Authorization: token ? `Bearer ${token}` : '',
         },
     };
 
@@ -47,9 +49,7 @@ const link = split(
             mainDefinition.operation === 'subscription'
         );
     },
-    // @ts-ignores
     wsLink,
-    // @ts-ignore
     from([authLink, httpLink]),
 );
 

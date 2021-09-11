@@ -1,20 +1,19 @@
 /* Core */
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 /* Instruments */
-import { AUTH_TOKEN } from '../constants';
 import { book } from '../routes/book';
 import Logo from './logo.png';
 
 export const Header: React.FC = () => {
-    const history = useHistory();
-    const authToken = localStorage.getItem(AUTH_TOKEN);
+    // const history = useHistory();
+    const authToken = localStorage.getItem(
+        process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME,
+    );
 
     return (
         <Section className="flex pa1 justify-between nowrap orange">
-            <div className="flex flex-fixed black">
+            {/* <div className="flex flex-fixed black">
                 <Logoi src={Logo} />
                 <H1>Hacker News</H1>
                 <Link to={book.newest} className="ml1 no-underline black">
@@ -38,8 +37,8 @@ export const Header: React.FC = () => {
                         </Link>
                     </div>
                 )}
-            </div>
-            <div className="flex flex-fixed">
+            </div> */}
+            {/* <div className="flex flex-fixed">
                 {authToken ? (
                     <div
                         className="ml1 pointer black"
@@ -54,7 +53,7 @@ export const Header: React.FC = () => {
                         login
                     </Link>
                 )}
-            </div>
+            </div> */}
         </Section>
     );
 };

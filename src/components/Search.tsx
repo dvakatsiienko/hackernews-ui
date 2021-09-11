@@ -1,5 +1,5 @@
 /* Core */
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { NetworkStatus } from '@apollo/client';
 
 /* Components */
@@ -11,23 +11,23 @@ import * as gql from '../graphql';
 export const Search: React.FC = () => {
     const [filter, setFilter] = useState('test');
 
-    const feedSearchQueryResult = gql.useFeedSearchQuery({
-        notifyOnNetworkStatusChange: true,
-        variables: {
-            filter,
-        },
-    });
+    // const feedSearchQueryResult = gql.useFeedSearchQuery({
+    //     notifyOnNetworkStatusChange: true,
+    //     variables: {
+    //         filter,
+    //     },
+    // });
 
     useEffect(() => {
-        if (feedSearchQueryResult.data) {
-            feedSearchQueryResult.refetch({
-                filter,
-            });
-        }
+        // if (feedSearchQueryResult.data) {
+        //     feedSearchQueryResult.refetch({
+        //         filter,
+        //     });
+        // }
     }, [filter]);
 
-    const isFirstFetch =
-        feedSearchQueryResult.networkStatus === NetworkStatus.loading;
+    // const isFirstFetch =
+    //     feedSearchQueryResult.networkStatus === NetworkStatus.loading;
 
     return (
         <div>
@@ -36,16 +36,16 @@ export const Search: React.FC = () => {
                 <input type="text" onChange={e => setFilter(e.target.value)} />
                 &nbsp;
                 <button>OK</button>
-                {feedSearchQueryResult.networkStatus ===
-                    NetworkStatus.refetch && '⏳'}
+                {/* {feedSearchQueryResult.networkStatus ===
+                    NetworkStatus.refetch && '⏳'} */}
             </div>
-            {isFirstFetch ? (
+            {/* {isFirstFetch ? (
                 <p>Loading...</p>
             ) : (
                 feedSearchQueryResult.data?.feed?.links?.map((link, index) => (
                     <Link key={link.id} link={link} index={index} />
                 ))
-            )}
+            )} */}
         </div>
     );
 };

@@ -1,89 +1,55 @@
 # Query
-query feed($first: Int, $skip: Int, $orderBy: LinkOrderByInput) {
-    feed(first: $first, skip: $skip, orderBy: $orderBy)
+query feed(
+    $filter: String
+    $skip: Int
+    $take: Int
+    $orderBy: LinkOrderByInput
+) {
+    feed(filter: $filter, skip: $skip, take: $take, orderBy: $orderBy)
         @connection(key: "feed") {
         links {
-            id
-            # createdAt
-            url
-            description
-            postedBy {
-                id
-                name
-            }
-            votes {
-                id
-                user {
-                    id
-                }
-            }
+            ...LinkFragment
         }
         count
     }
 }
 
-query feedSearch($filter: String!) {
-    feed(filter: $filter) {
-        links {
-            id
-            url
-            description
-            # createdAt
-            postedBy {
-                id
-                name
-            }
-            votes {
-                id
-                user {
-                    id
-                }
-            }
-        }
-    }
-}
-# Mutation
-mutation createPost($description: String!, $url: String!) {
-    post(description: $description, url: $url) {
-        id
-        # createdAt
-        url
-        description
-    }
-}
+# query feedSearch($filter: String!) {
+#     feed(filter: $filter) {
+#         links {
+#             id
+#             url
+#             description
+#             # createdAt
+#             postedBy {
+#                 id
+#                 name
+#             }
+#             votes {
+#                 id
+#                 user {
+#                     id
+#                 }
+#             }
+#         }
+#     }
+# }
 
-# Subscription
-subscription newLinksSubscription {
-    newLink {
-        id
-        url
-        description
-        # createdAt
-        postedBy {
-            id
-            name
-        }
-        votes {
-            id
-            user {
-                id
-            }
-        }
-    }
-}
+# # Mutation
+# mutation createPost($description: String!, $url: String!) {
+#     post(description: $description, url: $url) {
+#         id
+#         # createdAt
+#         url
+#         description
+#     }
+# }
 
-subscription newVotesSubscription {
-    newVote {
+mutation VoteMutation($linkId: ID!) {
+    vote(linkId: $linkId) {
         id
         link {
             id
-            url
-            description
-            # createdAt
-            postedBy {
-                id
-                name
-            }
             votes {
                 id
                 user {
@@ -91,6 +57,69 @@ subscription newVotesSubscription {
                 }
             }
         }
+        user {
+            id
+        }
+    }
+}
+
+# # Subscription
+# subscription newLinksSubscription {
+#     newLink {
+#         id
+#         url
+#         description
+#         # createdAt
+#         postedBy {
+#             id
+#             name
+#         }
+#         votes {
+#             id
+#             user {
+#                 id
+#             }
+#         }
+#     }
+# }
+
+# subscription newVotesSubscription {
+#     newVote {
+#         id
+#         link {
+#             id
+#             url
+#             description
+#             # createdAt
+#             postedBy {
+#                 id
+#                 name
+#             }
+#             votes {
+#                 id
+#                 user {
+#                     id
+#                 }
+#             }
+#         }
+#         user {
+#             id
+#         }
+#     }
+# }
+
+# Fragment
+fragment LinkFragment on Link {
+    id
+    createdAt
+    url
+    description
+    postedBy {
+        id
+        name
+    }
+    votes {
+        id
         user {
             id
         }

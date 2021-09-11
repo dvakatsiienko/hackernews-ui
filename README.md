@@ -1,7 +1,9 @@
 # The Hackernews
 
 Built with the following technology stack:
-+ React
-+ Apollo Client
-+ Yoga
-+ Prisma
+
+-   React
+-   Apollo Client
+-   Apollo Server
+-   Prisma GraphQL ORM
+-   SQLite DB

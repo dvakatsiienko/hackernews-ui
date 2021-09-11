@@ -1,13 +1,12 @@
 /* Core */
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 /* Instruments */
-import { AUTH_TOKEN } from '../constants';
 import * as gql from '../graphql';
 
 export const Login: React.FC = props => {
-    const history = useHistory();
+    // const history = useHistory();
 
     const [login, setLogin] = useState(true);
     const [email, setEmail] = useState('');
@@ -17,9 +16,9 @@ export const Login: React.FC = props => {
     const _confirm = async data => {
         const { token } = login ? data.login : data.signup;
 
-        localStorage.setItem(AUTH_TOKEN, token);
+        localStorage.setItem(process.env.AUTH_TOKEN_NAME, token);
 
-        history.push(`/`);
+        // history.push(`/`);
     };
 
     const [loginMutation] = gql.useLoginMutation({

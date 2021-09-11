@@ -1,35 +1,28 @@
-/* Core */
-import React from 'react';
-import { useMutation, gql } from '@apollo/client';
-
 /* Instruments */
-import { AUTH_TOKEN } from '../constants';
-import { timeDifferenceForDate } from '../utils';
+import * as gql from '@/graphql';
+import { timeDifferenceForDate } from '@/utils';
 
-export const Link = props => {
-    const [vote, voteMeta] = useMutation(VOTE_MUTATION, {
+export const Link: React.FC<LinkProps> = props => {
+    const [vote] = gql.useVoteMutationMutation({
         variables: { linkId: props.link.id },
+        update(cache, response) {
+            props.updateStoreAfterVote(
+                cache,
+                response.data.vote,
+                props.link.id,
+            );
+        },
     });
-    const authToken = localStorage.getItem(AUTH_TOKEN);
-
-    const voteMut = () => {
-        vote({
-            update(cache, response) {
-                props.updateStoreAfterVote(
-                    cache,
-                    response.data.vote,
-                    props.link.id,
-                );
-            },
-        });
-    };
+    const authToken = localStorage.getItem(
+        process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME,
+    );
 
     return (
         <div className="flex mt2 items-start">
             <div className="flex items-center">
                 <span className="gray">{props.index + 1}.</span>
                 {authToken && (
-                    <div className="ml1 gray f11" onClick={voteMut}>
+                    <div className="ml1 gray f11" onClick={() => vote}>
                         ▲
                     </div>
                 )}
@@ -48,22 +41,9 @@ export const Link = props => {
     );
 };
 
-const VOTE_MUTATION = gql`
-    mutation VoteMutation($linkId: ID!) {
-        vote(linkId: $linkId) {
-            id
-            link {
-                id
-                votes {
-                    id
-                    user {
-                        id
-                    }
-                }
-            }
-            user {
-                id
-            }
-        }
-    }
-`;
+/* Types */
+interface LinkProps {
+    index: number;
+    link: gql.LinkFragmentFragment;
+    updateStoreAfterVote: (a: any, b: any, c: any) => void;
+}

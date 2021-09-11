@@ -1,9 +1,9 @@
-@import './App.css';
+@import 'tachyons';
 
 body {
     margin: 0;
     padding: 0;
-    font-family: Verdana, Geneva, sans-serif;
+    font-family: system-ui, Verdana, Geneva, sans-serif;
 }
 
 input {
@@ -16,10 +16,6 @@ input {
 
 .orange {
     background-color: #ff6600;
-}
-
-.background-gray {
-    background-color: rgb(246, 246, 239);
 }
 
 .f11 {
