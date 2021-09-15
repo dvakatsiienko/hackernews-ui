@@ -2,10 +2,10 @@
 import { NextPage } from 'next';
 
 /* Components */
-import { Login } from '@/components';
+import { LoginForm } from '@/components';
 
 const LoginPage: NextPage = () => {
-    return <Login />;
+    return <LoginForm />;
 };
 
 export default LoginPage;

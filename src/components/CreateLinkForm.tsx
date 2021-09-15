@@ -5,7 +5,7 @@ import Router from 'next/router';
 /* Instruments */
 import * as gql from '../graphql';
 
-export const CreateLink: React.FC = () => {
+export const CreateLinkForm: React.FC = () => {
     const {
         register,
         handleSubmit,
@@ -23,8 +23,9 @@ export const CreateLink: React.FC = () => {
     const [createLinkMutation] = gql.useCreateLinkMutation({
         variables: getValues(),
         onCompleted() {
-            Router.push('/');
+            // Router.push('/');
         },
+        refetchQueries: [{ query: gql.FeedDocument }],
         // update(cache, response) {
         //     const createLink = response.data.createLink;
         //     const first = process.env.NEXT_PUBLIC_LINKS_PER_PAGE;

@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
+import Router from 'next/router';
 
 /* Instruments */
 import { book } from '@/routes/book';
@@ -52,6 +53,7 @@ export const Header: React.FC = () => {
                         className="ml1 pointer black"
                         onClick={() => {
                             localStorage.removeItem(AUTH_TOKEN_NAME);
+                            setAuthToken(null);
                         }}>
                         <A>logout</A>
                     </div>

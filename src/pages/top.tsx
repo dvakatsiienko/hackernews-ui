@@ -7,9 +7,9 @@ import { Link } from '@/components';
 /* Instruments */
 import * as gql from '@/graphql';
 
-const NEXT_PUBLIC_LINKS_PER_PAGE = Number(
-    process.env.NEXT_PUBLIC_LINKS_PER_PAGE,
-);
+const LINKS_PER_PAGE = Number(process.env.NEXT_PUBLIC_LINKS_PER_PAGE);
+const SKIP = 0;
+const orderBy = { createdAt: 'desc' };
 
 const TopLinksPage: NextPage = () => {
     // const history = useHistory();
@@ -36,20 +36,20 @@ const TopLinksPage: NextPage = () => {
     // const newVotesSubscriptionResult =
     //     gql.useNewVotesSubscriptionSubscription();
 
-    const _updateCacheAfterVote = (store, createVote, linkId) => {
-        // const isNewPage = location.pathname.includes('new');
-        // const page = parseInt(match.params.page, 10);
-        // const skip = isNewPage ? (page - 1) * LINKS_PER_PAGE : 0;
-        // const first = isNewPage ? LINKS_PER_PAGE : 100;
-        // const orderBy = isNewPage ? 'createdAt_DESC' : null;
-        // const data = store.readQuery({
-        //     query: gql.FeedDocument,
-        //     variables: { first, skip, orderBy },
-        // });
-        // const votedLink = data.feed.links.find(link => link.id === linkId);
-        // votedLink.votes = createVote.link.votes;
-        // store.writeQuery({ query: gql.FeedDocument, data });
-    };
+    // const _updateCacheAfterVote = (store, createVote, linkId) => {
+    //     const isNewPage = location.pathname.includes('new');
+    //     const page = parseInt(match.params.page, 10);
+    //     const skip = isNewPage ? (page - 1) * LINKS_PER_PAGE : 0;
+    //     const first = isNewPage ? LINKS_PER_PAGE : 100;
+    //     const orderBy = isNewPage ? 'createdAt_DESC' : null;
+    //     const data = store.readQuery({
+    //         query: gql.FeedDocument,
+    //         variables: { first, skip, orderBy },
+    //     });
+    //     const votedLink = data.feed.links.find(link => link.id === linkId);
+    //     votedLink.votes = createVote.link.votes;
+    //     store.writeQuery({ query: gql.FeedDocument, data });
+    // };
 
     const _getLinksToRender = () => {
         const links = feedQuery.data.feed.links;
@@ -125,16 +125,11 @@ const TopLinksPage: NextPage = () => {
     // const pageIndex = match.params.page
     //     ? (Number(match.params.page) - 1) * LINKS_PER_PAGE
     //     : 0;
-    const pageIndex = 1;
+    const pageIndex = 0;
 
-    const linksListJSX = linksToRender.map((link, index) => (
-        <Link
-            key={link.id}
-            link={link}
-            index={index + pageIndex}
-            updateStoreAfterVote={_updateCacheAfterVote}
-        />
-    ));
+    const linksListJSX = linksToRender.map((link, index) => {
+        return <Link key={link.id} link={link} index={index + pageIndex} />;
+    });
 
     return (
         <>

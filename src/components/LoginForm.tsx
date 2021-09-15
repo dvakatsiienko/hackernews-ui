@@ -13,7 +13,7 @@ interface FormValues {
     name: string;
 }
 
-export const Login: React.FC = props => {
+export const LoginForm: React.FC = props => {
     const {
         register,
         handleSubmit,
@@ -32,7 +32,7 @@ export const Login: React.FC = props => {
     const _confirm = async data => {
         const { token } = isLogin ? data.login : data.signup;
 
-        localStorage.setItem(process.env.AUTH_TOKEN_NAME, token);
+        localStorage.setItem(process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME, token);
         Router.replace(`/`);
     };
 
@@ -80,6 +80,7 @@ export const Login: React.FC = props => {
 
                     <button
                         className="pointer button"
+                        type="button"
                         onClick={() => setIsLogin(!isLogin)}>
                         {isLogin
                             ? 'need to create an account?'

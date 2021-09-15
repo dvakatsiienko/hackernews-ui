@@ -2,7 +2,7 @@
 import { NextPage } from 'next';
 
 /* Components */
-import { Link, CreateLink } from '@/components';
+import { Link, CreateLinkForm } from '@/components';
 
 /* Instruments */
 import * as gql from '@/graphql';
@@ -125,20 +125,15 @@ const CreatePage: NextPage = () => {
     // const pageIndex = match.params.page
     //     ? (Number(match.params.page) - 1) * LINKS_PER_PAGE
     //     : 0;
-    const pageIndex = 1;
+    const pageIndex = 0;
 
     const linksListJSX = linksToRender.map((link, index) => (
-        <Link
-            key={link.id}
-            link={link}
-            index={index + pageIndex}
-            updateStoreAfterVote={_updateCacheAfterVote}
-        />
+        <Link key={link.id} link={link} index={index + pageIndex} />
     ));
 
     return (
         <>
-            <CreateLink />
+            <CreateLinkForm />
 
             {linksListJSX}
 

@@ -343,8 +343,8 @@ export function useCreateLinkMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type CreateLinkMutationHookResult = ReturnType<typeof useCreateLinkMutation>;
 export type CreateLinkMutationResult = ApolloReactCommon.MutationResult<CreateLinkMutation>;
 export type CreateLinkMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateLinkMutation, CreateLinkMutationVariables>;
-export const VoteMutationDocument = gql`
-    mutation VoteMutation($linkId: ID!) {
+export const VoteDocument = gql`
+    mutation vote($linkId: ID!) {
   vote(linkId: $linkId) {
     id
     link {
@@ -362,7 +362,7 @@ export const VoteMutationDocument = gql`
   }
 }
     `;
-export type VoteMutationMutationFn = ApolloReactCommon.MutationFunction<VoteMutation, VoteMutationVariables>;
+export type VoteMutationFn = ApolloReactCommon.MutationFunction<VoteMutation, VoteMutationVariables>;
 
 /**
  * __useVoteMutation__
@@ -383,8 +383,8 @@ export type VoteMutationMutationFn = ApolloReactCommon.MutationFunction<VoteMuta
  */
 export function useVoteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<VoteMutation, VoteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<VoteMutation, VoteMutationVariables>(VoteMutationDocument, options);
+        return ApolloReactHooks.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument, options);
       }
 export type VoteMutationHookResult = ReturnType<typeof useVoteMutation>;
-export type VoteMutationMutationResult = ApolloReactCommon.MutationResult<VoteMutation>;
-export type VoteMutationMutationOptions = ApolloReactCommon.BaseMutationOptions<VoteMutation, VoteMutationVariables>;
+export type VoteMutationResult = ApolloReactCommon.MutationResult<VoteMutation>;
+export type VoteMutationOptions = ApolloReactCommon.BaseMutationOptions<VoteMutation, VoteMutationVariables>;

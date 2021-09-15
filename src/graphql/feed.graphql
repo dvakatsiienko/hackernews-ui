@@ -44,17 +44,11 @@ mutation createLink($description: String!, $url: String!) {
     }
 }
 
-mutation VoteMutation($linkId: ID!) {
+mutation vote($linkId: ID!) {
     vote(linkId: $linkId) {
         id
         link {
-            id
-            votes {
-                id
-                user {
-                    id
-                }
-            }
+            ...LinkFragment
         }
         user {
             id
