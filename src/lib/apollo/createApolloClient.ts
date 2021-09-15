@@ -76,7 +76,7 @@ const links = from([loggerLink, errorLink, authLink, httpLink]);
 export const createApolloClient = () => {
     return new ApolloClient({
         ssrMode: typeof window === 'undefined',
-        link: process.browser
+        link: false // ! process.browser
             ? split(
                   operation => {
                       const mainDefinition = getMainDefinition(operation.query);
