@@ -22,18 +22,18 @@ const GQL_HTTP_URL = process.env.NEXT_PUBLIC_GQL_HTTP_URL;
 const GQL_WS_URL = process.env.NEXT_PUBLIC_GQL_WS_URL;
 const AUTH_TOKEN_NAME = process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME;
 
-const subscriptionClient = process.browser
-    ? new SubscriptionClient(GQL_WS_URL, {
-          reconnect: true,
-          connectionParams: {
-              authToken: process.browser
-                  ? localStorage.getItem(AUTH_TOKEN_NAME)
-                  : null,
-          },
-      })
-    : null;
+// const subscriptionClient = process.browser
+//     ? new SubscriptionClient(GQL_WS_URL, {
+//           reconnect: true,
+//           connectionParams: {
+//               authToken: process.browser
+//                   ? localStorage.getItem(AUTH_TOKEN_NAME)
+//                   : null,
+//           },
+//       })
+//     : null;
 
-const wsLink = process.browser ? new WebSocketLink(subscriptionClient) : null;
+// const wsLink = process.browser ? new WebSocketLink(subscriptionClient) : null;
 
 const httpLink = new HttpLink({
     uri: GQL_HTTP_URL,
@@ -76,21 +76,22 @@ const links = from([loggerLink, errorLink, authLink, httpLink]);
 export const createApolloClient = () => {
     return new ApolloClient({
         ssrMode: typeof window === 'undefined',
-        link: false // ! process.browser
-            ? split(
-                  operation => {
-                      const mainDefinition = getMainDefinition(operation.query);
-
-                      return (
-                          process.browser &&
-                          mainDefinition.kind === 'OperationDefinition' &&
-                          mainDefinition.operation === 'subscription'
-                      );
-                  },
-                  wsLink,
-                  links,
-              )
-            : links,
+        link: links,
         cache: new InMemoryCache(),
+        // link: process.browser
+        //     ? split(
+        //           operation => {
+        //               const mainDefinition = getMainDefinition(operation.query);
+
+        //               return (
+        //                   process.browser &&
+        //                   mainDefinition.kind === 'OperationDefinition' &&
+        //                   mainDefinition.operation === 'subscription'
+        //               );
+        //           },
+        //           wsLink,
+        //           links,
+        //       )
+        //     : links,
     });
 };
