@@ -1,8 +1,8 @@
 export const book = {
+    top: '/top',
     login: '/login',
     create: '/create',
     search: '/search',
-    top: '/top',
     newest: '/newest',
     newestPage: '/newest/:page',
 };

@@ -2,7 +2,7 @@
 import { NextPage } from 'next';
 
 /* Components */
-import { Link } from '@/components';
+import { Link, CreateLink } from '@/components';
 
 /* Instruments */
 import * as gql from '@/graphql';
@@ -11,7 +11,7 @@ const NEXT_PUBLIC_LINKS_PER_PAGE = Number(
     process.env.NEXT_PUBLIC_LINKS_PER_PAGE,
 );
 
-const IndexPage: NextPage = () => {
+const CreatePage: NextPage = () => {
     // const history = useHistory();
     // const location = useLocation();
     // const match = useRouteMatch<{ page: string }>();
@@ -138,6 +138,8 @@ const IndexPage: NextPage = () => {
 
     return (
         <>
+            <CreateLink />
+
             {linksListJSX}
 
             {isNewPage && (
@@ -156,4 +158,4 @@ const IndexPage: NextPage = () => {
     );
 };
 
-export default IndexPage;
+export default CreatePage;

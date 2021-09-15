@@ -5,8 +5,7 @@ query feed(
     $take: Int
     $orderBy: LinkOrderByInput
 ) {
-    feed(filter: $filter, skip: $skip, take: $take, orderBy: $orderBy)
-        @connection(key: "feed") {
+    feed(filter: $filter, skip: $skip, take: $take, orderBy: $orderBy) {
         links {
             ...LinkFragment
         }
@@ -36,14 +35,14 @@ query feed(
 # }
 
 # # Mutation
-# mutation createPost($description: String!, $url: String!) {
-#     post(description: $description, url: $url) {
-#         id
-#         # createdAt
-#         url
-#         description
-#     }
-# }
+mutation createLink($description: String!, $url: String!) {
+    createLink(description: $description, url: $url) {
+        id
+        url
+        description
+        createdAt
+    }
+}
 
 mutation VoteMutation($linkId: ID!) {
     vote(linkId: $linkId) {
@@ -111,9 +110,9 @@ mutation VoteMutation($linkId: ID!) {
 # Fragment
 fragment LinkFragment on Link {
     id
-    createdAt
     url
     description
+    createdAt
     postedBy {
         id
         name

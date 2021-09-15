@@ -6,13 +6,13 @@
     "scripts": {
         "start": "next",
         "build": "next build",
+        "serve": "next start",
         "codegen:graphql": "gql-gen -r dotenv/config --config \"./graphql-codegen.yml\""
     },
     "dependencies": {
         "@apollo/client": "3.4.11",
-        "@apollo/link-context": "2.0.0-beta.3",
-        "@apollo/link-error": "2.0.0-beta.3",
-        "@apollo/link-ws": "2.0.0-beta.3",
+        "@graphql-tools/load-files": "6.4.0",
+        "@graphql-tools/schema": "8.2.0",
         "debug": "4.3.2",
         "deepmerge": "4.2.2",
         "graphql": "15.5.3",
@@ -20,6 +20,7 @@
         "nprogress": "0.2.0",
         "react": "17.0.2",
         "react-dom": "17.0.2",
+        "react-hook-form": "7.15.3",
         "styled-components": "5.3.1",
         "subscriptions-transport-ws": "0.9.19",
         "tachyons": "4.12.0"
@@ -32,7 +33,7 @@
         "@types/debug": "4.1.7",
         "@types/lodash": "4.14.172",
         "@types/nprogress": "0.2.0",
-        "@types/react": "17.0.20",
+        "@types/react": "17.0.21",
         "@types/react-dom": "17.0.9",
         "@types/styled-components": "5.1.14",
         "babel-plugin-graphql-tag": "3.3.0",

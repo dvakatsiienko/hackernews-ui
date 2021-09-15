@@ -3,7 +3,7 @@ import * as gql from '@/graphql';
 import { timeDifferenceForDate } from '@/utils';
 
 export const Link: React.FC<LinkProps> = props => {
-    const [vote] = gql.useVoteMutationMutation({
+    const [vote] = gql.useVoteMutation({
         variables: { linkId: props.link.id },
         update(cache, response) {
             props.updateStoreAfterVote(
@@ -44,6 +44,6 @@ export const Link: React.FC<LinkProps> = props => {
 /* Types */
 interface LinkProps {
     index: number;
-    link: gql.LinkFragmentFragment;
+    link: gql.LinkFragment;
     updateStoreAfterVote: (a: any, b: any, c: any) => void;
 }

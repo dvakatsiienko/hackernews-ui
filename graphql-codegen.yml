@@ -8,6 +8,7 @@ config:
     avoidOptionals: true
     apolloReactHooksImportFrom: '@apollo/client'
     apolloReactCommonImportFrom: '@apollo/client'
+    dedupeOperationSuffix: true
 generates:
     src/graphql/index.tsx:
         plugins:

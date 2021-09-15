@@ -159,23 +159,31 @@ export type FeedQueryVariables = Exact<{
 }>;
 
 
-export type FeedQuery = { __typename?: 'Query', feed: { __typename?: 'Feed', count: number, links: Array<{ __typename?: 'Link', id: string, createdAt: string, url: string, description: string, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }> } };
+export type FeedQuery = { __typename?: 'Query', feed: { __typename?: 'Feed', count: number, links: Array<{ __typename?: 'Link', id: string, url: string, description: string, createdAt: string, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }> } };
 
-export type VoteMutationMutationVariables = Exact<{
+export type CreateLinkMutationVariables = Exact<{
+  description: Scalars['String'];
+  url: Scalars['String'];
+}>;
+
+
+export type CreateLinkMutation = { __typename?: 'Mutation', createLink: { __typename?: 'Link', id: string, url: string, description: string, createdAt: string } };
+
+export type VoteMutationVariables = Exact<{
   linkId: Scalars['ID'];
 }>;
 
 
-export type VoteMutationMutation = { __typename?: 'Mutation', vote: Maybe<{ __typename?: 'Vote', id: string, link: { __typename?: 'Link', id: string, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> };
+export type VoteMutation = { __typename?: 'Mutation', vote: Maybe<{ __typename?: 'Vote', id: string, link: { __typename?: 'Link', id: string, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> };
 
-export type LinkFragmentFragment = { __typename?: 'Link', id: string, createdAt: string, url: string, description: string, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> };
+export type LinkFragment = { __typename?: 'Link', id: string, url: string, description: string, createdAt: string, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> };
 
-export const LinkFragmentFragmentDoc = gql`
+export const LinkFragmentDoc = gql`
     fragment LinkFragment on Link {
   id
-  createdAt
   url
   description
+  createdAt
   postedBy {
     id
     name
@@ -259,14 +267,14 @@ export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation
 export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const FeedDocument = gql`
     query feed($filter: String, $skip: Int, $take: Int, $orderBy: LinkOrderByInput) {
-  feed(filter: $filter, skip: $skip, take: $take, orderBy: $orderBy) @connection(key: "feed") {
+  feed(filter: $filter, skip: $skip, take: $take, orderBy: $orderBy) {
     links {
       ...LinkFragment
     }
     count
   }
 }
-    ${LinkFragmentFragmentDoc}`;
+    ${LinkFragmentDoc}`;
 
 /**
  * __useFeedQuery__
@@ -298,6 +306,43 @@ export function useFeedLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOpt
 export type FeedQueryHookResult = ReturnType<typeof useFeedQuery>;
 export type FeedLazyQueryHookResult = ReturnType<typeof useFeedLazyQuery>;
 export type FeedQueryResult = ApolloReactCommon.QueryResult<FeedQuery, FeedQueryVariables>;
+export const CreateLinkDocument = gql`
+    mutation createLink($description: String!, $url: String!) {
+  createLink(description: $description, url: $url) {
+    id
+    url
+    description
+    createdAt
+  }
+}
+    `;
+export type CreateLinkMutationFn = ApolloReactCommon.MutationFunction<CreateLinkMutation, CreateLinkMutationVariables>;
+
+/**
+ * __useCreateLinkMutation__
+ *
+ * To run a mutation, you first call `useCreateLinkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateLinkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createLinkMutation, { data, loading, error }] = useCreateLinkMutation({
+ *   variables: {
+ *      description: // value for 'description'
+ *      url: // value for 'url'
+ *   },
+ * });
+ */
+export function useCreateLinkMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateLinkMutation, CreateLinkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<CreateLinkMutation, CreateLinkMutationVariables>(CreateLinkDocument, options);
+      }
+export type CreateLinkMutationHookResult = ReturnType<typeof useCreateLinkMutation>;
+export type CreateLinkMutationResult = ApolloReactCommon.MutationResult<CreateLinkMutation>;
+export type CreateLinkMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateLinkMutation, CreateLinkMutationVariables>;
 export const VoteMutationDocument = gql`
     mutation VoteMutation($linkId: ID!) {
   vote(linkId: $linkId) {
@@ -317,29 +362,29 @@ export const VoteMutationDocument = gql`
   }
 }
     `;
-export type VoteMutationMutationFn = ApolloReactCommon.MutationFunction<VoteMutationMutation, VoteMutationMutationVariables>;
+export type VoteMutationMutationFn = ApolloReactCommon.MutationFunction<VoteMutation, VoteMutationVariables>;
 
 /**
- * __useVoteMutationMutation__
+ * __useVoteMutation__
  *
- * To run a mutation, you first call `useVoteMutationMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useVoteMutationMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useVoteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVoteMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [voteMutationMutation, { data, loading, error }] = useVoteMutationMutation({
+ * const [voteMutation, { data, loading, error }] = useVoteMutation({
  *   variables: {
  *      linkId: // value for 'linkId'
  *   },
  * });
  */
-export function useVoteMutationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<VoteMutationMutation, VoteMutationMutationVariables>) {
+export function useVoteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<VoteMutation, VoteMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<VoteMutationMutation, VoteMutationMutationVariables>(VoteMutationDocument, options);
+        return ApolloReactHooks.useMutation<VoteMutation, VoteMutationVariables>(VoteMutationDocument, options);
       }
-export type VoteMutationMutationHookResult = ReturnType<typeof useVoteMutationMutation>;
-export type VoteMutationMutationResult = ApolloReactCommon.MutationResult<VoteMutationMutation>;
-export type VoteMutationMutationOptions = ApolloReactCommon.BaseMutationOptions<VoteMutationMutation, VoteMutationMutationVariables>;
+export type VoteMutationHookResult = ReturnType<typeof useVoteMutation>;
+export type VoteMutationMutationResult = ApolloReactCommon.MutationResult<VoteMutation>;
+export type VoteMutationMutationOptions = ApolloReactCommon.BaseMutationOptions<VoteMutation, VoteMutationVariables>;

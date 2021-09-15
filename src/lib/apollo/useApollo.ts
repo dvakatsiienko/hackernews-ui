@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import { initApollo } from './initApollo';
 
 export const useApollo = initialState => {
-    const client = useMemo(() => initApollo(initialState), [ initialState ]);
+    const client = useMemo(() => initApollo(initialState), [initialState]);
 
     return client;
 };
