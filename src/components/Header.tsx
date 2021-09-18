@@ -27,10 +27,13 @@ export const Header: React.FC = () => {
     return (
         <Section className="flex pa1 justify-between nowrap orange">
             <div className="flex flex-fixed black">
-                <LogoImage src="/y18.gif" />
-                <H1>Hacker News&nbsp;</H1>
-                <Link href={book.newest}>
-                    <A $active={get$Active(book.newest)}>new</A>
+                <LogoImage onClick={() => Router.push('/')} src="/y18.gif" />
+                <H1 onClick={() => Router.push('/')} $active={get$Active('/')}>
+                    Hacker News&nbsp;
+                </H1>
+
+                <Link href={book.new}>
+                    <A $active={get$Active(book.new)}>new</A>
                 </Link>
                 <div className="ml1">|</div>
 
@@ -87,12 +90,20 @@ const LogoImage = styled.img`
     border: 1px solid white;
     cursor: pointer;
 `;
-const H1 = styled.h1`
+
+const H1 = styled.h1<AProps>`
+    cursor: pointer;
     display: flex;
     align-items: center;
     font-size: 14px;
     margin: 0;
     font-family: Helvetica, system-ui;
+
+    &:hover {
+        color: white;
+    }
+
+    ${props => props.$active && 'color: white; font-weight: 700;'}
 `;
 
 interface AProps {
@@ -101,8 +112,7 @@ interface AProps {
 const A = styled.a<AProps>`
     cursor: pointer;
 
-    &:hover,
-    &:active {
+    &:hover {
         color: white;
     }
 

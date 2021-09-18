@@ -6,8 +6,8 @@ export const App: React.FC = () => {
                 <Route exact path={book.create} component={CreateLink} />
                 <Route exact path={book.search} component={Search} />
                 <Route exact path={book.top} component={LinkList} />
-                <Route exact path={book.newestPage} component={LinkList} />
-                <Redirect to={`${book.newest}/1`} />
+                <Route exact path={book.newPage} component={LinkList} />
+                <Redirect to={`${book.new}/1`} />
             </Switch> */}
         </div>
     );
