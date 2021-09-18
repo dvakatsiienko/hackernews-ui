@@ -10,7 +10,7 @@
         "codegen:graphql": "gql-gen -r dotenv/config --config \"./graphql-codegen.yml\""
     },
     "dependencies": {
-        "@apollo/client": "3.4.11",
+        "@apollo/client": "3.4.12",
         "@graphql-tools/load-files": "6.4.0",
         "@graphql-tools/schema": "8.2.0",
         "debug": "4.3.2",
@@ -23,7 +23,8 @@
         "react-hook-form": "7.15.3",
         "styled-components": "5.3.1",
         "subscriptions-transport-ws": "0.9.19",
-        "tachyons": "4.12.0"
+        "tachyons": "4.12.0",
+        "waait": "1.0.5"
     },
     "devDependencies": {
         "@graphql-codegen/cli": "2.2.0",
@@ -31,7 +32,7 @@
         "@graphql-codegen/typescript-operations": "2.1.4",
         "@graphql-codegen/typescript-react-apollo": "3.1.4",
         "@types/debug": "4.1.7",
-        "@types/lodash": "4.14.172",
+        "@types/lodash": "4.14.173",
         "@types/nprogress": "0.2.0",
         "@types/react": "17.0.21",
         "@types/react-dom": "17.0.9",

@@ -18,30 +18,36 @@ export const Header: React.FC = () => {
         }
     }, []);
 
+    const get$Active = (href: string) => {
+        if (process.browser) {
+            return Router.pathname === href;
+        }
+    };
+
     return (
         <Section className="flex pa1 justify-between nowrap orange">
             <div className="flex flex-fixed black">
                 <LogoImage src="/y18.gif" />
                 <H1>Hacker News&nbsp;</H1>
                 <Link href={book.newest}>
-                    <A>new</A>
+                    <A $active={get$Active(book.newest)}>new</A>
                 </Link>
                 <div className="ml1">|</div>
 
                 <Link href={book.top}>
-                    <A>top</A>
+                    <A $active={get$Active(book.top)}>top</A>
                 </Link>
                 <div className="ml1">|</div>
 
                 <Link href={book.search}>
-                    <A>search</A>
+                    <A $active={get$Active(book.search)}>search</A>
                 </Link>
 
                 {authToken && (
                     <div className="flex">
                         <div className="ml1">|</div>
                         <Link href={book.create}>
-                            <A>submit</A>
+                            <A $active={get$Active(book.create)}>submit</A>
                         </Link>
                     </div>
                 )}
@@ -59,7 +65,7 @@ export const Header: React.FC = () => {
                     </div>
                 ) : (
                     <Link href={book.login}>
-                        <A>login</A>
+                        <A $active={get$Active(book.login)}>login</A>
                     </Link>
                 )}
             </div>
@@ -88,7 +94,20 @@ const H1 = styled.h1`
     margin: 0;
     font-family: Helvetica, system-ui;
 `;
-const A = styled.a``;
+
+interface AProps {
+    readonly $active?: boolean;
+}
+const A = styled.a<AProps>`
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+        color: white;
+    }
+
+    ${props => props.$active && 'color: white; font-weight: 500;'}
+`;
 A.defaultProps = {
     className: 'ml1 no-underline black',
 };
