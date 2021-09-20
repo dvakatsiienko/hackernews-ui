@@ -32,7 +32,7 @@ const App: React.FC<AppProps> = props => {
                 </Head>
 
                 <div className="center w85">
-                    <Header />
+                    <Header pathname={props.router.pathname} />
 
                     <Canvas className="ph3 pv1">
                         <props.Component {...props.pageProps} />

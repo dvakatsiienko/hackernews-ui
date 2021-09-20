@@ -6,33 +6,12 @@ query feed(
     $orderBy: LinkOrderByInput
 ) {
     feed(filter: $filter, skip: $skip, take: $take, orderBy: $orderBy) {
+        count
         links {
             ...LinkFragment
         }
-        count
     }
 }
-
-# query feedSearch($filter: String!) {
-#     feed(filter: $filter) {
-#         links {
-#             id
-#             url
-#             description
-#             # createdAt
-#             postedBy {
-#                 id
-#                 name
-#             }
-#             votes {
-#                 id
-#                 user {
-#                     id
-#                 }
-#             }
-#         }
-#     }
-# }
 
 # # Mutation
 mutation createLink($description: String!, $url: String!) {
@@ -56,50 +35,24 @@ mutation vote($linkId: ID!) {
     }
 }
 
-# # Subscription
-# subscription newLinksSubscription {
-#     newLink {
-#         id
-#         url
-#         description
-#         # createdAt
-#         postedBy {
-#             id
-#             name
-#         }
-#         votes {
-#             id
-#             user {
-#                 id
-#             }
-#         }
-#     }
-# }
+# Subscription
+subscription linkCreated {
+    linkCreated {
+        ...LinkFragment
+    }
+}
 
-# subscription newVotesSubscription {
-#     newVote {
-#         id
-#         link {
-#             id
-#             url
-#             description
-#             # createdAt
-#             postedBy {
-#                 id
-#                 name
-#             }
-#             votes {
-#                 id
-#                 user {
-#                     id
-#                 }
-#             }
-#         }
-#         user {
-#             id
-#         }
-#     }
-# }
+subscription postVoted {
+    linkVoted {
+        id
+        link {
+            ...LinkFragment
+        }
+        user {
+            id
+        }
+    }
+}
 
 # Fragment
 fragment LinkFragment on Link {

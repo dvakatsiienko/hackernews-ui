@@ -20,9 +20,7 @@ export const Search: React.FC = () => {
         notifyOnNetworkStatusChange: true,
     });
 
-    useEffect(() => {
-        search();
-    }, []);
+    useEffect(search, []);
 
     const submit = form.handleSubmit(async values => {
         if (form.getValues().filter.length) {
@@ -36,6 +34,11 @@ export const Search: React.FC = () => {
     const isFirstFetch = feedQuery.networkStatus === NetworkStatus.loading;
     const isDisabled = feedQuery.loading || isRefetching;
 
+    const linksListJSX =
+        feedQuery.data?.feed.links.map((link, index) => {
+            return <Link key={link.id} link={link} index={index + 0} />;
+        }) ?? [];
+
     return (
         <>
             <form onSubmit={submit}>
@@ -48,13 +51,7 @@ export const Search: React.FC = () => {
                 </fieldset>
             </form>
 
-            {isFirstFetch ? (
-                <h5>Loading...</h5>
-            ) : (
-                feedQuery.data?.feed.links.map((link, index) => (
-                    <Link key={link.id} link={link} index={index} />
-                ))
-            )}
+            {isFirstFetch ? <h5>Loading...</h5> : linksListJSX}
         </>
     );
 };

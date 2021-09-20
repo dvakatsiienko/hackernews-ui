@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 
 /* Instruments */
 import { book } from '@/routes/book';
@@ -10,6 +10,7 @@ import { book } from '@/routes/book';
 const AUTH_TOKEN_NAME = process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME;
 
 export const Header: React.FC = () => {
+    const router = useRouter();
     const [authToken, setAuthToken] = useState(null);
 
     useEffect(() => {
@@ -19,20 +20,19 @@ export const Header: React.FC = () => {
     }, []);
 
     const get$Active = (href: string) => {
-        if (process.browser) {
-            return Router.pathname === href;
-        }
+        return router.pathname.includes(href);
     };
 
     return (
         <Section className="flex pa1 justify-between nowrap orange">
             <div className="flex flex-fixed black">
-                <LogoImage onClick={() => Router.push('/')} src="/y18.gif" />
-                <H1 onClick={() => Router.push('/')} $active={get$Active('/')}>
-                    Hacker News&nbsp;
-                </H1>
+                <LogoImage
+                    onClick={() => router.push('/new/1')}
+                    src="/y18.gif"
+                />
+                <H1 onClick={() => router.push('/new/1')}>Hacker News&nbsp;</H1>
 
-                <Link href={book.new}>
+                <Link href="/new/1">
                     <A $active={get$Active(book.new)}>new</A>
                 </Link>
                 <div className="ml1">|</div>
@@ -91,7 +91,10 @@ const LogoImage = styled.img`
     cursor: pointer;
 `;
 
-const H1 = styled.h1<AProps>`
+interface ActiveProp {
+    readonly $active?: boolean;
+}
+const H1 = styled.h1<ActiveProp>`
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -105,11 +108,7 @@ const H1 = styled.h1<AProps>`
 
     ${props => props.$active && 'color: white; font-weight: 700;'}
 `;
-
-interface AProps {
-    readonly $active?: boolean;
-}
-const A = styled.a<AProps>`
+const A = styled.a<ActiveProp>`
     cursor: pointer;
 
     &:hover {

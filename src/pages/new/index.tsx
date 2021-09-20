@@ -2,7 +2,7 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-const IndexPage: NextPage = () => {
+const NewLinksPage: NextPage = () => {
     const router = useRouter();
 
     router.replace('/new/1');
@@ -10,4 +10,4 @@ const IndexPage: NextPage = () => {
     return null;
 };
 
-export default IndexPage;
+export default NewLinksPage;

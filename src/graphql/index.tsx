@@ -116,7 +116,7 @@ export enum Sort {
 export type Subscription = {
   __typename?: 'Subscription';
   linkCreated: Maybe<Link>;
-  postVoted: Maybe<Vote>;
+  linkVoted: Maybe<Vote>;
 };
 
 export type User = {
@@ -174,7 +174,17 @@ export type VoteMutationVariables = Exact<{
 }>;
 
 
-export type VoteMutation = { __typename?: 'Mutation', vote: Maybe<{ __typename?: 'Vote', id: string, link: { __typename?: 'Link', id: string, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> };
+export type VoteMutation = { __typename?: 'Mutation', vote: Maybe<{ __typename?: 'Vote', id: string, link: { __typename?: 'Link', id: string, url: string, description: string, createdAt: string, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> };
+
+export type LinkCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LinkCreatedSubscription = { __typename?: 'Subscription', linkCreated: Maybe<{ __typename?: 'Link', id: string, url: string, description: string, createdAt: string, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }> };
+
+export type PostVotedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PostVotedSubscription = { __typename?: 'Subscription', linkVoted: Maybe<{ __typename?: 'Vote', id: string, link: { __typename?: 'Link', id: string, url: string, description: string, createdAt: string, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> };
 
 export type LinkFragment = { __typename?: 'Link', id: string, url: string, description: string, createdAt: string, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> };
 
@@ -348,20 +358,14 @@ export const VoteDocument = gql`
   vote(linkId: $linkId) {
     id
     link {
-      id
-      votes {
-        id
-        user {
-          id
-        }
-      }
+      ...LinkFragment
     }
     user {
       id
     }
   }
 }
-    `;
+    ${LinkFragmentDoc}`;
 export type VoteMutationFn = ApolloReactCommon.MutationFunction<VoteMutation, VoteMutationVariables>;
 
 /**
@@ -388,3 +392,67 @@ export function useVoteMutation(baseOptions?: ApolloReactHooks.MutationHookOptio
 export type VoteMutationHookResult = ReturnType<typeof useVoteMutation>;
 export type VoteMutationResult = ApolloReactCommon.MutationResult<VoteMutation>;
 export type VoteMutationOptions = ApolloReactCommon.BaseMutationOptions<VoteMutation, VoteMutationVariables>;
+export const LinkCreatedDocument = gql`
+    subscription linkCreated {
+  linkCreated {
+    ...LinkFragment
+  }
+}
+    ${LinkFragmentDoc}`;
+
+/**
+ * __useLinkCreatedSubscription__
+ *
+ * To run a query within a React component, call `useLinkCreatedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useLinkCreatedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLinkCreatedSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLinkCreatedSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<LinkCreatedSubscription, LinkCreatedSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useSubscription<LinkCreatedSubscription, LinkCreatedSubscriptionVariables>(LinkCreatedDocument, options);
+      }
+export type LinkCreatedSubscriptionHookResult = ReturnType<typeof useLinkCreatedSubscription>;
+export type LinkCreatedSubscriptionResult = ApolloReactCommon.SubscriptionResult<LinkCreatedSubscription>;
+export const PostVotedDocument = gql`
+    subscription postVoted {
+  linkVoted {
+    id
+    link {
+      ...LinkFragment
+    }
+    user {
+      id
+    }
+  }
+}
+    ${LinkFragmentDoc}`;
+
+/**
+ * __usePostVotedSubscription__
+ *
+ * To run a query within a React component, call `usePostVotedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `usePostVotedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostVotedSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePostVotedSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<PostVotedSubscription, PostVotedSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useSubscription<PostVotedSubscription, PostVotedSubscriptionVariables>(PostVotedDocument, options);
+      }
+export type PostVotedSubscriptionHookResult = ReturnType<typeof usePostVotedSubscription>;
+export type PostVotedSubscriptionResult = ApolloReactCommon.SubscriptionResult<PostVotedSubscription>;

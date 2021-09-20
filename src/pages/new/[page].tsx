@@ -4,8 +4,8 @@ import { NextPage } from 'next';
 /* Components */
 import { LinkList } from '@/components';
 
-const TopLinksPage: NextPage = () => {
+const NewLinksPaginatedPage: NextPage = () => {
     return <LinkList />;
 };
 
-export default TopLinksPage;
+export default NewLinksPaginatedPage;
