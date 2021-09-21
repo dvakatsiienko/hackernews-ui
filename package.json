@@ -34,7 +34,7 @@
         "@types/debug": "4.1.7",
         "@types/lodash": "4.14.173",
         "@types/nprogress": "0.2.0",
-        "@types/react": "17.0.22",
+        "@types/react": "17.0.24",
         "@types/react-dom": "17.0.9",
         "@types/styled-components": "5.1.14",
         "babel-plugin-graphql-tag": "3.3.0",
