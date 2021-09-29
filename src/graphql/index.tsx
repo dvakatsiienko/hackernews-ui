@@ -91,9 +91,9 @@ export type Query = {
 
 
 export type QueryFeedArgs = {
-  filter?: Maybe<Scalars['String']>;
-  skip?: Maybe<Scalars['Int']>;
-  take?: Maybe<Scalars['Int']>;
+  filter: Scalars['String'];
+  skip: Scalars['Int'];
+  take: Scalars['Int'];
 };
 
 
@@ -145,9 +145,9 @@ export type LoginMutationVariables = Exact<{
 export type LoginMutation = { __typename?: 'Mutation', login?: Maybe<{ __typename?: 'AuthPayload', token?: Maybe<string> }> };
 
 export type FeedQueryVariables = Exact<{
-  filter?: Maybe<Scalars['String']>;
-  skip?: Maybe<Scalars['Int']>;
-  take?: Maybe<Scalars['Int']>;
+  filter: Scalars['String'];
+  skip: Scalars['Int'];
+  take: Scalars['Int'];
 }>;
 
 
@@ -268,7 +268,7 @@ export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const FeedDocument = gql`
-    query feed($filter: String, $skip: Int, $take: Int) {
+    query feed($filter: String!, $skip: Int!, $take: Int!) {
   feed(filter: $filter, skip: $skip, take: $take) {
     count
     links {
@@ -296,7 +296,7 @@ export const FeedDocument = gql`
  *   },
  * });
  */
-export function useFeedQuery(baseOptions?: Apollo.QueryHookOptions<FeedQuery, FeedQueryVariables>) {
+export function useFeedQuery(baseOptions: Apollo.QueryHookOptions<FeedQuery, FeedQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
       }

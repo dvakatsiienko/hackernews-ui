@@ -1,5 +1,5 @@
 # Query
-query feed($filter: String, $skip: Int, $take: Int) {
+query feed($filter: String!, $skip: Int!, $take: Int!) {
     feed(filter: $filter, skip: $skip, take: $take) {
         count
         links {
