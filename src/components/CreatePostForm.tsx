@@ -2,12 +2,12 @@
 import { useForm } from 'react-hook-form';
 
 /* Instruments */
-import * as gql from '../graphql';
+import * as gql from '@/graphql';
 
-export const CreateLinkForm: React.FC = () => {
+export const CreatePostForm: React.FC = () => {
     const {
         register, handleSubmit, getValues, reset,
-    } = useForm<gql.CreateLinkMutationVariables>({
+    } = useForm<gql.CreatePostMutationVariables>({
         defaultValues: {
             url:         '',
             description: '',
@@ -15,7 +15,7 @@ export const CreateLinkForm: React.FC = () => {
         // mode: 'all'
     });
 
-    const [ createLinkMutation ] = gql.useCreateLinkMutation({
+    const [ createPostMutation ] = gql.useCreatePostMutation({
         variables: getValues(),
         onCompleted() {
             // Router.push('/');
@@ -23,7 +23,7 @@ export const CreateLinkForm: React.FC = () => {
         refetchQueries: [{ query: gql.FeedDocument }],
         // update(cache, response) {
         //     const createLink = response.data.createLink;
-        //     const first = process.env.NEXT_PUBLIC_LINKS_PER_PAGE;
+        //     const first = process.env.NEXT_PUBLIC_POSTS_PER_PAGE;
         //     const skip = 0;
 
         //     const oldData = cache.readQuery<gql.FeedQuery>({
@@ -51,7 +51,7 @@ export const CreateLinkForm: React.FC = () => {
     });
 
     const submit = () => {
-        createLinkMutation();
+        createPostMutation();
         reset();
     };
 

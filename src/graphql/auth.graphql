@@ -1,12 +1,38 @@
-# Mutation
-mutation signup($email: String!, $password: String!, $name: String!) {
-    signup(email: $email, password: $password, name: $name) {
-        token
+# Query
+query User($id: ID!) {
+    user(id: $id) {
+        ...UserFragment
     }
 }
 
-mutation login($email: String!, $password: String!) {
+# Mutation
+mutation Signup($email: String!, $password: String!, $name: String!) {
+    signup(email: $email, password: $password, name: $name) {
+        token
+        user {
+            ...UserFragment
+        }
+    }
+}
+
+mutation Login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
         token
+        user {
+            ...UserFragment
+        }
+    }
+}
+
+# Fragment
+fragment UserFragment on User {
+    id
+    name
+    email
+    posts {
+        ...PostFragment
+    }
+    votes {
+        ...VoteFragment
     }
 }

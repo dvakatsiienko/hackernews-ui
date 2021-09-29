@@ -1,5 +1,5 @@
 /* Core */
-import merge       from 'deepmerge';
+import merge from 'deepmerge';
 import { isEqual } from 'lodash';
 
 /* Instruments */

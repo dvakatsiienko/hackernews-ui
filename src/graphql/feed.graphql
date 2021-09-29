@@ -1,47 +1,38 @@
 # Query
-query feed($filter: String!, $skip: Int!, $take: Int!) {
+query Feed($filter: String, $skip: Int, $take: Int) {
     feed(filter: $filter, skip: $skip, take: $take) {
         count
-        links {
-            ...LinkFragment
+        posts {
+            ...PostFragment
         }
     }
 }
 
-# # Mutation
-mutation createLink($description: String!, $url: String!) {
-    createLink(description: $description, url: $url) {
-        id
-        url
-        description
-        createdAt
+# Mutation
+mutation CreatePost($description: String!, $url: String!) {
+    createPost(description: $description, url: $url) {
+        ...PostFragment
     }
 }
 
-mutation vote($linkId: ID!) {
-    vote(linkId: $linkId) {
-        id
-        link {
-            ...LinkFragment
-        }
-        user {
-            id
-        }
+mutation Vote($postId: ID!) {
+    vote(postId: $postId) {
+        ...VoteFragment
     }
 }
 
 # Subscription
-subscription linkCreated {
-    linkCreated {
-        ...LinkFragment
+subscription PostCreated {
+    postCreated {
+        ...PostFragment
     }
 }
 
-subscription postVoted {
-    linkVoted {
+subscription PostVoted {
+    postVoted {
         id
-        link {
-            ...LinkFragment
+        post {
+            ...PostFragment
         }
         user {
             id
@@ -50,7 +41,7 @@ subscription postVoted {
 }
 
 # Fragment
-fragment LinkFragment on Link {
+fragment PostFragment on Post {
     id
     url
     description
@@ -64,5 +55,15 @@ fragment LinkFragment on Link {
         user {
             id
         }
+    }
+}
+
+fragment VoteFragment on Vote {
+    id
+    post {
+        ...PostFragment
+    }
+    user {
+        id
     }
 }

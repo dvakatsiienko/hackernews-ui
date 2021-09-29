@@ -2,10 +2,10 @@
 import { NextPage } from 'next';
 
 /* Components */
-import { LinkList } from '@/components';
+import { PostList } from '@/components';
 
-const TopLinksPage: NextPage = () => {
-    return <LinkList />;
+const TopPostsPage: NextPage = () => {
+    return <PostList />;
 };
 
-export default TopLinksPage;
+export default TopPostsPage;

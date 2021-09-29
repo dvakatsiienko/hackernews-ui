@@ -5,13 +5,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 /* Instruments */
-import { book } from '@/routes/book';
+import { book } from '@/utils';
 
 const AUTH_TOKEN_NAME = process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME;
 
 export const Header: React.FC = () => {
     const router = useRouter();
-    const [authToken, setAuthToken] = useState(null);
+    const [ authToken, setAuthToken ] = useState(null);
 
     useEffect(() => {
         if (process.browser) {
@@ -24,51 +24,52 @@ export const Header: React.FC = () => {
     };
 
     return (
-        <Section className="flex pa1 justify-between nowrap orange">
-            <div className="flex flex-fixed black">
+        <Section className = 'flex pa1 justify-between nowrap orange'>
+            <div className = 'flex flex-fixed black'>
                 <LogoImage
-                    onClick={() => router.push('/new/1')}
-                    src="/y18.gif"
+                    src = '/y18.gif'
+                    onClick = { () => router.push('/new/1') }
                 />
-                <H1 onClick={() => router.push('/new/1')}>Hacker News&nbsp;</H1>
+                <H1 onClick = { () => router.push('/new/1') }>Hacker News&nbsp;</H1>
 
-                <Link href="/new/1">
-                    <A $active={get$Active(book.new)}>new</A>
+                <Link href = '/new/1'>
+                    <A $active = { get$Active(book.new) }>new</A>
                 </Link>
-                <div className="ml1">|</div>
+                <div className = 'ml1'>|</div>
 
-                <Link href={book.top}>
-                    <A $active={get$Active(book.top)}>top</A>
+                <Link href = { book.top }>
+                    <A $active = { get$Active(book.top) }>top</A>
                 </Link>
-                <div className="ml1">|</div>
+                <div className = 'ml1'>|</div>
 
-                <Link href={book.search}>
-                    <A $active={get$Active(book.search)}>search</A>
+                <Link href = { book.search }>
+                    <A $active = { get$Active(book.search) }>search</A>
                 </Link>
 
                 {authToken && (
-                    <div className="flex">
-                        <div className="ml1">|</div>
-                        <Link href={book.create}>
-                            <A $active={get$Active(book.create)}>submit</A>
+                    <div className = 'flex'>
+                        <div className = 'ml1'>|</div>
+                        <Link href = { book.create }>
+                            <A $active = { get$Active(book.create) }>submit</A>
                         </Link>
                     </div>
                 )}
             </div>
 
-            <div className="flex flex-fixed">
+            <div className = 'flex flex-fixed'>
                 {authToken ? (
                     <div
-                        className="ml1 pointer black"
-                        onClick={() => {
+                        className = 'ml1 pointer black'
+                        onClick = { () => {
                             localStorage.removeItem(AUTH_TOKEN_NAME);
                             setAuthToken(null);
-                        }}>
+                        } }
+                    >
                         <A>logout</A>
                     </div>
                 ) : (
-                    <Link href={book.login}>
-                        <A $active={get$Active(book.login)}>login</A>
+                    <Link href = { book.login }>
+                        <A $active = { get$Active(book.login) }>login</A>
                     </Link>
                 )}
             </div>

@@ -5,7 +5,7 @@ import NProgress from 'nprogress';
 import { AppProps } from 'next/app';
 import { ApolloProvider } from '@apollo/client';
 import styled, {
-    ThemeProvider as StyledComponentsProvider,
+    ThemeProvider as StyledComponentsProvider
 } from 'styled-components';
 
 /* Components */
@@ -19,23 +19,23 @@ const App: React.FC<AppProps> = props => {
     const apolloClient = useApollo(props.pageProps.initialApolloState);
 
     return (
-        <ApolloProvider client={apolloClient}>
-            <StyledComponentsProvider theme={{}}>
+        <ApolloProvider client = { apolloClient }>
+            <StyledComponentsProvider theme = {{}}>
                 <Head>
-                    <link href="/favicon.ico" rel="icon" />
+                    <link href = '/favicon.ico' rel = 'icon' />
                     <title>Hackernews</title>
                     <link
-                        href="/nprogress.css"
-                        rel="stylesheet"
-                        type="text/css"
+                        href = '/nprogress.css'
+                        rel = 'stylesheet'
+                        type = 'text/css'
                     />
                 </Head>
 
-                <div className="center w85">
-                    <Header pathname={props.router.pathname} />
+                <div className = 'center w85'>
+                    <Header />
 
-                    <Canvas className="ph3 pv1">
-                        <props.Component {...props.pageProps} />
+                    <Canvas className = 'ph3 pv1'>
+                        <props.Component { ...props.pageProps } />
                     </Canvas>
                 </div>
             </StyledComponentsProvider>
@@ -45,10 +45,6 @@ const App: React.FC<AppProps> = props => {
 
 /* Styles */
 const Canvas = styled.section`
-    /* margin-top: 8px;
-    box-sizing: border-box;
-    max-width: 1618px;
-    padding: 0; */
     background-color: rgb(246, 246, 239);
 `;
 

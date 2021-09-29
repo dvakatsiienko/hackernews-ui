@@ -1,6 +1,6 @@
 /* Core */
 import { useState } from 'react';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 
 /* Instruments */
@@ -13,36 +13,31 @@ interface FormValues {
     name: string;
 }
 
-export const LoginForm: React.FC = props => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        getValues,
-        reset,
-    } = useForm<FormValues>({
+export const LoginForm: React.FC = () => {
+    const router = useRouter();
+    const { register, handleSubmit, getValues } = useForm<FormValues>({
         defaultValues: {
-            email: '',
+            email:    '',
             password: '',
-            name: '',
+            name:     '',
         },
     });
-    const [isLogin, setIsLogin] = useState(true);
+    const [ isLogin, setIsLogin ] = useState(true);
 
     const _confirm = async data => {
         const { token } = isLogin ? data.login : data.signup;
 
         localStorage.setItem(process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME, token);
-        Router.replace(`/`);
+        router.replace('/');
     };
 
-    const [loginMutation] = gql.useLoginMutation({
+    const [ loginMutation ] = gql.useLoginMutation({
         variables: getValues(),
         onCompleted(data) {
             _confirm(data);
         },
     });
-    const [signupMutation] = gql.useSignupMutation({
+    const [ signupMutation ] = gql.useSignupMutation({
         variables: getValues(),
         onCompleted(data) {
             _confirm(data);
@@ -55,33 +50,34 @@ export const LoginForm: React.FC = props => {
 
     return (
         <div>
-            <h4 className="mv3">{isLogin ? 'Login' : 'Sign Up'}</h4>
+            <h4 className = 'mv3'>{isLogin ? 'Login' : 'Sign Up'}</h4>
 
-            <form onSubmit={handleSubmit(submit)}>
-                <div className="flex flex-column">
+            <form onSubmit = { handleSubmit(submit) }>
+                <div className = 'flex flex-column'>
                     {!isLogin && (
-                        <input placeholder="Your name" {...register('name')} />
+                        <input placeholder = 'Your name' { ...register('name') } />
                     )}
                     <input
-                        placeholder="Your email address"
-                        {...register('email')}
+                        placeholder = 'Your email address'
+                        { ...register('email') }
                     />
                     <input
-                        type="password"
-                        placeholder="Choose a safe password"
-                        {...register('password')}
+                        placeholder = 'Choose a safe password'
+                        type = 'password'
+                        { ...register('password') }
                     />
                 </div>
 
-                <div className="flex mt3">
-                    <button type="submit" className="pointer mr2 button">
+                <div className = 'flex mt3'>
+                    <button className = 'pointer mr2 button' type = 'submit'>
                         {isLogin ? 'login' : 'create account'}
                     </button>
 
                     <button
-                        className="pointer button"
-                        type="button"
-                        onClick={() => setIsLogin(!isLogin)}>
+                        className = 'pointer button'
+                        type = 'button'
+                        onClick = { () => setIsLogin(!isLogin) }
+                    >
                         {isLogin
                             ? 'need to create an account?'
                             : 'already have an account?'}

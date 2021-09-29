@@ -2,16 +2,16 @@
 import { NextPage } from 'next';
 
 /* Components */
-import { LinkList, CreateLinkForm } from '@/components';
+import { PostList, CreatePostForm } from '@/components';
 
-const CreatePage: NextPage = () => {
+const CreatePostPage: NextPage = () => {
     return (
         <>
-            <CreateLinkForm />
+            <CreatePostForm />
 
-            <LinkList />
+            <PostList subscription />
         </>
     );
 };
 
-export default CreatePage;
+export default CreatePostPage;

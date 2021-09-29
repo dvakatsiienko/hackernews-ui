@@ -2,22 +2,22 @@
 import { useRouter } from 'next/router';
 
 /* Components */
-import { Link } from '@/components';
+import { Post } from '@/components';
 
 /* Instruments */
 import * as gql from '@/graphql';
 
-const LINKS_PER_PAGE = Number(process.env.NEXT_PUBLIC_LINKS_PER_PAGE);
+const POSTS_PER_PAGE = Number(process.env.NEXT_PUBLIC_POSTS_PER_PAGE);
 
-export const LinkList: React.FC<LinkListProps> = props => {
+export const PostList: React.FC<PostListProps> = props => {
     const router = useRouter();
 
     const isPaginated = router.pathname.includes('new');
     const page = parseInt(router.query.page as string);
 
     const getVariables = (): gql.FeedQueryVariables => {
-        const skip = isPaginated ? (page - 1) * LINKS_PER_PAGE : 0;
-        const take = isPaginated ? LINKS_PER_PAGE : 100;
+        const skip = isPaginated ? (page - 1) * POSTS_PER_PAGE : 0;
+        const take = isPaginated ? POSTS_PER_PAGE : 100;
 
         return {
             take,
@@ -28,16 +28,17 @@ export const LinkList: React.FC<LinkListProps> = props => {
     const feedQuery = gql.useFeedQuery({ variables: getVariables() });
 
     if (props.subscription) {
-        feedQuery.subscribeToMore<gql.LinkCreatedSubscription>({
-            document:    gql.LinkCreatedDocument,
+        feedQuery.subscribeToMore<gql.PostCreatedSubscription>({
+            document:    gql.PostCreatedDocument,
             updateQuery: (prev, opts) => {
                 const { subscriptionData } = opts;
 
                 if (!subscriptionData.data) return prev;
 
-                const newLink = subscriptionData.data.linkCreated;
-                const isExists = prev.feed.links.find(
-                    link => link.id === newLink.id,
+                const newPost = subscriptionData.data.postCreated;
+
+                const isExists = prev.feed.posts.find(
+                    post => post.id === newPost.id,
                 );
 
                 if (isExists) return prev;
@@ -46,8 +47,8 @@ export const LinkList: React.FC<LinkListProps> = props => {
                     ...prev,
                     feed: {
                         __typename: prev.feed.__typename,
-                        links:      [ newLink, ...prev.feed.links ],
-                        count:      prev.feed.links.length + 1,
+                        posts:      [ newPost, ...prev.feed.posts ],
+                        count:      prev.feed.posts.length + 1,
                     },
                 };
 
@@ -56,20 +57,20 @@ export const LinkList: React.FC<LinkListProps> = props => {
         });
     }
 
-    const getSortedLinks = () => {
+    const getSortedPosts = () => {
         if (isPaginated) {
-            return feedQuery.data?.feed.links ?? [];
+            return feedQuery.data?.feed.posts ?? [];
         }
 
-        const sortedLinks = feedQuery.data?.feed.links.slice() ?? [];
+        const sortedPosts = feedQuery.data?.feed.posts.slice() ?? [];
 
-        sortedLinks.sort((l1, l2) => l2.votes.length - l1.votes.length);
+        sortedPosts.sort((p1, p2) => p2.votes.length - p1.votes.length);
 
-        return sortedLinks;
+        return sortedPosts;
     };
 
-    const linksListJSX = getSortedLinks().map((link, index) => {
-        return <Link index = { index + 0 } key = { link.id } link = { link } />;
+    const postListJSX = getSortedPosts().map((link, index) => {
+        return <Post index = { index + 0 } key = { link.id } post = { link } />;
     });
 
     const goPrev = () => {
@@ -79,7 +80,7 @@ export const LinkList: React.FC<LinkListProps> = props => {
     };
 
     const goNext = () => {
-        if (page <= feedQuery.data?.feed.count / LINKS_PER_PAGE) {
+        if (page <= feedQuery.data?.feed.count / POSTS_PER_PAGE) {
             const nextPage = page + 1;
 
             router.push(`/new/${nextPage}`);
@@ -93,7 +94,7 @@ export const LinkList: React.FC<LinkListProps> = props => {
                 <pre>{JSON.stringify(feedQuery.error, null, 2)}</pre>
             )}
 
-            {linksListJSX}
+            {postListJSX}
 
             {isPaginated && (
                 <div className = 'flex ml4 mv3 gray'>
@@ -110,6 +111,6 @@ export const LinkList: React.FC<LinkListProps> = props => {
 };
 
 /* Types */
-interface LinkListProps {
+interface PostListProps {
     subscription?: boolean;
 }

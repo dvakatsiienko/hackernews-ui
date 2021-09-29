@@ -1,10 +1,5 @@
 /* Core */
-import Document, {
-    DocumentContext,
-    Main,
-    Head,
-    NextScript,
-} from 'next/document';
+import Document, { DocumentContext } from 'next/document';
 import { ServerStyleSheet as StyledServerStyleSheet } from 'styled-components';
 
 export default class extends Document {
@@ -16,10 +11,9 @@ export default class extends Document {
             ctx.renderPage = () => {
                 return originalRenderPage({
                     enhanceApp: App => props => {
-                        const styledSheetResult =
-                            styledComponentsStylesheet.collectStyles(
-                                <App {...props} />,
-                            );
+                        const styledSheetResult = styledComponentsStylesheet.collectStyles(
+                            <App { ...props } />,
+                        );
 
                         return styledSheetResult;
                     },

@@ -2,10 +2,10 @@
 import { NextPage } from 'next';
 
 /* Components */
-import { LinkList } from '@/components';
+import { PostList } from '@/components';
 
-const NewLinksPaginatedPage: NextPage = () => {
-    return <LinkList />;
+const NewPostsPaginatedPage: NextPage = () => {
+    return <PostList />;
 };
 
-export default NewLinksPaginatedPage;
+export default NewPostsPaginatedPage;
