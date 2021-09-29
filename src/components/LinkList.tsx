@@ -22,12 +22,6 @@ export const LinkList: React.FC<LinkListProps> = props => {
         return {
             take,
             skip,
-            orderBy: {
-                createdAt: gql.Sort.Desc,
-                description: gql.Sort.Desc,
-                url: gql.Sort.Desc,
-            },
-            filter: '',
         };
     };
 
@@ -35,7 +29,7 @@ export const LinkList: React.FC<LinkListProps> = props => {
 
     if (props.subscription) {
         feedQuery.subscribeToMore<gql.LinkCreatedSubscription>({
-            document: gql.LinkCreatedDocument,
+            document:    gql.LinkCreatedDocument,
             updateQuery: (prev, opts) => {
                 const { subscriptionData } = opts;
 
@@ -52,8 +46,8 @@ export const LinkList: React.FC<LinkListProps> = props => {
                     ...prev,
                     feed: {
                         __typename: prev.feed.__typename,
-                        links: [newLink, ...prev.feed.links],
-                        count: prev.feed.links.length + 1,
+                        links:      [ newLink, ...prev.feed.links ],
+                        count:      prev.feed.links.length + 1,
                     },
                 };
 
@@ -75,7 +69,7 @@ export const LinkList: React.FC<LinkListProps> = props => {
     };
 
     const linksListJSX = getSortedLinks().map((link, index) => {
-        return <Link key={link.id} link={link} index={index + 0} />;
+        return <Link index = { index + 0 } key = { link.id } link = { link } />;
     });
 
     const goPrev = () => {
@@ -102,11 +96,11 @@ export const LinkList: React.FC<LinkListProps> = props => {
             {linksListJSX}
 
             {isPaginated && (
-                <div className="flex ml4 mv3 gray">
-                    <div className="pointer mr2" onClick={goPrev}>
+                <div className = 'flex ml4 mv3 gray'>
+                    <div className = 'pointer mr2' onClick = { goPrev }>
                         Previous
                     </div>
-                    <div className="pointer" onClick={goNext}>
+                    <div className = 'pointer' onClick = { goNext }>
                         Next
                     </div>
                 </div>

@@ -1,17 +1,13 @@
 schema: ${NEXT_PUBLIC_GQL_HTTP_URL}
 documents: 'src/graphql/**/*.graphql'
+
 config:
-    reactApolloVersion: 3
-    withHooks: true
-    withHOC: false
-    withComponent: false
-    avoidOptionals: true
-    apolloReactHooksImportFrom: '@apollo/client'
-    apolloReactCommonImportFrom: '@apollo/client'
     dedupeOperationSuffix: true
+
 generates:
     src/graphql/index.tsx:
         plugins:
             - typescript
             - typescript-operations
             - typescript-react-apollo
+            - typescript-apollo-client-helpers

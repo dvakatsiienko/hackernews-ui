@@ -1,4 +1,4 @@
-# The Hackernews
+# The Hackernews UI
 
 Built with the following technology stack:
 

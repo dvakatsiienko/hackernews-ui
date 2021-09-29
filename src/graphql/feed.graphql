@@ -1,11 +1,6 @@
 # Query
-query feed(
-    $filter: String
-    $skip: Int
-    $take: Int
-    $orderBy: LinkOrderByInput
-) {
-    feed(filter: $filter, skip: $skip, take: $take, orderBy: $orderBy) {
+query feed($filter: String, $skip: Int, $take: Int) {
+    feed(filter: $filter, skip: $skip, take: $take) {
         count
         links {
             ...LinkFragment
