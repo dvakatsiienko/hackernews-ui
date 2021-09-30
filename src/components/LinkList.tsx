@@ -27,7 +27,7 @@ export const PostList: React.FC<PostListProps> = props => {
 
     const feedQuery = gql.useFeedQuery({ variables: getVariables() });
 
-    if (props.subscription) {
+    if (props.subscription && process.browser) {
         feedQuery.subscribeToMore<gql.PostCreatedSubscription>({
             document:    gql.PostCreatedDocument,
             updateQuery: (prev, opts) => {

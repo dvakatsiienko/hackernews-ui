@@ -7,34 +7,36 @@ import loggerLink from 'apollo-link-logger';
 
 /* Instruments */
 import {
-    errorLink, authLink, httpLink, createWSLink
+    errorLink, authLink, httpLink, wsLink
 } from './links';
 
 const baseLinks = [ loggerLink, errorLink ];
 const httpLinks = from([ ...baseLinks, authLink, httpLink ]);
 
 const createIsomorphicLink = () => {
-    return process.browser
-        ? split(
-            operation => {
-                const mainDefinition = getMainDefinition(operation.query);
+    const link = split(
+        operation => {
+            const mainDefinition = getMainDefinition(operation.query);
 
-                return (
-                    mainDefinition.kind === 'OperationDefinition'
-                      && mainDefinition.operation === 'subscription'
-                );
-            },
-            from([ ...baseLinks, createWSLink() ]),
-            httpLinks,
-        )
-        : httpLinks;
+            return (
+                process.browser
+                && mainDefinition.kind === 'OperationDefinition'
+                && mainDefinition.operation === 'subscription'
+            );
+        },
+        from([ ...baseLinks, wsLink ]),
+        httpLinks,
+    );
+
+    return link;
 };
 
 export const createApolloClient = () => {
-    return new ApolloClient({
-        ssrMode: typeof window === 'undefined',
-        // link: links,
+    const client = new ApolloClient({
+        ssrMode: !process.browser,
         link:    createIsomorphicLink(),
         cache:   new InMemoryCache(),
     });
+
+    return client;
 };
