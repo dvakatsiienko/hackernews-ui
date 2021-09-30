@@ -1,12 +1,15 @@
 /* Core */
 import { useForm } from 'react-hook-form';
 
+/* Components */
+import { Fieldset, Input } from '../Form';
+
 /* Instruments */
 import * as gql from '@/graphql';
 
 export const CreatePostForm: React.FC = () => {
     const {
-        register, handleSubmit, getValues, reset,
+        register, handleSubmit, getValues, reset, formState,
     } = useForm<gql.CreatePostMutationVariables>({
         defaultValues: {
             url:         '',
@@ -56,22 +59,23 @@ export const CreatePostForm: React.FC = () => {
     };
 
     return (
-        <div>
-            <form onSubmit = { handleSubmit(submit) }>
-                <div className = 'flex flex-column mt3'>
-                    <input
-                        className = 'mb2'
-                        placeholder = 'A description for the link'
-                        { ...register('description') }
-                    />
-                    <input
-                        className = 'mb2'
-                        placeholder = 'The URL for the link'
-                        { ...register('url') }
-                    />
-                    <button type = 'submit'>Submit</button>
-                </div>
-            </form>
-        </div>
+        <form onSubmit = { handleSubmit(submit) }>
+            <h2 className = 'mv3'>Create post</h2>
+            <Fieldset>
+                <Input
+                    formState = { formState }
+                    placeholder = 'A description for the link'
+                    register = { register('description') }
+                />
+                <Input
+                    formState = { formState }
+                    placeholder = 'The URL for the link'
+                    register = { register('url') }
+                />
+                <button className = 'button' type = 'submit'>
+                    Submit
+                </button>
+            </Fieldset>
+        </form>
     );
 };

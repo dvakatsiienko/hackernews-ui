@@ -12,7 +12,7 @@ import { Fieldset, Input } from '../Form';
 import * as gql from '@/graphql';
 import { resolver } from './resolver';
 
-export const Search: React.FC = () => {
+export const SearchPostForm: React.FC = () => {
     const [ isRefetching, setIsRefetching ] = useState(false);
     const form = useForm({
         resolver,
@@ -50,7 +50,9 @@ export const Search: React.FC = () => {
                         register = { form.register('filter') }
                     />
                     &nbsp;
-                    <button type = 'submit'>OK</button>
+                    <button className = 'button' type = 'submit'>
+                        OK
+                    </button>
                     {isRefetching && '⏳'}
                 </Fieldset>
             </form>

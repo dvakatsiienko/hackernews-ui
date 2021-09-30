@@ -2,10 +2,10 @@
 import { NextPage } from 'next';
 
 /* Components */
-import { Search } from '@/components';
+import { SearchPostForm } from '@/components';
 
 const SearchPage: NextPage = () => {
-    return <Search />;
+    return <SearchPostForm />;
 };
 
 export default SearchPage;

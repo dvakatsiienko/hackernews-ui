@@ -84,12 +84,12 @@ export const LoginForm: React.FC = () => {
                     />
                 </div>
                 <div className = 'flex mt3'>
-                    <button className = 'pointer mr2 button' type = 'submit'>
+                    <button className = 'mr2 button' type = 'submit'>
                         {isLogin ? 'login' : 'create account'}
                     </button>
 
                     <button
-                        className = 'pointer button'
+                        className = 'button'
                         type = 'button'
                         onClick = { () => setIsLogin(!isLogin) }
                     >
