@@ -1,26 +1,26 @@
 /* Core */
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import { useReactiveVar } from '@apollo/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
 
 /* Instruments */
 import { book } from '@/utils';
+import { vars } from '@/lib/apollo';
 
 const AUTH_TOKEN_NAME = process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME;
 
 export const Header: React.FC = () => {
     const router = useRouter();
-    const [ authToken, setAuthToken ] = useState(null);
-
-    useEffect(() => {
-        if (process.browser) {
-            setAuthToken(localStorage.getItem(AUTH_TOKEN_NAME));
-        }
-    }, []);
+    const isAuthenticated = useReactiveVar(vars.isAuthenticated);
 
     const get$Active = (href: string) => {
         return router.pathname.includes(href);
+    };
+
+    const logout = () => {
+        localStorage.removeItem(AUTH_TOKEN_NAME);
+        vars.isAuthenticated(false);
     };
 
     return (
@@ -46,7 +46,7 @@ export const Header: React.FC = () => {
                     <A $active = { get$Active(book.search) }>search</A>
                 </Link>
 
-                {authToken && (
+                {isAuthenticated && (
                     <div className = 'flex'>
                         <div className = 'ml1'>|</div>
                         <Link href = { book.create }>
@@ -57,14 +57,8 @@ export const Header: React.FC = () => {
             </div>
 
             <div className = 'flex flex-fixed'>
-                {authToken ? (
-                    <div
-                        className = 'ml1 pointer black'
-                        onClick = { () => {
-                            localStorage.removeItem(AUTH_TOKEN_NAME);
-                            setAuthToken(null);
-                        } }
-                    >
+                {isAuthenticated ? (
+                    <div className = 'ml1 pointer black' onClick = { logout }>
                         <A>logout</A>
                     </div>
                 ) : (
@@ -80,6 +74,7 @@ export const Header: React.FC = () => {
 /* Styles */
 const Section = styled.section`
     padding: 2px;
+    padding-right: 5px;
     background-color: #ff6600;
     height: 24px;
 `;

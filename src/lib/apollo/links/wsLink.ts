@@ -59,7 +59,6 @@ class WebSocketLink extends ApolloLink {
     }
 }
 
-// export const createWsLink = () => {
 export const wsLink = new WebSocketLink({
     url:              GQL_WS_URL,
     webSocketImpl:    IsomorphicWebSocket,
@@ -71,6 +70,3 @@ export const wsLink = new WebSocketLink({
         return { Authorization: `Bearer ${token}` };
     },
 });
-
-// return wsLink;
-// };

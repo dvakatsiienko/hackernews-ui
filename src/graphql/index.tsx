@@ -85,9 +85,15 @@ export type Post = {
 
 export type Query = {
   __typename?: 'Query';
+  authenticate?: Maybe<Scalars['Boolean']>;
   feed: Feed;
   post: Post;
   user: User;
+};
+
+
+export type QueryAuthenticateArgs = {
+  token: Scalars['String'];
 };
 
 
@@ -141,6 +147,13 @@ export type UserQueryVariables = Exact<{
 
 export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', id: string, name: string, email: string, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } };
 
+export type AuthenticateQueryVariables = Exact<{
+  token: Scalars['String'];
+}>;
+
+
+export type AuthenticateQuery = { __typename?: 'Query', authenticate?: boolean | null | undefined };
+
 export type SignupMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -157,6 +170,8 @@ export type LoginMutationVariables = Exact<{
 
 
 export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'AuthPayload', token?: string | null | undefined, user: { __typename?: 'User', id: string, name: string, email: string, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } } | null | undefined };
+
+export type AuthPayloadFragment = { __typename?: 'AuthPayload', token?: string | null | undefined, user: { __typename?: 'User', id: string, name: string, email: string, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } };
 
 export type UserFragment = { __typename?: 'User', id: string, name: string, email: string, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> };
 
@@ -241,6 +256,14 @@ export const UserFragmentDoc = gql`
 }
     ${PostFragmentDoc}
 ${VoteFragmentDoc}`;
+export const AuthPayloadFragmentDoc = gql`
+    fragment AuthPayloadFragment on AuthPayload {
+  token
+  user {
+    ...UserFragment
+  }
+}
+    ${UserFragmentDoc}`;
 export const UserDocument = gql`
     query User($id: ID!) {
   user(id: $id) {
@@ -276,16 +299,46 @@ export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQ
 export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
 export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
+export const AuthenticateDocument = gql`
+    query Authenticate($token: String!) {
+  authenticate(token: $token)
+}
+    `;
+
+/**
+ * __useAuthenticateQuery__
+ *
+ * To run a query within a React component, call `useAuthenticateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAuthenticateQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAuthenticateQuery({
+ *   variables: {
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useAuthenticateQuery(baseOptions: Apollo.QueryHookOptions<AuthenticateQuery, AuthenticateQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AuthenticateQuery, AuthenticateQueryVariables>(AuthenticateDocument, options);
+      }
+export function useAuthenticateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AuthenticateQuery, AuthenticateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AuthenticateQuery, AuthenticateQueryVariables>(AuthenticateDocument, options);
+        }
+export type AuthenticateQueryHookResult = ReturnType<typeof useAuthenticateQuery>;
+export type AuthenticateLazyQueryHookResult = ReturnType<typeof useAuthenticateLazyQuery>;
+export type AuthenticateQueryResult = Apollo.QueryResult<AuthenticateQuery, AuthenticateQueryVariables>;
 export const SignupDocument = gql`
     mutation Signup($email: String!, $password: String!, $name: String!) {
   signup(email: $email, password: $password, name: $name) {
-    token
-    user {
-      ...UserFragment
-    }
+    ...AuthPayloadFragment
   }
 }
-    ${UserFragmentDoc}`;
+    ${AuthPayloadFragmentDoc}`;
 export type SignupMutationFn = Apollo.MutationFunction<SignupMutation, SignupMutationVariables>;
 
 /**
@@ -317,13 +370,10 @@ export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, S
 export const LoginDocument = gql`
     mutation Login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
-    token
-    user {
-      ...UserFragment
-    }
+    ...AuthPayloadFragment
   }
 }
-    ${UserFragmentDoc}`;
+    ${AuthPayloadFragmentDoc}`;
 export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**

@@ -11,6 +11,7 @@
     },
     "dependencies": {
         "@apollo/client": "3.4.15",
+        "@hookform/resolvers": "2.8.1",
         "apollo-link-logger": "2.0.0",
         "debug": "4.3.2",
         "deepmerge": "4.2.2",
@@ -25,7 +26,8 @@
         "react-hook-form": "7.16.2",
         "styled-components": "5.3.1",
         "tachyons": "4.12.0",
-        "waait": "1.0.5"
+        "waait": "1.0.5",
+        "yup": "0.32.9"
     },
     "devDependencies": {
         "@graphql-codegen/cli": "2.2.0",
@@ -42,7 +44,7 @@
         "babel-plugin-styled-components": "1.13.2",
         "babel-plugin-transform-define": "2.0.1",
         "eslint": "7.32.0",
-        "eslint-config-dva": "0.0.11",
+        "eslint-config-dva": "0.0.13",
         "typescript": "4.4.3"
     }
 }

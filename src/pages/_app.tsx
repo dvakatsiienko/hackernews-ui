@@ -1,15 +1,15 @@
 /* Core */
+import { ApolloProvider } from '@apollo/client';
 import Head from 'next/head';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import { AppProps } from 'next/app';
-import { ApolloProvider } from '@apollo/client';
 import styled, {
     ThemeProvider as StyledComponentsProvider
 } from 'styled-components';
 
 /* Components */
-import { Header } from '@/components';
+import { Authenticator, Header } from '@/components';
 
 /* Instruments */
 import '@/theme/index.css';
@@ -20,25 +20,27 @@ const App: React.FC<AppProps> = props => {
 
     return (
         <ApolloProvider client = { apolloClient }>
-            <StyledComponentsProvider theme = {{}}>
-                <Head>
-                    <link href = '/favicon.ico' rel = 'icon' />
-                    <title>Hackernews</title>
-                    <link
-                        href = '/nprogress.css'
-                        rel = 'stylesheet'
-                        type = 'text/css'
-                    />
-                </Head>
+            <Authenticator>
+                <StyledComponentsProvider theme = {{}}>
+                    <Head>
+                        <link href = '/favicon.ico' rel = 'icon' />
+                        <title>Hackernews</title>
+                        <link
+                            href = '/nprogress.css'
+                            rel = 'stylesheet'
+                            type = 'text/css'
+                        />
+                    </Head>
 
-                <div className = 'center w85'>
-                    <Header />
+                    <div className = 'center w85'>
+                        <Header />
 
-                    <Canvas className = 'ph3 pv1'>
-                        <props.Component { ...props.pageProps } />
-                    </Canvas>
-                </div>
-            </StyledComponentsProvider>
+                        <Canvas className = 'ph3 pv1'>
+                            <props.Component { ...props.pageProps } />
+                        </Canvas>
+                    </div>
+                </StyledComponentsProvider>
+            </Authenticator>
         </ApolloProvider>
     );
 };
@@ -46,6 +48,7 @@ const App: React.FC<AppProps> = props => {
 /* Styles */
 const Canvas = styled.section`
     background-color: rgb(246, 246, 239);
+    height: calc(100vh - 24px - 10px);
 `;
 
 Router.events.on('routeChangeStart', () => NProgress.start());

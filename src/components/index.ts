@@ -1,3 +1,4 @@
+export * from './Authenticator';
 export * from './LoginForm';
 export * from './CreatePostForm';
 export * from './Header';

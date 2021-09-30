@@ -5,14 +5,17 @@ import { useForm } from 'react-hook-form';
 import waait from 'waait';
 
 /* Components */
-import { Post } from './Post';
+import { Post } from '../Post';
+import { Fieldset, Input } from '../Form';
 
 /* Instruments */
 import * as gql from '@/graphql';
+import { resolver } from './resolver';
 
 export const Search: React.FC = () => {
     const [ isRefetching, setIsRefetching ] = useState(false);
-    const form = useForm<gql.FeedQueryVariables>({
+    const form = useForm({
+        resolver,
         defaultValues: { filter: '' },
     });
 
@@ -23,12 +26,10 @@ export const Search: React.FC = () => {
     useEffect(search, []);
 
     const submit = form.handleSubmit(async values => {
-        if (form.getValues().filter.length) {
-            setIsRefetching(true);
-            await waait(1000);
-            feedQuery.refetch(values);
-            setIsRefetching(false);
-        }
+        setIsRefetching(true);
+        await waait(1000);
+        feedQuery.refetch(values);
+        setIsRefetching(false);
     });
 
     const isFirstFetch = feedQuery.networkStatus === NetworkStatus.loading;
@@ -41,13 +42,17 @@ export const Search: React.FC = () => {
     return (
         <>
             <form onSubmit = { submit }>
-                <fieldset disabled = { isDisabled }>
-                    Search
-                    <input name = 'filter' { ...form.register('filter') } />
+                <Fieldset disabled = { isDisabled }>
+                    <h2 className = 'mv3'>Search for a post</h2>
+                    <Input
+                        formState = { form.formState }
+                        placeholder = 'Search...'
+                        register = { form.register('filter') }
+                    />
                     &nbsp;
                     <button type = 'submit'>OK</button>
                     {isRefetching && '⏳'}
-                </fieldset>
+                </Fieldset>
             </form>
 
             {isFirstFetch ? <h5>Loading...</h5> : postListJSX}
