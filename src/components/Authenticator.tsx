@@ -23,7 +23,7 @@ export const Authenticator: React.FC = props => {
         );
 
         if (token) {
-            authenticate({ variables: { token } });
+            authenticate({ variables: { token: '111' } });
         } else {
             setIsInitialized(true);
         }
