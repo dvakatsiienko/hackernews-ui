@@ -1,5 +1,6 @@
 /* Core */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useReactiveVar } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import waait from 'waait';
@@ -17,6 +18,7 @@ import { vars } from '@/lib/apollo';
 
 export const LoginForm: React.FC = () => {
     const router = useRouter();
+    const isAuthenticated = useReactiveVar(vars.isAuthenticated);
     const [ isLogin, setIsLogin ] = useState(true);
     const [ isFetching, setIsFetching ] = useState(false);
 
@@ -63,7 +65,11 @@ export const LoginForm: React.FC = () => {
         }
     };
 
-    const scale = 0.7;
+    if (isAuthenticated) {
+        isAuthenticated && router.replace('/new/1');
+
+        return null;
+    }
 
     return (
         <form onSubmit = { handleSubmit(submit) }>
