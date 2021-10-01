@@ -11,6 +11,7 @@
     },
     "dependencies": {
         "@apollo/client": "3.4.15",
+        "@geist-ui/react": "2.2.0",
         "@hookform/resolvers": "2.8.1",
         "apollo-link-logger": "2.0.0",
         "debug": "4.3.2",
@@ -24,6 +25,7 @@
         "react": "17.0.2",
         "react-dom": "17.0.2",
         "react-hook-form": "7.16.2",
+        "sass": "1.42.1",
         "styled-components": "5.3.1",
         "tachyons": "4.12.0",
         "waait": "1.0.5",

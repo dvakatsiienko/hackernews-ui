@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import waait from 'waait';
+import {
+    Text, Grid, Spacer, Button
+} from '@geist-ui/react';
 
 /* Components */
 import { Fieldset, Input } from '../Form';
@@ -33,7 +36,7 @@ export const LoginForm: React.FC = () => {
         const { token } = data;
 
         localStorage.setItem(process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME, token);
-        router.replace('/');
+        router.replace('/new/1');
         vars.isAuthenticated(true);
     };
 
@@ -53,15 +56,21 @@ export const LoginForm: React.FC = () => {
     const submit = async () => {
         setIsFetching(true);
         await waait(1000);
-        isLogin ? await loginMutation() : await signupMutation();
-        setIsFetching(false);
+        try {
+            isLogin ? await loginMutation() : await signupMutation();
+        } finally {
+            setIsFetching(false);
+        }
     };
+
+    const scale = 0.7;
 
     return (
         <form onSubmit = { handleSubmit(submit) }>
-            <h2 className = 'mv3'>{isLogin ? 'Login' : 'Sign Up'}</h2>
+            <Text h1>{isLogin ? 'Login' : 'Sign Up'}</Text>
+            <Spacer h = { 2 } />
 
-            <Fieldset disabled = { isFetching }>
+            <Fieldset css = 'max-width: 300px;' disabled = { isFetching }>
                 <div className = 'flex flex-column'>
                     {!isLogin && (
                         <Input
@@ -82,22 +91,39 @@ export const LoginForm: React.FC = () => {
                         register = { register('password') }
                         type = 'password'
                     />
-                </div>
-                <div className = 'flex mt3'>
-                    <button className = 'mr2 button' type = 'submit'>
-                        {isLogin ? 'login' : 'create account'}
-                    </button>
+                    {/* <Grid.Container gap = { 3 }>
+                    <Grid> */}
+                    <Spacer h = { 2 } />
 
-                    <button
-                        className = 'button'
-                        type = 'button'
-                        onClick = { () => setIsLogin(!isLogin) }
-                    >
-                        {isLogin
-                            ? 'create account'
-                            : 'already have an account?'}
-                    </button>
+                    <Grid.Container gap = { 1 }>
+                        <Grid>
+                            <Button
+                                auto
+                                disabled = { isFetching }
+                                htmlType = 'submit'
+                                loading = { isFetching }
+                                // scale = { scale }
+                            >
+                                {isLogin ? 'login' : 'create account'}
+                            </Button>
+                        </Grid>
+                        {/* <Spacer /> */}
+
+                        <Grid>
+                            <Button
+                                auto
+                                ghost
+                                // scale = { scale }
+                                disabled = { isFetching }
+                                type = 'secondary'
+                                onClick = { () => setIsLogin(!isLogin) }
+                            >
+                                {isLogin ? 'create account' : 'back to login'}
+                            </Button>
+                        </Grid>
+                    </Grid.Container>
                 </div>
+                {/* </Grid.Container> */}
             </Fieldset>
         </form>
     );

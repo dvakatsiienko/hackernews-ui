@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { NetworkStatus } from '@apollo/client';
 import { useForm } from 'react-hook-form';
+import { Button } from '@geist-ui/react';
 import waait from 'waait';
 
 /* Components */
@@ -50,10 +51,10 @@ export const SearchPostForm: React.FC = () => {
                         register = { form.register('filter') }
                     />
                     &nbsp;
-                    <button className = 'button' type = 'submit'>
-                        OK
-                    </button>
-                    {isRefetching && '⏳'}
+                    <Button auto htmlType = 'submit'>
+                        GO
+                        {isRefetching && '⏳'}
+                    </Button>
                 </Fieldset>
             </form>
 

@@ -4,15 +4,14 @@ import Head from 'next/head';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import { AppProps } from 'next/app';
-import styled, {
-    ThemeProvider as StyledComponentsProvider
-} from 'styled-components';
+import { GeistProvider, CssBaseline } from '@geist-ui/react';
+import { ThemeProvider as StyledComponentsProvider } from 'styled-components';
 
 /* Components */
-import { Authenticator, Header } from '@/components';
+import { Authenticator, Layout } from '@/components';
 
 /* Instruments */
-import '@/theme/index.css';
+import '@/theme/index.scss';
 import { useApollo } from '@/lib/apollo';
 
 const App: React.FC<AppProps> = props => {
@@ -21,35 +20,28 @@ const App: React.FC<AppProps> = props => {
     return (
         <ApolloProvider client = { apolloClient }>
             <Authenticator>
-                <StyledComponentsProvider theme = {{}}>
-                    <Head>
-                        <link href = '/favicon.ico' rel = 'icon' />
-                        <title>Hackernews</title>
-                        <link
-                            href = '/nprogress.css'
-                            rel = 'stylesheet'
-                            type = 'text/css'
-                        />
-                    </Head>
+                <GeistProvider>
+                    <StyledComponentsProvider theme = {{}}>
+                        <Head>
+                            <link href = '/favicon.ico' rel = 'icon' />
+                            <title>Hackernews</title>
+                            <link
+                                href = '/nprogress.css'
+                                rel = 'stylesheet'
+                                type = 'text/css'
+                            />
+                        </Head>
+                        <CssBaseline />
 
-                    <div className = 'center w85'>
-                        <Header />
-
-                        <Canvas className = 'ph3 pv1'>
+                        <Layout>
                             <props.Component { ...props.pageProps } />
-                        </Canvas>
-                    </div>
-                </StyledComponentsProvider>
+                        </Layout>
+                    </StyledComponentsProvider>
+                </GeistProvider>
             </Authenticator>
         </ApolloProvider>
     );
 };
-
-/* Styles */
-const Canvas = styled.section`
-    background-color: rgb(246, 246, 239);
-    height: calc(100vh - 24px - 10px);
-`;
 
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());

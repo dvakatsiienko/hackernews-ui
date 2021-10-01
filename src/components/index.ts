@@ -1,4 +1,5 @@
 export * from './Authenticator';
+export * from './Layout';
 export * from './LoginForm';
 export * from './CreatePostForm';
 export * from './SearchPostForm';

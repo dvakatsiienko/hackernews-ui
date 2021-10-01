@@ -1,6 +1,7 @@
 /* Core */
 import Document, { DocumentContext } from 'next/document';
 import { ServerStyleSheet as StyledServerStyleSheet } from 'styled-components';
+import { CssBaseline as GeistCssBaseline } from '@geist-ui/react';
 
 export default class extends Document {
     static async getInitialProps(ctx: DocumentContext) {
@@ -22,12 +23,15 @@ export default class extends Document {
 
             const initialProps = await Document.getInitialProps(ctx);
 
+            const geistStyles = GeistCssBaseline.flush();
+
             return {
                 ...initialProps,
                 styles: (
                     <>
                         {initialProps.styles}
                         {styledComponentsStylesheet.getStyleElement()}
+                        {geistStyles}
                     </>
                 ),
             };

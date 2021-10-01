@@ -4,17 +4,47 @@ import type {
     FormState,
     FieldValues
 } from 'react-hook-form';
-import styled from 'styled-components';
+import { Input as GeistInput, Dot } from '@geist-ui/react';
+import type {
+    InputProps as GeistInputProps,
+    InputPasswordProps
+} from '@geist-ui/react';
+import styled, { css } from 'styled-components';
 
 export const Input: React.FC<InputProps> = props => {
+    const isInvalid = props.formState.errors[ props.register.name ]?.message;
+
+    props.formState.isSubmitting;
+
+    let dotType = 'default';
+    isInvalid && (dotType = 'error');
+    props.formState.isSubmitting && (dotType = 'warning');
+
+    const InputComponent = props.type === 'password' ? (
+        <StyledPInput
+            htmlType = { props.type }
+            // @ts-ignore
+            label = { <Dot type = { dotType } /> }
+            placeholder = { props.placeholder }
+            type = { isInvalid ? 'error' : 'default' }
+            width = '100%'
+            { ...props.register }
+        />
+    ) : (
+        <StyledInput
+            htmlType = { props.type }
+            // @ts-ignore
+            label = { <Dot type = { dotType } /> }
+            placeholder = { props.placeholder }
+            type = { isInvalid ? 'error' : 'default' }
+            width = '100%'
+            { ...props.register }
+        />
+    );
+
     return (
         <>
-            <StyedInput
-                placeholder = { props.placeholder }
-                type = { props.type }
-                { ...props.register }
-            />
-
+            {InputComponent}
             <ErrorMessage>
                 {props.formState.errors[ props.register.name ]?.message ?? (
                     <>&nbsp;</>
@@ -28,27 +58,37 @@ Input.defaultProps = {
 };
 
 /* Styles */
-const StyedInput = styled.input<React.InputHTMLAttributes<Element>>`
-    padding: 6px;
-    font-size: 16px;
-    border-radius: 3px;
-    border: 1px solid grey;
-
+const style = css`
     &:not(:last-child) {
         margin-bottom: 3px;
     }
 
-    &:disabled {
-        cursor: not-allowed;
+    & input {
+        &:disabled {
+            cursor: not-allowed;
+            color: grey;
+        }
     }
 `;
+const StyledInput = styled(GeistInput)<GeistInputProps>`
+    ${style}
+`;
+const StyledPInput = styled(GeistInput.Password)<InputPasswordProps>`
+    ${style}
+`;
+
 const ErrorMessage = styled.span`
     color: red;
     font-weight: 500;
     font-size: 14px;
 
-    &:not(:last-child) {
-        margin-bottom: 9px;
+    /* &:not(:last-child) { */
+    margin-top: 5px;
+    margin-bottom: 10px;
+    /* } */
+
+    & span {
+        text-transform: initial !important;
     }
 `;
 

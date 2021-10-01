@@ -1,0 +1,16 @@
+@import 'tachyons';
+
+body {
+    margin: 0;
+    padding: 5px;
+    font-family: system-ui, Verdana, Geneva, sans-serif;
+    min-height: 100vh !important;
+
+    & button {
+        &:disabled {
+            background-color: grey;
+            cursor: not-allowed !important;
+            color: white;
+        }
+    }
+}

@@ -16,7 +16,7 @@ export const Post: React.FC<PostProps> = props => {
                 <span className = 'gray'>{props.index + 1}.</span>
                 {authToken && (
                     <div
-                        className = 'ml1 gray f11'
+                        className = 'ml1 gray'
                         css = 'cursor: pointer;'
                         onClick = { () => voteMutation() }
                     >
