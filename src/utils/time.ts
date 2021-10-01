@@ -31,7 +31,7 @@ const timeDifference = (current: number, previous: number) => {
 
 export const timeDifferenceForDate = (date: string) => {
     const now = new Date().getTime();
-    const updated = new Date(+date).getTime();
+    const updated = new Date(date).getTime();
 
     return timeDifference(now, updated);
 };

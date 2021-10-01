@@ -14,7 +14,7 @@ export const Layout: React.FC = props => {
                 // @ts-ignore
                 title = { (
                     <Link href = '/new/1'>
-                        <A>The Hackernews</A>
+                        <A>λ Hackernews</A>
                     </Link>
                 ) }
             >

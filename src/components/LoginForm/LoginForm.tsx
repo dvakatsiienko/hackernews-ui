@@ -27,7 +27,7 @@ export const LoginForm: React.FC = () => {
         mode:          'all',
         defaultValues: {
             name:     '',
-            email:    'test@email.com',
+            email:    'test@email.io',
             password: '12345',
         },
     });

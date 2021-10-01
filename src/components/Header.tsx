@@ -2,14 +2,7 @@
 import { useReactiveVar } from '@apollo/client';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import {
-    Breadcrumbs,
-    Link as GeistLink,
-    LinkProps as GeistLinkProps,
-    BreadcrumbsItemProps,
-    useTheme,
-    Themes
-} from '@geist-ui/react';
+import { Breadcrumbs, BreadcrumbsItemProps, Themes } from '@geist-ui/react';
 import styled from 'styled-components';
 
 /* Instruments */
@@ -19,11 +12,8 @@ import { vars } from '@/lib/apollo';
 const AUTH_TOKEN_NAME = process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME;
 
 export const Header: React.FC = () => {
-    const theme = useTheme();
     const router = useRouter();
     const isAuthenticated = useReactiveVar(vars.isAuthenticated);
-
-    console.log(theme.palette.link);
 
     const get$Active = (href: string) => {
         return router.pathname.includes(href);
