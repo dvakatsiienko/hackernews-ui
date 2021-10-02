@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 /* Instruments */
 import * as gql from '@/graphql';
 import { vars } from '@/lib/apollo';
+import { getJwtToken } from '@/utils';
 
 export const Authenticator: React.FC = props => {
     const [ isInitialized, setIsInitialized ] = useState(false);
@@ -18,9 +19,7 @@ export const Authenticator: React.FC = props => {
     });
 
     useEffect(() => {
-        const token = localStorage.getItem(
-            process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME,
-        );
+        const token = getJwtToken();
 
         if (token) {
             authenticate({ variables: { token } });

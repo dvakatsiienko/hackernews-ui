@@ -1,5 +1,5 @@
 /* Core */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useReactiveVar } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -12,9 +12,10 @@ import {
 import { Fieldset, Input } from '../Form';
 
 /* Instruments */
-import { createResolver } from './resolver';
 import * as gql from '@/graphql';
 import { vars } from '@/lib/apollo';
+import { saveJwtToken } from '@/utils';
+import { createResolver } from './resolver';
 
 export const LoginForm: React.FC = () => {
     const router = useRouter();
@@ -29,15 +30,15 @@ export const LoginForm: React.FC = () => {
         mode:          'all',
         defaultValues: {
             name:     '',
-            email:    'test@email.io',
-            password: '12345',
+            email:    __DEV__ ? 'test@email.io' : '',
+            password: __DEV__ ? '12345' : '',
         },
     });
 
     const saveToken = async (data: gql.AuthPayloadFragment) => {
         const { token } = data;
 
-        localStorage.setItem(process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME, token);
+        saveJwtToken(token);
         router.replace('/new/1');
         vars.isAuthenticated(true);
     };

@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { book } from '@/utils';
 import { vars } from '@/lib/apollo';
 
-const AUTH_TOKEN_NAME = process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME;
+const JWT_TOKEN_NAME = process.env.NEXT_PUBLIC_JWT_TOKEN_NAME;
 
 export const Header: React.FC = () => {
     const router = useRouter();
@@ -20,7 +20,7 @@ export const Header: React.FC = () => {
     };
 
     const logout = () => {
-        localStorage.removeItem(AUTH_TOKEN_NAME);
+        localStorage.removeItem(JWT_TOKEN_NAME);
         vars.isAuthenticated(false);
     };
 
