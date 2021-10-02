@@ -9,7 +9,7 @@ import { print, GraphQLError } from 'graphql';
 import { createClient, ClientOptions, Client } from 'graphql-ws';
 import IsomorphicWebSocket from 'isomorphic-ws';
 
-const AUTH_TOKEN_NAME = process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME;
+const JWT_TOKEN_NAME = process.env.NEXT_PUBLIC_JWT_TOKEN_NAME;
 const GQL_WS_URL = process.env.NEXT_PUBLIC_GQL_WS_URL;
 
 class WebSocketLink extends ApolloLink {
@@ -64,7 +64,7 @@ export const wsLink = new WebSocketLink({
     webSocketImpl:    IsomorphicWebSocket,
     connectionParams: () => {
         const token = process.browser
-            ? localStorage.getItem(AUTH_TOKEN_NAME)
+            ? localStorage.getItem(JWT_TOKEN_NAME)
             : '';
 
         return { Authorization: `Bearer ${token}` };

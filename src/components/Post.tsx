@@ -1,20 +1,22 @@
+/* Core */
+import { useReactiveVar } from '@apollo/client';
+
 /* Instruments */
 import * as gql from '@/graphql';
+import { vars } from '@/lib/apollo';
 import { timeDifferenceForDate } from '@/utils';
 
 export const Post: React.FC<PostProps> = props => {
+    const isAuthenticated = useReactiveVar(vars.isAuthenticated);
     const [ voteMutation ] = gql.useVoteMutation({
         variables: { postId: props.post.id },
     });
-    const authToken = localStorage.getItem(
-        process.env.NEXT_PUBLIC_AUTH_TOKEN_NAME,
-    );
 
     return (
         <div className = 'flex mt2 items-start'>
             <div className = 'flex items-center'>
                 <span className = 'gray'>{props.index + 1}.</span>
-                {authToken && (
+                {isAuthenticated && (
                     <div
                         className = 'ml1 gray'
                         css = 'cursor: pointer;'
