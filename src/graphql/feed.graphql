@@ -21,6 +21,12 @@ mutation Vote($postId: ID!) {
     }
 }
 
+mutation Unvote($postId: ID!) {
+    unVote(postId: $postId) {
+        ...VoteFragment
+    }
+}
+
 # Subscription
 subscription PostCreated {
     postCreated {
@@ -46,6 +52,7 @@ fragment PostFragment on Post {
     url
     description
     createdAt
+    isVotedByMe
     postedBy {
         id
         name

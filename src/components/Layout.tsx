@@ -43,11 +43,12 @@ const InnerContainer = styled.section`
 `;
 
 const A = styled.a`
-    font-weight: 500;
+    display: flex;
     color: white;
+    font-size: 16px;
+    font-weight: 700;
 
     &:hover {
         text-decoration: underline;
-        font-weight: 600;
     }
 `;

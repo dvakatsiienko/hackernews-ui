@@ -1,8 +1,8 @@
 /* Core */
-import { useReactiveVar } from '@apollo/client';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { Breadcrumbs, BreadcrumbsItemProps, Themes } from '@geist-ui/react';
+import { Aperture } from '@geist-ui/react-icons';
 import styled from 'styled-components';
 
 /* Instruments */
@@ -13,7 +13,7 @@ const JWT_TOKEN_NAME = process.env.NEXT_PUBLIC_JWT_TOKEN_NAME;
 
 export const Header: React.FC = () => {
     const router = useRouter();
-    const isAuthenticated = useReactiveVar(vars.isAuthenticated);
+    const isAuthenticated = vars.useIsAuthenticated();
 
     const get$Active = (href: string) => {
         return router.pathname.includes(href);
@@ -24,9 +24,15 @@ export const Header: React.FC = () => {
         vars.isAuthenticated(false);
     };
 
+    const handleApertureClick = () => {
+        router.push(isAuthenticated ? '/new/1' : '/login');
+    };
+
     return (
         <Section>
             <Breadcrumbs>
+                <Aperture onClick = { handleApertureClick } />
+
                 <NextLink href = '/new/1'>
                     <BreadcrumbItem nextLink $active = { get$Active(book.new) }>
                         new
@@ -84,7 +90,18 @@ const Section = styled.section`
     display: flex;
     justify-content: space-between;
     padding: 0 7px;
-    /* height: 24px; */
+    user-select: none;
+
+    && svg {
+        height: 18px;
+        width: 18px;
+        margin: 0;
+
+        &:hover {
+            color: ${Themes.getPresets()[ 0 ].palette.link} !important;
+            cursor: pointer;
+        }
+    }
 `;
 
 interface TBreadcrumbsItemProps extends BreadcrumbsItemProps {

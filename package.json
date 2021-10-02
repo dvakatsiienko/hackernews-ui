@@ -12,6 +12,7 @@
     "dependencies": {
         "@apollo/client": "3.4.15",
         "@geist-ui/react": "2.2.0",
+        "@geist-ui/react-icons": "1.0.1",
         "@hookform/resolvers": "2.8.1",
         "apollo-link-logger": "2.0.0",
         "debug": "4.3.2",
@@ -27,13 +28,13 @@
         "react-hook-form": "7.17.0",
         "sass": "1.42.1",
         "styled-components": "5.3.1",
-        "tachyons": "4.12.0",
         "waait": "1.0.5",
         "yup": "0.32.9"
     },
     "devDependencies": {
         "@graphql-codegen/cli": "2.2.0",
         "@graphql-codegen/typescript": "2.2.2",
+        "@graphql-codegen/typescript-apollo-client-helpers": "2.1.4",
         "@graphql-codegen/typescript-operations": "2.1.5",
         "@graphql-codegen/typescript-react-apollo": "3.1.4",
         "@types/debug": "4.1.7",

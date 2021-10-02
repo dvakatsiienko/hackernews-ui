@@ -1,6 +1,5 @@
 /* Core */
 import { useEffect } from 'react';
-import { useReactiveVar } from '@apollo/client';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
@@ -12,7 +11,7 @@ import { vars } from '@/lib/apollo';
 
 const CreatePostPage: NextPage = () => {
     const router = useRouter();
-    const isAuthenticated = useReactiveVar(vars.isAuthenticated);
+    const isAuthenticated = vars.useIsAuthenticated();
 
     useEffect(() => {
         !isAuthenticated && router.replace('/new/1');

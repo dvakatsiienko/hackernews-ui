@@ -1,11 +1,10 @@
 /* Core */
 import { useState } from 'react';
-import { useReactiveVar } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import waait from 'waait';
 import {
-    Text, Grid, Spacer, Button
+    Text, Grid, Spacer, Button, useToasts, Toast
 } from '@geist-ui/react';
 
 /* Components */
@@ -19,13 +18,17 @@ import { createResolver } from './resolver';
 
 export const LoginForm: React.FC = () => {
     const router = useRouter();
-    const isAuthenticated = useReactiveVar(vars.isAuthenticated);
+    const isAuthenticated = vars.useIsAuthenticated();
     const [ isLogin, setIsLogin ] = useState(true);
     const [ isFetching, setIsFetching ] = useState(false);
 
-    const {
-        register, handleSubmit, getValues, formState,
-    } = useForm({
+    const [ , setToast ] = useToasts();
+    const createToast = (toast?: Toast) => setToast({
+        text: toast?.text ?? 'Error...',
+        type: toast?.type ?? 'default',
+    });
+
+    const form = useForm({
         resolver:      createResolver(isLogin),
         mode:          'all',
         defaultValues: {
@@ -44,13 +47,23 @@ export const LoginForm: React.FC = () => {
     };
 
     const [ loginMutation ] = gql.useLoginMutation({
-        variables: getValues(),
+        variables: form.getValues(),
         onCompleted(data) {
             saveToken(data.login);
         },
+        onError(error) {
+            form.setError('email', { message: error.message });
+            form.setError('password', { message: error.message });
+
+            createToast({
+                type:  'error',
+                text:  error.message,
+                delay: 10000,
+            });
+        },
     });
     const [ signupMutation ] = gql.useSignupMutation({
-        variables: getValues(),
+        variables: form.getValues(),
         onCompleted(data) {
             saveToken(data.signup);
         },
@@ -73,7 +86,7 @@ export const LoginForm: React.FC = () => {
     }
 
     return (
-        <form onSubmit = { handleSubmit(submit) }>
+        <form onSubmit = { form.handleSubmit(submit) }>
             <Text h1>{isLogin ? 'Login' : 'Sign Up'}</Text>
             <Spacer h = { 2 } />
 
@@ -81,21 +94,21 @@ export const LoginForm: React.FC = () => {
                 <div className = 'flex flex-column'>
                     {!isLogin && (
                         <Input
-                            formState = { formState }
+                            formState = { form.formState }
                             placeholder = 'Your name'
-                            register = { register('name') }
+                            register = { form.register('name') }
                         />
                     )}
 
                     <Input
-                        formState = { formState }
+                        formState = { form.formState }
                         placeholder = 'Your email address'
-                        register = { register('email') }
+                        register = { form.register('email') }
                     />
                     <Input
-                        formState = { formState }
+                        formState = { form.formState }
                         placeholder = 'Choose a safe password'
-                        register = { register('password') }
+                        register = { form.register('password') }
                         type = 'password'
                     />
                     {/* <Grid.Container gap = { 3 }>
