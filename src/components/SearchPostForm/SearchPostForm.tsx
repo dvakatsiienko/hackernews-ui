@@ -6,7 +6,7 @@ import { Button } from '@geist-ui/react';
 import waait from 'waait';
 
 /* Components */
-import { Post } from '../Post';
+import { Post } from '../PostList/Post';
 import { Fieldset, Input } from '../Form';
 
 /* Instruments */

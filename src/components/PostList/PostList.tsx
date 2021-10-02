@@ -2,30 +2,22 @@
 import { useRouter } from 'next/router';
 
 /* Components */
-import { Post } from '@/components';
+import { Post } from './Post';
 
 /* Instruments */
 import * as gql from '@/graphql';
+import { useFeedVariables } from '@/utils';
 
 const POSTS_PER_PAGE = Number(process.env.NEXT_PUBLIC_POSTS_PER_PAGE);
 
 export const PostList: React.FC<PostListProps> = props => {
     const router = useRouter();
+    const { isPaginated, page, variables: feedVariables } = useFeedVariables();
 
-    const isPaginated = router.pathname.includes('new');
-    const page = parseInt(router.query.page as string);
-
-    const getVariables = (): gql.FeedQueryVariables => {
-        const skip = isPaginated ? (page - 1) * POSTS_PER_PAGE : 0;
-        const take = isPaginated ? POSTS_PER_PAGE : 100;
-
-        return {
-            take,
-            skip,
-        };
-    };
-
-    const feedQuery = gql.useFeedQuery({ variables: getVariables() });
+    const feedQuery = gql.useFeedQuery({
+        variables:   feedVariables,
+        fetchPolicy: 'cache-and-network',
+    });
 
     if (props.subscription && process.browser) {
         feedQuery.subscribeToMore<gql.PostCreatedSubscription>({
@@ -89,7 +81,7 @@ export const PostList: React.FC<PostListProps> = props => {
 
     return (
         <>
-            {feedQuery.loading && <p>Loading...</p>}
+            {/* {feedQuery.loading && <p>Loading...</p>} */}
             {feedQuery.error && (
                 <pre>{JSON.stringify(feedQuery.error, null, 2)}</pre>
             )}
