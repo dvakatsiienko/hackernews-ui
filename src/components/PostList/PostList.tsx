@@ -1,5 +1,9 @@
 /* Core */
+import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { Pagination } from '@geist-ui/react';
+import styled from 'styled-components';
+import waait from 'waait';
 
 /* Components */
 import { Post } from './Post';
@@ -8,18 +12,24 @@ import { Post } from './Post';
 import * as gql from '@/graphql';
 import { useFeedVariables } from '@/utils';
 
-const POSTS_PER_PAGE = Number(process.env.NEXT_PUBLIC_POSTS_PER_PAGE);
-
 export const PostList: React.FC<PostListProps> = props => {
+    const { isPaginated } = props;
+
+    const [ isFetchingMore, setIsFetchingMore ] = useState(false);
     const router = useRouter();
-    const { isPaginated, page, variables: feedVariables } = useFeedVariables();
+    const {
+        page,
+        variables: feedVariables,
+        POSTS_PER_PAGE,
+    } = useFeedVariables({ isPaginated });
 
     const feedQuery = gql.useFeedQuery({
-        variables:   feedVariables,
-        fetchPolicy: 'cache-and-network',
+        variables:                   feedVariables,
+        fetchPolicy:                 'cache-and-network',
+        notifyOnNetworkStatusChange: true,
     });
 
-    if (props.subscription && process.browser) {
+    if (props.isSubscribed && process.browser) {
         feedQuery.subscribeToMore<gql.PostCreatedSubscription>({
             document:    gql.PostCreatedDocument,
             updateQuery: (prev, opts) => {
@@ -62,47 +72,108 @@ export const PostList: React.FC<PostListProps> = props => {
     };
 
     const postListJSX = getSortedPosts().map((link, index) => {
-        return <Post index = { index + 0 } key = { link.id } post = { link } />;
+        let orderNumber = index + 1;
+
+        if (isPaginated) {
+            orderNumber = feedVariables.skip + index + 1;
+        }
+
+        return <Post key = { link.id } orderNumber = { orderNumber } post = { link } />;
     });
 
-    const goPrev = () => {
-        if (page > 1) {
-            router.push(`/new/${page - 1}`);
-        }
-    };
+    const totalPages = Math.ceil(feedQuery.data?.feed.count / POSTS_PER_PAGE);
 
-    const goNext = () => {
-        if (page <= feedQuery.data?.feed.count / POSTS_PER_PAGE) {
-            const nextPage = page + 1;
+    const setPage = async (nextPage: number) => {
+        // const isPaginated = router.pathname.includes('new');
+        setIsFetchingMore(true);
 
-            router.push(`/new/${nextPage}`);
-        }
+        const skip = isPaginated ? (nextPage - 1) * POSTS_PER_PAGE : 0;
+        const take = isPaginated ? POSTS_PER_PAGE : 25;
+
+        await feedQuery.fetchMore({ variables: { skip, take } });
+        await waait(1000);
+
+        router.push(`/new/${nextPage}`);
+        setIsFetchingMore(false);
     };
 
     return (
-        <>
+        <S.Container>
             {/* {feedQuery.loading && <p>Loading...</p>} */}
-            {feedQuery.error && (
-                <pre>{JSON.stringify(feedQuery.error, null, 2)}</pre>
-            )}
 
-            {postListJSX}
+            <S.List>{postListJSX}</S.List>
 
-            {isPaginated && (
-                <div className = 'flex ml4 mv3 gray'>
-                    <div className = 'pointer mr2' onClick = { goPrev }>
-                        Previous
-                    </div>
-                    <div className = 'pointer' onClick = { goNext }>
-                        Next
-                    </div>
-                </div>
-            )}
-        </>
+            <S.Footer $isDisabled = { isFetchingMore }>
+                {feedQuery.data && !isNaN(totalPages) && isPaginated && (
+                    <Pagination
+                        count = { totalPages }
+                        initialPage = { page }
+                        limit = { 7 }
+                        page = { page }
+                        onChange = { setPage }
+                    />
+                )}
+            </S.Footer>
+        </S.Container>
     );
 };
 
+/* Styles */
+const S = {
+    Container: styled.section`
+        --footer-height: 40px;
+
+        display: grid;
+        grid-template-rows: 1fr var(--footer-height);
+        gap: var(--container-gap);
+
+        overflow: hidden;
+    `,
+    List: styled.ul`
+        max-height: calc(
+            100vh - (2 * var(--layout-offset)) - 41px -
+                (2 * var(--container-v-padding)) - var(--nav-height) -
+                (2 * var(--container-gap)) - var(--footer-height)
+        );
+        overflow-y: scroll;
+
+        /* Hide scrollbar for Chrome */
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Hide scrollbar for IE and Edge */
+        -ms-overflow-style: none;
+    `,
+    Footer: styled.footer<FooterProps>`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & nav {
+            & li {
+                margin-bottom: 0;
+
+                ${p => p.$isDisabled && 'cursor: not-allowed;'}
+
+                & button {
+                    ${p => p.$isDisabled && 'color: grey; pointer-events: none;'}
+
+                    &.active {
+                        ${p => p.$isDisabled
+                            && 'color: white; background-color: grey;'}
+                    }
+                }
+            }
+        }
+    `,
+};
+interface FooterProps {
+    $isDisabled: boolean;
+}
+
 /* Types */
 interface PostListProps {
-    subscription?: boolean;
+    isPaginated?: boolean;
+    isSubscribed?: boolean;
 }

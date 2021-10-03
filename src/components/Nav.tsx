@@ -11,7 +11,7 @@ import { vars } from '@/lib/apollo';
 
 const JWT_TOKEN_NAME = process.env.NEXT_PUBLIC_JWT_TOKEN_NAME;
 
-export const Header: React.FC = () => {
+export const Nav: React.FC = () => {
     const router = useRouter();
     const isAuthenticated = vars.useIsAuthenticated();
 
@@ -41,7 +41,7 @@ export const Header: React.FC = () => {
 
                 <NextLink href = { book.top }>
                     <BreadcrumbItem nextLink $active = { get$Active(book.top) }>
-                        top
+                        top 25
                     </BreadcrumbItem>
                 </NextLink>
 
@@ -86,10 +86,10 @@ export const Header: React.FC = () => {
 };
 
 /* Styles */
-const Section = styled.section`
+const Section = styled.nav`
     display: flex;
     justify-content: space-between;
-    padding: 0 7px;
+    height: var(--nav-height);
     user-select: none;
 
     && svg {

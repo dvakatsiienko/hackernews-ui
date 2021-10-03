@@ -19,9 +19,9 @@ export const Post: React.FC<PostProps> = props => {
     });
 
     return (
-        <S.Card>
+        <S.Container>
             <S.Header>
-                <S.OrderNumber>{props.index + 1}.</S.OrderNumber>
+                <S.OrderNumber>{props.orderNumber}.</S.OrderNumber>
                 <Link
                     color
                     href = { props.post.url }
@@ -50,7 +50,7 @@ export const Post: React.FC<PostProps> = props => {
                 {props.post.postedBy ? props.post.postedBy.name : 'Unknown'} |{' '}
                 {timeDifferenceForDate(props.post.createdAt)}
             </S.Footer>
-        </S.Card>
+        </S.Container>
     );
 };
 
@@ -58,7 +58,9 @@ export const Post: React.FC<PostProps> = props => {
 const { palette } = Themes.getPresets()[ 0 ];
 
 const S = {
-    Card: styled(Card)<CardProps>`
+    Container: styled(Card)<CardProps>`
+        --font-size: 15px;
+
         &&:not(:last-child) {
             margin-bottom: 7px;
         }
@@ -66,13 +68,18 @@ const S = {
     Header: styled.header`
         display: flex;
         user-select: none;
+        gap: 3px;
+
+        && a {
+            display: inline-block;
+            font-size: var(--font-size);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     `,
     OrderNumber: styled.span`
-        display: flex;
-        align-items: center;
-        width: 11px;
-        margin-right: 5px;
-        font-size: 14px;
+        font-size: var(--font-size);
         font-weight: 500;
         color: ${palette.accents_4};
     `,
@@ -95,7 +102,7 @@ const S = {
 
 /* Types */
 interface PostProps {
-    index: number;
+    orderNumber: number;
     post: gql.PostFragment;
 }
 

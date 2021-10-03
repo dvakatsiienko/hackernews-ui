@@ -4,51 +4,74 @@ import { Image } from '@geist-ui/react';
 import styled from 'styled-components';
 
 /* Components */
-import { Header } from '@/components';
+import { Nav } from '@/components';
 
 export const Layout: React.FC = props => {
     return (
-        <Container>
+        <S.Container>
             <Image.Browser
                 invert
                 // @ts-ignore
                 title = { (
                     <Link href = '/new/1'>
-                        <A>λ Hackernews</A>
+                        <S.A>λ Hackernews</S.A>
                     </Link>
                 ) }
             >
-                <Header />
-                <InnerContainer>{props.children}</InnerContainer>
+                <S.Content>
+                    <Nav />
+                    {props.children}
+                </S.Content>
             </Image.Browser>
-        </Container>
+        </S.Container>
     );
 };
 
 /* Styles */
-const Container = styled.section`
-    margin: 100px auto;
-    padding: 0 24px;
+const S = {
+    Container: styled.section`
+        --layout-offset: 100px;
 
-    && .bowser {
-        width: 100%;
-        min-height: calc(100vh - 200px);
-    }
-`;
+        display: grid;
+        grid-template-columns: minmax(10px, var(--layout-offset)) 1fr minmax(
+                10px,
+                var(--layout-offset)
+            );
+        grid-template-rows: minmax(10px, var(--layout-offset)) 1fr minmax(
+                10px,
+                var(--layout-offset)
+            );
+        height: 100vh;
 
-/* Styles */
-const InnerContainer = styled.section`
-    margin: 0 auto;
-    padding: 10px;
-`;
+        && .bowser {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            grid-column: 2;
+            grid-row: 2;
+            width: 100%;
+            min-width: 300px;
+            min-height: 700px;
+        }
+    `,
+    Content: styled.section`
+        --nav-height: 24px;
+        --container-gap: 7px;
+        --container-v-padding: 7px;
 
-const A = styled.a`
-    display: flex;
-    color: white;
-    font-size: 16px;
-    font-weight: 700;
+        display: grid;
+        grid-template-rows: auto 1fr;
+        gap: var(--container-gap);
+        padding: var(--container-v-padding) 10px;
+        /* max-height: calc(100vh - 200px - 24px - 41px - 20px); */
+    `,
+    A: styled.a`
+        display: flex;
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
 
-    &:hover {
-        text-decoration: underline;
-    }
-`;
+        &:hover {
+            text-decoration: underline;
+        }
+    `,
+};
