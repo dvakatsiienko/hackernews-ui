@@ -5,7 +5,7 @@ import { NextPage } from 'next';
 import { PostList } from '@/components';
 
 const NewPostsPaginatedPage: NextPage = () => {
-    return <PostList />;
+    return <PostList isPaginated />;
 };
 
 export default NewPostsPaginatedPage;

@@ -37,7 +37,7 @@ export const SearchPostForm: React.FC = () => {
     const isDisabled = feedQuery.loading || isRefetching;
 
     const postListJSX = feedQuery.data?.feed.posts.map((post, index) => {
-        return <Post index = { index + 0 } key = { post.id } post = { post } />;
+        return <Post key = { post.id } orderNumber = { index + 0 } post = { post } />;
     }) ?? [];
 
     return (

@@ -21,7 +21,7 @@ const CreatePostPage: NextPage = () => {
         <>
             <CreatePostForm />
 
-            <PostList subscription />
+            <PostList isSubscribed />
         </>
     );
 };

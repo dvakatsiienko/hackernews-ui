@@ -7,6 +7,8 @@ import { Fieldset, Input } from '../Form';
 /* Instruments */
 import * as gql from '@/graphql';
 
+// description max-length 85;
+
 export const CreatePostForm: React.FC = () => {
     const {
         register, handleSubmit, getValues, reset, formState,
