@@ -4,8 +4,7 @@ import { useRouter } from 'next/router';
 /* Instruments */
 import * as gql from '@/graphql';
 
-// const POSTS_PER_PAGE = Number(process.env.NEXT_PUBLIC_POSTS_PER_PAGE);
-const POSTS_PER_PAGE = 5;
+const POSTS_PER_PAGE = Number(process.env.NEXT_PUBLIC_POSTS_PER_PAGE);
 
 export const useFeedVariables: UseFeedVariables = options => {
     const router = useRouter();

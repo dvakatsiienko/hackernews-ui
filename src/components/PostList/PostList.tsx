@@ -168,12 +168,13 @@ const S = {
         }
     `,
 };
-interface FooterProps {
-    $isDisabled: boolean;
-}
 
 /* Types */
 interface PostListProps {
     isPaginated?: boolean;
     isSubscribed?: boolean;
+}
+
+interface FooterProps {
+    $isDisabled: boolean;
 }
