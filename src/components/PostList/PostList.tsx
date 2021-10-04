@@ -91,7 +91,7 @@ export const PostList: React.FC<PostListProps> = props => {
         const take = isPaginated ? POSTS_PER_PAGE : 25;
 
         await feedQuery.fetchMore({ variables: { skip, take } });
-        await waait(1000);
+        await waait(100);
 
         router.push(`/new/${nextPage}`);
         setIsFetchingMore(false);
