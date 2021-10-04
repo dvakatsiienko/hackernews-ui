@@ -1,7 +1,6 @@
 module.exports = {
     git: {
         commitMessage: 'v${version}',
-        requireBranch: 'dev',
     },
     npm: {
         publish: false,
