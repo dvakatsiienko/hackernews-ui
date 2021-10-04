@@ -14,7 +14,7 @@ import { Fieldset, Input } from '../Form';
 import * as gql from '@/graphql';
 import { vars } from '@/lib/apollo';
 import { saveJwtToken } from '@/utils';
-import { createResolver } from './resolver';
+import { createResolver, FormShape } from './resolver';
 
 export const LoginForm: React.FC = () => {
     const router = useRouter();
@@ -32,9 +32,10 @@ export const LoginForm: React.FC = () => {
         resolver:      createResolver(isLogin),
         mode:          'all',
         defaultValues: {
-            name:     '',
-            email:    __DEV__ ? 'test@email.io' : '',
-            password: __DEV__ ? '12345' : '',
+            name:            '',
+            email:           __DEV__ ? 'test@email.io' : '',
+            password:        __DEV__ ? '12345' : '',
+            confirmPassword: __DEV__ ? '12345' : '',
         },
     });
 
@@ -55,17 +56,27 @@ export const LoginForm: React.FC = () => {
             form.setError('email', { message: error.message });
             form.setError('password', { message: error.message });
 
-            createToast({
-                type:  'error',
-                text:  error.message,
-                delay: 10000,
-            });
+            createToast({ type: 'error', text: error.message, delay: 10000 });
         },
     });
     const [ signupMutation ] = gql.useSignupMutation({
         variables: form.getValues(),
         onCompleted(data) {
             saveToken(data.signup);
+        },
+        onError(error) {
+            const fields: Array<keyof FormShape> = [
+                'name',
+                'email',
+                'password',
+                'confirmPassword',
+            ];
+
+            fields.forEach(field => {
+                form.setError(field, { message: error.message });
+            });
+
+            createToast({ type: 'error', text: error.message, delay: 10000 });
         },
     });
 
@@ -111,6 +122,14 @@ export const LoginForm: React.FC = () => {
                         register = { form.register('password') }
                         type = 'password'
                     />
+                    {!isLogin && (
+                        <Input
+                            formState = { form.formState }
+                            placeholder = 'Confirm password'
+                            register = { form.register('confirmPassword') }
+                            type = 'password'
+                        />
+                    )}
                     {/* <Grid.Container gap = { 3 }>
                     <Grid> */}
                     <Spacer h = { 2 } />
