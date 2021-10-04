@@ -8,7 +8,7 @@
         "build": "next build",
         "serve": "next start",
         "codegen:graphql": "gql-gen -r dotenv/config --config \"./graphql-codegen.yml\"",
-        "release": "release-it"
+        "release": "release-it --ci"
     },
     "dependencies": {
         "@apollo/client": "3.4.15",
