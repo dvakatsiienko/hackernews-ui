@@ -16,7 +16,7 @@ export const PostList: React.FC<PostListProps> = props => {
     const { isPaginated } = props;
 
     const isXs = useMediaQuery('xs');
-    console.log(isXs);
+
     const [ isFetchingMore, setIsFetchingMore ] = useState(false);
     const router = useRouter();
     const {
