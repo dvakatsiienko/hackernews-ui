@@ -1,7 +1,7 @@
 /* Core */
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Pagination } from '@geist-ui/react';
+import { Pagination, useMediaQuery } from '@geist-ui/react';
 import styled from 'styled-components';
 import waait from 'waait';
 
@@ -15,6 +15,8 @@ import { useFeedVariables } from '@/utils';
 export const PostList: React.FC<PostListProps> = props => {
     const { isPaginated } = props;
 
+    const isXs = useMediaQuery('xs');
+    console.log(isXs);
     const [ isFetchingMore, setIsFetchingMore ] = useState(false);
     const router = useRouter();
     const {
@@ -108,7 +110,7 @@ export const PostList: React.FC<PostListProps> = props => {
                     <Pagination
                         count = { totalPages }
                         initialPage = { page }
-                        limit = { 7 }
+                        limit = { isXs ? 3 : 7 }
                         page = { page }
                         onChange = { setPage }
                     />

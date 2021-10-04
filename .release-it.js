@@ -1,7 +1,6 @@
 module.exports = {
     git: {
         commitMessage: 'v${version}',
-        requireBranch: 'dev',
     },
     npm: {
         publish: false,
@@ -9,7 +8,6 @@ module.exports = {
     github: {
         release: true,
         releaseName: 'v${version}',
-        // "releaseNotes": null,
     },
     hooks: {
         'after:bump': 'npx auto-changelog',
