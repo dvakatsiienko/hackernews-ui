@@ -45,9 +45,7 @@ export const CreatePostForm: React.FC = () => {
         //             __typename: 'Query',
         //             feed: {
         //                 __typename: 'Feed',
-        //                 // @ts-ignore
         //                 links: data,
-        //                 // @ts-ignore
         //                 count: data.length,
         //             },
         //         },
