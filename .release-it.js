@@ -9,7 +9,9 @@ module.exports = {
     github: {
         release: true,
         releaseName: 'v${version}',
-        // "releaseNotes": null,
+    },
+    hooks: {
+        'after:bump': 'npx auto-changelog',
     },
     hooks: {
         'after:bump': 'npx auto-changelog',
