@@ -14,6 +14,6 @@ module.exports = {
         'after:bump': 'npx auto-changelog',
     },
     hooks: {
-        'after:bump': 'npx auto-changelog',
+        'after:bump': 'npx auto-changelog -p',
     },
 };
