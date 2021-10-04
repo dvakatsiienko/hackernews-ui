@@ -86,7 +86,6 @@ export const PostList: React.FC<PostListProps> = props => {
     const totalPages = Math.ceil(feedQuery.data?.feed.count / POSTS_PER_PAGE);
 
     const setPage = async (nextPage: number) => {
-        // const isPaginated = router.pathname.includes('new');
         setIsFetchingMore(true);
 
         const skip = isPaginated ? (nextPage - 1) * POSTS_PER_PAGE : 0;
