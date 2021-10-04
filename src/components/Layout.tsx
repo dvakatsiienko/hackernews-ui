@@ -62,7 +62,6 @@ const S = {
         grid-template-rows: auto 1fr;
         gap: var(--container-gap);
         padding: var(--container-v-padding) 10px;
-        /* max-height: calc(100vh - 200px - 24px - 41px - 20px); */
     `,
     A: styled.a`
         display: flex;
