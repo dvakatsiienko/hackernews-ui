@@ -104,6 +104,7 @@ const Section = styled.nav`
     }
 `;
 
+/* Types */
 interface TBreadcrumbsItemProps extends BreadcrumbsItemProps {
     readonly $active?: boolean;
 }
