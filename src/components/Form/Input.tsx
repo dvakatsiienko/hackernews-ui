@@ -81,11 +81,8 @@ const ErrorMessage = styled.span`
     color: red;
     font-weight: 500;
     font-size: 14px;
-
-    /* &:not(:last-child) { */
     margin-top: 5px;
     margin-bottom: 10px;
-    /* } */
 
     & span {
         text-transform: initial !important;
