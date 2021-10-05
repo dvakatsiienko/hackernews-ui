@@ -10,7 +10,7 @@ import { Post } from './Post';
 
 /* Instruments */
 import * as gql from '@/graphql';
-import { useFeedVariables } from '@/utils';
+import { useFeedVariables } from '@/hooks';
 
 export const PostList: React.FC<PostListProps> = props => {
     const { isPaginated } = props;
@@ -103,8 +103,6 @@ export const PostList: React.FC<PostListProps> = props => {
 
     return (
         <S.Container>
-            {/* {feedQuery.loading && <p>Loading...</p>} */}
-
             <S.List $postCount = { POSTS_PER_PAGE } isPaginated = { isPaginated }>
                 {postListJSX}
             </S.List>

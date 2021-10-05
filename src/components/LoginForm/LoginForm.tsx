@@ -3,9 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import waait from 'waait';
-import {
-    Text, Grid, Spacer, Button, useToasts, Toast
-} from '@geist-ui/react';
+import * as GUI from '@geist-ui/react';
 
 /* Components */
 import { Fieldset, Input } from '../Form';
@@ -14,6 +12,7 @@ import { Fieldset, Input } from '../Form';
 import * as gql from '@/graphql';
 import { vars } from '@/lib/apollo';
 import { saveJwtToken } from '@/utils';
+import { useToasts } from '@/hooks';
 import { createResolver, FormShape } from './resolver';
 
 export const LoginForm: React.FC = () => {
@@ -22,11 +21,7 @@ export const LoginForm: React.FC = () => {
     const [ isLogin, setIsLogin ] = useState(true);
     const [ isFetching, setIsFetching ] = useState(false);
 
-    const [ , setToast ] = useToasts();
-    const createToast = (toast?: Toast) => setToast({
-        text: toast?.text ?? 'Error...',
-        type: toast?.type ?? 'default',
-    });
+    const createToast = useToasts();
 
     const form = useForm({
         resolver:      createResolver(isLogin),
@@ -98,71 +93,67 @@ export const LoginForm: React.FC = () => {
 
     return (
         <form onSubmit = { form.handleSubmit(submit) }>
-            <Text h1>{isLogin ? 'Login' : 'Sign Up'}</Text>
-            <Spacer h = { 2 } />
+            <GUI.Spacer />
+            <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+            <GUI.Spacer h = { 2 } />
 
             <Fieldset css = 'max-width: 300px;' disabled = { isFetching }>
-                <div className = 'flex flex-column'>
-                    {!isLogin && (
-                        <Input
-                            formState = { form.formState }
-                            placeholder = 'Your name'
-                            register = { form.register('name') }
-                        />
-                    )}
-
+                {!isLogin && (
                     <Input
+                        autoFocus
                         formState = { form.formState }
-                        placeholder = 'Your email address'
-                        register = { form.register('email') }
+                        placeholder = 'Your name'
+                        register = { form.register('name') }
                     />
+                )}
+
+                <Input
+                    autoFocus
+                    formState = { form.formState }
+                    placeholder = 'Your email address'
+                    register = { form.register('email') }
+                />
+                <Input
+                    formState = { form.formState }
+                    placeholder = 'Choose a safe password'
+                    register = { form.register('password') }
+                    type = 'password'
+                />
+                {!isLogin && (
                     <Input
                         formState = { form.formState }
-                        placeholder = 'Choose a safe password'
-                        register = { form.register('password') }
+                        placeholder = 'Confirm password'
+                        register = { form.register('confirmPassword') }
                         type = 'password'
                     />
-                    {!isLogin && (
-                        <Input
-                            formState = { form.formState }
-                            placeholder = 'Confirm password'
-                            register = { form.register('confirmPassword') }
-                            type = 'password'
-                        />
-                    )}
-                    {/* <Grid.Container gap = { 3 }>
-                    <Grid> */}
-                    <Spacer h = { 2 } />
+                )}
 
-                    <Grid.Container gap = { 1 }>
-                        <Grid>
-                            <Button
-                                auto
-                                disabled = { isFetching }
-                                htmlType = 'submit'
-                                loading = { isFetching }
-                                // scale = { scale }
-                            >
-                                {isLogin ? 'login' : 'create account'}
-                            </Button>
-                        </Grid>
-                        {/* <Spacer /> */}
+                <GUI.Spacer h = { 2 } />
 
-                        <Grid>
-                            <Button
-                                auto
-                                ghost
-                                // scale = { scale }
-                                disabled = { isFetching }
-                                type = 'secondary'
-                                onClick = { () => setIsLogin(!isLogin) }
-                            >
-                                {isLogin ? 'create account' : 'back to login'}
-                            </Button>
-                        </Grid>
-                    </Grid.Container>
-                </div>
-                {/* </Grid.Container> */}
+                <GUI.Grid.Container gap = { 1 }>
+                    <GUI.Grid>
+                        <GUI.Button
+                            auto
+                            disabled = { isFetching }
+                            htmlType = 'submit'
+                            loading = { isFetching }
+                        >
+                            {isLogin ? 'login' : 'create account'}
+                        </GUI.Button>
+                    </GUI.Grid>
+
+                    <GUI.Grid>
+                        <GUI.Button
+                            auto
+                            ghost
+                            disabled = { isFetching }
+                            type = 'secondary'
+                            onClick = { () => setIsLogin(!isLogin) }
+                        >
+                            {isLogin ? 'create account' : 'back to login'}
+                        </GUI.Button>
+                    </GUI.Grid>
+                </GUI.Grid.Container>
             </Fieldset>
         </form>
     );

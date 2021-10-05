@@ -8,7 +8,12 @@ import { PostList } from '@/components';
 import * as gql from '@/graphql';
 
 const TopPostsPage: NextPage = () => {
-    return <PostList orderBy = {{ voteCount: gql.Order_By_Enum.Desc }} />;
+    return (
+        <PostList
+            isSubscribed
+            orderBy = {{ voteCount: gql.Order_By_Enum.Desc }}
+        />
+    );
 };
 
 export default TopPostsPage;

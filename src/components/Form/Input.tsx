@@ -21,7 +21,8 @@ export const Input: React.FC<InputProps> = props => {
     props.formState.isSubmitting && (dotType = 'warning');
 
     const InputComponent = props.type === 'password' ? (
-        <StyledPInput
+        <S.PInput
+            autoFocus = { props.autoFocus }
             htmlType = { props.type }
             // @ts-ignore
             label = { <Dot type = { dotType } /> }
@@ -31,7 +32,8 @@ export const Input: React.FC<InputProps> = props => {
             { ...props.register }
         />
     ) : (
-        <StyledInput
+        <S.Input
+            autoFocus = { props.autoFocus }
             htmlType = { props.type }
             // @ts-ignore
             label = { <Dot type = { dotType } /> }
@@ -43,14 +45,14 @@ export const Input: React.FC<InputProps> = props => {
     );
 
     return (
-        <>
+        <S.Container>
             {InputComponent}
-            <ErrorMessage>
+            <S.ErrorMessage>
                 {props.formState.errors[ props.register.name ]?.message ?? (
                     <>&nbsp;</>
                 )}
-            </ErrorMessage>
-        </>
+            </S.ErrorMessage>
+        </S.Container>
     );
 };
 Input.defaultProps = {
@@ -70,24 +72,34 @@ const style = css`
         }
     }
 `;
-const StyledInput = styled(GeistInput)<GeistInputProps>`
-    ${style}
-`;
-const StyledPInput = styled(GeistInput.Password)<InputPasswordProps>`
-    ${style}
-`;
+const S = {
+    Container: styled.div`
+        display: flex;
+        flex-direction: column;
+        align-items: start;
 
-const ErrorMessage = styled.span`
-    color: red;
-    font-weight: 500;
-    font-size: 14px;
-    margin-top: 5px;
-    margin-bottom: 10px;
+        &:not(:last-child) {
+            margin-bottom: 7px;
+        }
+    `,
+    Input: styled(GeistInput)<GeistInputProps>`
+        ${style}
+    `,
+    PInput: styled(GeistInput.Password)<InputPasswordProps>`
+        ${style}
+    `,
+    ErrorMessage: styled.span`
+        display: inline-block;
+        color: red;
+        font-weight: 500;
+        font-size: 14px;
+        margin-top: 5px;
 
-    & span {
-        text-transform: initial !important;
-    }
-`;
+        & span {
+            text-transform: initial !important;
+        }
+    `,
+};
 
 /* Types */
 interface InputProps {
@@ -95,4 +107,5 @@ interface InputProps {
     formState: FormState<FieldValues>;
     placeholder?: string;
     type?: React.HTMLInputTypeAttribute;
+    autoFocus?: boolean;
 }
