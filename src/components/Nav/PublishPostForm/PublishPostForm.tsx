@@ -17,8 +17,8 @@ export const PublishPostForm: React.FC<PublishPostFormProps> = props => {
         resolver,
         mode:          'all',
         defaultValues: {
-            url:         !__DEV__ ? 'https://www.prisma.io' : '',
-            description: !__DEV__
+            url:         __DEV__ ? 'https://www.prisma.io' : '',
+            description: __DEV__
                 ? 'Check out Prisma — the next-gen type-safe ORM'
                 : '',
         },
