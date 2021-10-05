@@ -124,11 +124,9 @@ export const PostList: React.FC<PostListProps> = props => {
 /* Styles */
 const S = {
     Container: styled.section`
-        /* --footer-height: 40px; */
+        --footer-height: 45px;
 
-        /* position: relative; */
         display: grid;
-        /* grid-template-rows: 1fr var(--footer-height); */
         gap: var(--container-gap);
 
         overflow: hidden;
@@ -141,12 +139,10 @@ const S = {
         grid-auto-rows: var(--post-height);
         gap: var(--post-list-gap);
 
-        height: calc(var(--post-height) + var(--post-list-gap) * 4) px;
         max-height: calc(
             100vh - 41px - (var(--layout-v-offset) * 2) -
-                (var(--container-v-padding) * 2) - 24px - 45px
+                (var(--container-v-padding) * 2) - 24px - var(--footer-height)
         );
-        /* max-height: 795px; */
         overflow-y: scroll;
 
         /* Hide scrollbar for Chrome */
@@ -166,7 +162,7 @@ const S = {
         justify-content: center;
         align-items: center;
         background-color: white;
-        height: 45px;
+        height: var(--footer-height);
 
         & nav {
             & li {
