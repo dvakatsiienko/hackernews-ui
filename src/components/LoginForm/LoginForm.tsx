@@ -2,8 +2,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import waait from 'waait';
 import * as GUI from '@geist-ui/react';
+import waait from 'waait';
+import styled from 'styled-components';
 
 /* Components */
 import { Fieldset, Input } from '../Form';
@@ -27,7 +28,7 @@ export const LoginForm: React.FC = () => {
         resolver:      createResolver(isLogin),
         mode:          'all',
         defaultValues: {
-            name:            '',
+            name:            __DEV__ ? 'Jack' : '',
             email:           __DEV__ ? 'test@email.io' : '',
             password:        __DEV__ ? '12345' : '',
             confirmPassword: __DEV__ ? '12345' : '',
@@ -128,33 +129,35 @@ export const LoginForm: React.FC = () => {
                     />
                 )}
 
-                <GUI.Spacer h = { 2 } />
+                <S.Controls>
+                    <GUI.Button
+                        auto
+                        disabled = { isFetching }
+                        htmlType = 'submit'
+                        loading = { isFetching }
+                    >
+                        {isLogin ? 'login' : 'create account'}
+                    </GUI.Button>
 
-                <GUI.Grid.Container gap = { 1 }>
-                    <GUI.Grid>
-                        <GUI.Button
-                            auto
-                            disabled = { isFetching }
-                            htmlType = 'submit'
-                            loading = { isFetching }
-                        >
-                            {isLogin ? 'login' : 'create account'}
-                        </GUI.Button>
-                    </GUI.Grid>
-
-                    <GUI.Grid>
-                        <GUI.Button
-                            auto
-                            ghost
-                            disabled = { isFetching }
-                            type = 'secondary'
-                            onClick = { () => setIsLogin(!isLogin) }
-                        >
-                            {isLogin ? 'create account' : 'back to login'}
-                        </GUI.Button>
-                    </GUI.Grid>
-                </GUI.Grid.Container>
+                    <GUI.Button
+                        auto
+                        ghost
+                        disabled = { isFetching }
+                        type = 'secondary'
+                        onClick = { () => setIsLogin(!isLogin) }
+                    >
+                        {isLogin ? 'create account' : 'back to login'}
+                    </GUI.Button>
+                </S.Controls>
             </Fieldset>
         </form>
     );
+};
+
+/* Styles */
+const S = {
+    Controls: styled.div`
+        display: flex;
+        gap: 5px;
+    `,
 };

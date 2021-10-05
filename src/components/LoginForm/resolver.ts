@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as gql from '@/graphql';
 
 export const createResolver = (isLogin: boolean) => {
+    console.log(isLogin);
     const schema: yup.SchemaOf<FormShape> = yup
         .object({
             name:
