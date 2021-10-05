@@ -23,7 +23,10 @@ export const PostList: React.FC<PostListProps> = props => {
         page,
         variables: feedVariables,
         POSTS_PER_PAGE,
-    } = useFeedVariables({ isPaginated });
+    } = useFeedVariables({
+        isPaginated,
+        orderBy: props.orderBy,
+    });
 
     const feedQuery = gql.useFeedQuery({
         variables:                   feedVariables,
@@ -187,6 +190,7 @@ const S = {
 interface PostListProps {
     isPaginated?: boolean;
     isSubscribed?: boolean;
+    orderBy?: gql.OrderByInput;
 }
 
 interface ListProps {

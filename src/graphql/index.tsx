@@ -1,14 +1,11 @@
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
-import {
-    FieldPolicy, FieldReadFunction, TypePolicies, TypePolicy
-} from '@apollo/client/cache';
-
+import { FieldPolicy, FieldReadFunction, TypePolicies, TypePolicy } from '@apollo/client/cache';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions = {};
+const defaultOptions =  {}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -42,19 +39,23 @@ export type Mutation = {
   vote: Vote;
 };
 
+
 export type MutationCreatePostArgs = {
   description: Scalars['String'];
   url: Scalars['String'];
 };
 
+
 export type MutationDeletePostArgs = {
   id: Scalars['ID'];
 };
+
 
 export type MutationLoginArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
 };
+
 
 export type MutationSignupArgs = {
   email: Scalars['String'];
@@ -62,9 +63,11 @@ export type MutationSignupArgs = {
   password: Scalars['String'];
 };
 
+
 export type MutationUnVoteArgs = {
   postId: Scalars['ID'];
 };
+
 
 export type MutationUpdatePostArgs = {
   description: Scalars['String'];
@@ -72,8 +75,19 @@ export type MutationUpdatePostArgs = {
   url: Scalars['String'];
 };
 
+
 export type MutationVoteArgs = {
   postId: Scalars['ID'];
+};
+
+export enum Order_By_Enum {
+  Asc = 'asc',
+  Desc = 'desc'
+}
+
+export type OrderByInput = {
+  createdAt?: Maybe<Order_By_Enum>;
+  voteCount?: Maybe<Order_By_Enum>;
 };
 
 export type Post = {
@@ -95,28 +109,28 @@ export type Query = {
   user: User;
 };
 
+
 export type QueryAuthenticateArgs = {
   token: Scalars['String'];
 };
 
+
 export type QueryFeedArgs = {
   filter?: Maybe<Scalars['String']>;
+  orderBy?: Maybe<OrderByInput>;
   skip?: Maybe<Scalars['Int']>;
   take?: Maybe<Scalars['Int']>;
 };
+
 
 export type QueryPostArgs = {
   id: Scalars['ID'];
 };
 
+
 export type QueryUserArgs = {
   id: Scalars['ID'];
 };
-
-export enum Sort {
-  Asc = 'asc',
-  Desc = 'desc'
-}
 
 export type Subscription = {
   __typename?: 'Subscription';
@@ -144,11 +158,13 @@ export type UserQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
+
 export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', id: string, name: string, email: string, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } };
 
 export type AuthenticateQueryVariables = Exact<{
   token: Scalars['String'];
 }>;
+
 
 export type AuthenticateQuery = { __typename?: 'Query', authenticate?: boolean | null | undefined };
 
@@ -158,12 +174,14 @@ export type SignupMutationVariables = Exact<{
   name: Scalars['String'];
 }>;
 
+
 export type SignupMutation = { __typename?: 'Mutation', signup?: { __typename?: 'AuthPayload', token?: string | null | undefined, user: { __typename?: 'User', id: string, name: string, email: string, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } } | null | undefined };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
 }>;
+
 
 export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'AuthPayload', token?: string | null | undefined, user: { __typename?: 'User', id: string, name: string, email: string, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } } | null | undefined };
 
@@ -175,7 +193,9 @@ export type FeedQueryVariables = Exact<{
   filter?: Maybe<Scalars['String']>;
   skip?: Maybe<Scalars['Int']>;
   take?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<OrderByInput>;
 }>;
+
 
 export type FeedQuery = { __typename?: 'Query', feed: { __typename?: 'Feed', count: number, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }> } };
 
@@ -184,11 +204,13 @@ export type CreatePostMutationVariables = Exact<{
   url: Scalars['String'];
 }>;
 
+
 export type CreatePostMutation = { __typename?: 'Mutation', createPost: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> } };
 
 export type VoteMutationVariables = Exact<{
   postId: Scalars['ID'];
 }>;
+
 
 export type VoteMutation = { __typename?: 'Mutation', vote: { __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } } };
 
@@ -196,13 +218,16 @@ export type UnvoteMutationVariables = Exact<{
   postId: Scalars['ID'];
 }>;
 
+
 export type UnvoteMutation = { __typename?: 'Mutation', unVote: { __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } } };
 
 export type PostCreatedSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
+
 export type PostCreatedSubscription = { __typename?: 'Subscription', postCreated: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> } };
 
 export type PostVotedSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
 
 export type PostVotedSubscription = { __typename?: 'Subscription', postVoted: { __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } } };
 
@@ -287,13 +312,13 @@ export const UserDocument = gql`
  * });
  */
 export function useUserQuery(baseOptions: Apollo.QueryHookOptions<UserQuery, UserQueryVariables>) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useQuery<UserQuery, UserQueryVariables>(UserDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+      }
 export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQuery, UserQueryVariables>) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useLazyQuery<UserQuery, UserQueryVariables>(UserDocument, options);
-}
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+        }
 export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
 export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
 export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;
@@ -320,13 +345,13 @@ export const AuthenticateDocument = gql`
  * });
  */
 export function useAuthenticateQuery(baseOptions: Apollo.QueryHookOptions<AuthenticateQuery, AuthenticateQueryVariables>) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useQuery<AuthenticateQuery, AuthenticateQueryVariables>(AuthenticateDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AuthenticateQuery, AuthenticateQueryVariables>(AuthenticateDocument, options);
+      }
 export function useAuthenticateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AuthenticateQuery, AuthenticateQueryVariables>) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useLazyQuery<AuthenticateQuery, AuthenticateQueryVariables>(AuthenticateDocument, options);
-}
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AuthenticateQuery, AuthenticateQueryVariables>(AuthenticateDocument, options);
+        }
 export type AuthenticateQueryHookResult = ReturnType<typeof useAuthenticateQuery>;
 export type AuthenticateLazyQueryHookResult = ReturnType<typeof useAuthenticateLazyQuery>;
 export type AuthenticateQueryResult = Apollo.QueryResult<AuthenticateQuery, AuthenticateQueryVariables>;
@@ -359,9 +384,9 @@ export type SignupMutationFn = Apollo.MutationFunction<SignupMutation, SignupMut
  * });
  */
 export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<SignupMutation, SignupMutationVariables>) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useMutation<SignupMutation, SignupMutationVariables>(SignupDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignupMutation, SignupMutationVariables>(SignupDocument, options);
+      }
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
@@ -393,15 +418,15 @@ export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutati
  * });
  */
 export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
+      }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const FeedDocument = gql`
-    query Feed($filter: String, $skip: Int, $take: Int) {
-  feed(filter: $filter, skip: $skip, take: $take) {
+    query Feed($filter: String, $skip: Int, $take: Int, $orderBy: OrderByInput) {
+  feed(filter: $filter, skip: $skip, take: $take, orderBy: $orderBy) {
     count
     posts {
       ...PostFragment
@@ -425,17 +450,18 @@ export const FeedDocument = gql`
  *      filter: // value for 'filter'
  *      skip: // value for 'skip'
  *      take: // value for 'take'
+ *      orderBy: // value for 'orderBy'
  *   },
  * });
  */
 export function useFeedQuery(baseOptions?: Apollo.QueryHookOptions<FeedQuery, FeedQueryVariables>) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
+      }
 export function useFeedLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FeedQuery, FeedQueryVariables>) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
-}
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FeedQuery, FeedQueryVariables>(FeedDocument, options);
+        }
 export type FeedQueryHookResult = ReturnType<typeof useFeedQuery>;
 export type FeedLazyQueryHookResult = ReturnType<typeof useFeedLazyQuery>;
 export type FeedQueryResult = Apollo.QueryResult<FeedQuery, FeedQueryVariables>;
@@ -467,9 +493,9 @@ export type CreatePostMutationFn = Apollo.MutationFunction<CreatePostMutation, C
  * });
  */
 export function useCreatePostMutation(baseOptions?: Apollo.MutationHookOptions<CreatePostMutation, CreatePostMutationVariables>) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePostMutation, CreatePostMutationVariables>(CreatePostDocument, options);
+      }
 export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
 export type CreatePostMutationResult = Apollo.MutationResult<CreatePostMutation>;
 export type CreatePostMutationOptions = Apollo.BaseMutationOptions<CreatePostMutation, CreatePostMutationVariables>;
@@ -500,9 +526,9 @@ export type VoteMutationFn = Apollo.MutationFunction<VoteMutation, VoteMutationV
  * });
  */
 export function useVoteMutation(baseOptions?: Apollo.MutationHookOptions<VoteMutation, VoteMutationVariables>) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<VoteMutation, VoteMutationVariables>(VoteDocument, options);
+      }
 export type VoteMutationHookResult = ReturnType<typeof useVoteMutation>;
 export type VoteMutationResult = Apollo.MutationResult<VoteMutation>;
 export type VoteMutationOptions = Apollo.BaseMutationOptions<VoteMutation, VoteMutationVariables>;
@@ -533,9 +559,9 @@ export type UnvoteMutationFn = Apollo.MutationFunction<UnvoteMutation, UnvoteMut
  * });
  */
 export function useUnvoteMutation(baseOptions?: Apollo.MutationHookOptions<UnvoteMutation, UnvoteMutationVariables>) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useMutation<UnvoteMutation, UnvoteMutationVariables>(UnvoteDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UnvoteMutation, UnvoteMutationVariables>(UnvoteDocument, options);
+      }
 export type UnvoteMutationHookResult = ReturnType<typeof useUnvoteMutation>;
 export type UnvoteMutationResult = Apollo.MutationResult<UnvoteMutation>;
 export type UnvoteMutationOptions = Apollo.BaseMutationOptions<UnvoteMutation, UnvoteMutationVariables>;
@@ -563,9 +589,9 @@ export const PostCreatedDocument = gql`
  * });
  */
 export function usePostCreatedSubscription(baseOptions?: Apollo.SubscriptionHookOptions<PostCreatedSubscription, PostCreatedSubscriptionVariables>) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useSubscription<PostCreatedSubscription, PostCreatedSubscriptionVariables>(PostCreatedDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<PostCreatedSubscription, PostCreatedSubscriptionVariables>(PostCreatedDocument, options);
+      }
 export type PostCreatedSubscriptionHookResult = ReturnType<typeof usePostCreatedSubscription>;
 export type PostCreatedSubscriptionResult = Apollo.SubscriptionResult<PostCreatedSubscription>;
 export const PostVotedDocument = gql`
@@ -598,9 +624,9 @@ export const PostVotedDocument = gql`
  * });
  */
 export function usePostVotedSubscription(baseOptions?: Apollo.SubscriptionHookOptions<PostVotedSubscription, PostVotedSubscriptionVariables>) {
-    const options = { ...defaultOptions, ...baseOptions };
-    return Apollo.useSubscription<PostVotedSubscription, PostVotedSubscriptionVariables>(PostVotedDocument, options);
-}
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<PostVotedSubscription, PostVotedSubscriptionVariables>(PostVotedDocument, options);
+      }
 export type PostVotedSubscriptionHookResult = ReturnType<typeof usePostVotedSubscription>;
 export type PostVotedSubscriptionResult = Apollo.SubscriptionResult<PostVotedSubscription>;
 export type AuthPayloadKeySpecifier = ('token' | 'user' | AuthPayloadKeySpecifier)[];
@@ -660,35 +686,35 @@ export type VoteFieldPolicy = {
 	user?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type StrictTypedTypePolicies = {
-	AuthPayload?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+	AuthPayload?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | AuthPayloadKeySpecifier | (() => undefined | AuthPayloadKeySpecifier),
 		fields?: AuthPayloadFieldPolicy,
 	},
-	Feed?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+	Feed?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | FeedKeySpecifier | (() => undefined | FeedKeySpecifier),
 		fields?: FeedFieldPolicy,
 	},
-	Mutation?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+	Mutation?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | MutationKeySpecifier | (() => undefined | MutationKeySpecifier),
 		fields?: MutationFieldPolicy,
 	},
-	Post?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+	Post?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | PostKeySpecifier | (() => undefined | PostKeySpecifier),
 		fields?: PostFieldPolicy,
 	},
-	Query?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+	Query?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | QueryKeySpecifier | (() => undefined | QueryKeySpecifier),
 		fields?: QueryFieldPolicy,
 	},
-	Subscription?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+	Subscription?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | SubscriptionKeySpecifier | (() => undefined | SubscriptionKeySpecifier),
 		fields?: SubscriptionFieldPolicy,
 	},
-	User?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+	User?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | UserKeySpecifier | (() => undefined | UserKeySpecifier),
 		fields?: UserFieldPolicy,
 	},
-	Vote?: Omit<TypePolicy, 'fields' | 'keyFields'> & {
+	Vote?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | VoteKeySpecifier | (() => undefined | VoteKeySpecifier),
 		fields?: VoteFieldPolicy,
 	}

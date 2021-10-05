@@ -1,6 +1,6 @@
 # Query
-query Feed($filter: String, $skip: Int, $take: Int) {
-    feed(filter: $filter, skip: $skip, take: $take) {
+query Feed($filter: String, $skip: Int, $take: Int, $orderBy: OrderByInput) {
+    feed(filter: $filter, skip: $skip, take: $take, orderBy: $orderBy) {
         count
         posts {
             ...PostFragment

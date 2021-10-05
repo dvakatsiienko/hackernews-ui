@@ -14,12 +14,18 @@ export const useFeedVariables: UseFeedVariables = options => {
     const skip = options.isPaginated ? (page - 1) * POSTS_PER_PAGE : 0;
     const take = options.isPaginated ? POSTS_PER_PAGE : 25;
 
+    const orderBy: gql.OrderByInput = {
+        createdAt: options.orderBy?.createdAt,
+        voteCount: options.orderBy?.voteCount,
+    };
+
     return {
         POSTS_PER_PAGE,
         page,
         variables: {
             skip,
             take,
+            orderBy,
         },
     };
 };
@@ -27,6 +33,7 @@ export const useFeedVariables: UseFeedVariables = options => {
 /* Types */
 interface UseFeedVariablesOptions {
     isPaginated: boolean;
+    orderBy?: gql.OrderByInput;
 }
 
 interface UseFeedVariablesReturn {
