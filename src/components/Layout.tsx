@@ -30,27 +30,32 @@ export const Layout: React.FC = props => {
 /* Styles */
 const S = {
     Container: styled.section`
-        --layout-offset: 100px;
+        --layout-h-offset: 100px;
+        --layout-v-offset: 50px;
 
         display: grid;
-        grid-template-columns: minmax(10px, var(--layout-offset)) 1fr minmax(
-                10px,
-                var(--layout-offset)
+        grid-template-columns: minmax(5px, var(--layout-h-offset)) 1fr minmax(
+                5px,
+                var(--layout-h-offset)
             );
-        grid-template-rows: minmax(10px, var(--layout-offset)) 1fr minmax(
+        grid-template-rows: minmax(10px, var(--layout-v-offset)) 1fr minmax(
                 10px,
-                var(--layout-offset)
+                var(--layout-v-offset)
             );
         height: 100vh;
 
         && .bowser {
+            position: relative;
             display: grid;
             grid-template-rows: auto 1fr;
             grid-column: 2;
             grid-row: 2;
             width: 100%;
-            min-width: 300px;
-            min-height: 700px;
+            min-width: 310px;
+        }
+
+        @media (max-width: 550px) {
+            grid-template-columns: minmax(5px, 25px) 1fr minmax(5px, 25px);
         }
     `,
     Content: styled.section`

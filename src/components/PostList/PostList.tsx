@@ -102,10 +102,12 @@ export const PostList: React.FC<PostListProps> = props => {
         <S.Container>
             {/* {feedQuery.loading && <p>Loading...</p>} */}
 
-            <S.List>{postListJSX}</S.List>
+            <S.List $postCount = { POSTS_PER_PAGE } isPaginated = { isPaginated }>
+                {postListJSX}
+            </S.List>
 
-            <S.Footer $isDisabled = { isFetchingMore }>
-                {feedQuery.data && !isNaN(totalPages) && isPaginated && (
+            {feedQuery.data && !isNaN(totalPages) && isPaginated && (
+                <S.Footer $isDisabled = { isFetchingMore }>
                     <Pagination
                         count = { totalPages }
                         initialPage = { page }
@@ -113,8 +115,8 @@ export const PostList: React.FC<PostListProps> = props => {
                         page = { page }
                         onChange = { setPage }
                     />
-                )}
-            </S.Footer>
+                </S.Footer>
+            )}
         </S.Container>
     );
 };
@@ -122,20 +124,29 @@ export const PostList: React.FC<PostListProps> = props => {
 /* Styles */
 const S = {
     Container: styled.section`
-        --footer-height: 40px;
+        /* --footer-height: 40px; */
 
+        /* position: relative; */
         display: grid;
-        grid-template-rows: 1fr var(--footer-height);
+        /* grid-template-rows: 1fr var(--footer-height); */
         gap: var(--container-gap);
 
         overflow: hidden;
     `,
-    List: styled.ul`
+    List: styled.ul<ListProps>`
+        --post-height: 75px;
+        --post-list-gap: 5px;
+
+        display: grid;
+        grid-auto-rows: var(--post-height);
+        gap: var(--post-list-gap);
+
+        height: calc(var(--post-height) + var(--post-list-gap) * 4) px;
         max-height: calc(
-            100vh - (2 * var(--layout-offset)) - 41px -
-                (2 * var(--container-v-padding)) - var(--nav-height) -
-                (2 * var(--container-gap)) - var(--footer-height)
+            100vh - 41px - (var(--layout-v-offset) * 2) -
+                (var(--container-v-padding) * 2) - 24px - 45px
         );
+        /* max-height: 795px; */
         overflow-y: scroll;
 
         /* Hide scrollbar for Chrome */
@@ -147,9 +158,15 @@ const S = {
         -ms-overflow-style: none;
     `,
     Footer: styled.footer<FooterProps>`
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: white;
+        height: 45px;
 
         & nav {
             & li {
@@ -174,6 +191,11 @@ const S = {
 interface PostListProps {
     isPaginated?: boolean;
     isSubscribed?: boolean;
+}
+
+interface ListProps {
+    isPaginated: boolean;
+    $postCount: number;
 }
 
 interface FooterProps {

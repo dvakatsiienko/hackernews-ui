@@ -61,9 +61,13 @@ const S = {
     Container: styled(Card)<CardProps>`
         --font-size: 15px;
 
-        &&:not(:last-child) {
-            margin-bottom: 7px;
+        &&& {
+            height: var(--post-height);
         }
+
+        /* &&:not(:last-child) {
+            margin-bottom: 7px;
+        } */
     `,
     Header: styled.header`
         display: flex;
