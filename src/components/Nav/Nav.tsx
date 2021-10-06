@@ -105,11 +105,14 @@ export const Nav: React.FC = () => {
             {isAuthenticated && (
                 <S.PublishPostButton
                     auto
-                    iconRight = { <Edit3 /> }
+                    icon = { <Edit3 /> }
+                    scale = { 2 / 3 }
                     title = 'Publish a post...'
                     type = 'secondary'
                     onClick = { () => setDrawerState('open') }
-                />
+                >
+                    Publish a post
+                </S.PublishPostButton>
             )}
         </S.Container>
     );
