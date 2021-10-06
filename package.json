@@ -14,7 +14,7 @@
         "@apollo/client": "3.4.16",
         "@geist-ui/react": "2.2.0",
         "@geist-ui/react-icons": "1.0.1",
-        "@hookform/resolvers": "2.8.1",
+        "@hookform/resolvers": "2.8.2",
         "apollo-link-logger": "2.0.0",
         "debug": "4.3.2",
         "deepmerge": "4.2.2",

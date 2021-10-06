@@ -9,7 +9,7 @@ specifiers:
   '@graphql-codegen/typescript-apollo-client-helpers': 2.1.4
   '@graphql-codegen/typescript-operations': 2.1.6
   '@graphql-codegen/typescript-react-apollo': 3.1.4
-  '@hookform/resolvers': 2.8.1
+  '@hookform/resolvers': 2.8.2
   '@types/debug': 4.1.7
   '@types/lodash': 4.14.175
   '@types/nprogress': 0.2.0
@@ -46,7 +46,7 @@ dependencies:
   '@apollo/client': 3.4.16_graphql@15.6.1+react@17.0.2
   '@geist-ui/react': 2.2.0_react-dom@17.0.2+react@17.0.2
   '@geist-ui/react-icons': 1.0.1_4e30a64da9ddcc01263fc9b4d75a88c5
-  '@hookform/resolvers': 2.8.1_react-hook-form@7.17.1
+  '@hookform/resolvers': 2.8.2_react-hook-form@7.17.1
   apollo-link-logger: 2.0.0_@apollo+client@3.4.16
   debug: 4.3.2
   deepmerge: 4.2.2
@@ -1277,8 +1277,8 @@ packages:
     resolution: {integrity: sha512-gfta+H8aziZsm8pZa0vj04KO6biEiisppNgA1kbJvFrrWu9Vm7eaUEy76DIxsuTaWvti5fkJVhllWc6ZTE+Mdw==}
     dev: false
 
-  /@hookform/resolvers/2.8.1_react-hook-form@7.17.1:
-    resolution: {integrity: sha512-U5lgaCkvD+0e5X8iQmCHiF+jOqjTX6OHUA7zPdeIHI6xdAOoi3rH9MKNuwMwv5Hly2LL6XtDgDkS/k+YG9hOew==}
+  /@hookform/resolvers/2.8.2_react-hook-form@7.17.1:
+    resolution: {integrity: sha512-oDTGrm7yHxT4VIv4kJcfjvWvozCbdcL0/jrpbAkeo39FYn78XnKOrrGTNmrXdfu+EQVkNIdZ47IYRFManZ4jUA==}
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
