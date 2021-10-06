@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 /* Instruments */
 import * as gql from '@/graphql';
 
-const schema: yup.SchemaOf<gql.CreatePostMutationVariables> = yup
+const schema: yup.SchemaOf<FormShape> = yup
     .object({
         url: yup
             .string()
@@ -20,3 +20,6 @@ const schema: yup.SchemaOf<gql.CreatePostMutationVariables> = yup
     .required();
 
 export const resolver = yupResolver(schema);
+
+/* Types */
+export type FormShape = gql.CreatePostMutationVariables;

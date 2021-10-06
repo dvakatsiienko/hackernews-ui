@@ -8,12 +8,12 @@ import { Fieldset, Input } from '@/components/Form';
 /* Instruments */
 import * as gql from '@/graphql';
 import { useToasts } from '@/hooks';
-import { resolver } from './resolver';
+import { resolver, FormShape } from './resolver';
 
 export const PublishPostForm: React.FC<PublishPostFormProps> = props => {
     const createToast = useToasts();
 
-    const form = useForm({
+    const form = useForm<FormShape>({
         resolver,
         mode:          'all',
         defaultValues: {
