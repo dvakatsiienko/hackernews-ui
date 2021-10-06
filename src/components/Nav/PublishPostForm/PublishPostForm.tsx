@@ -53,6 +53,7 @@ export const PublishPostForm: React.FC<PublishPostFormProps> = props => {
     return (
         <form onSubmit = { publish }>
             <h2>Publish a post</h2>
+            <h6>Share something interesting with public...</h6>
 
             <GUI.Spacer />
 

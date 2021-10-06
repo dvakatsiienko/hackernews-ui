@@ -125,8 +125,6 @@ export const PostList: React.FC<PostListProps> = props => {
 /* Styles */
 const S = {
     Container: styled.section`
-        --footer-height: 45px;
-
         display: grid;
         gap: var(--container-gap);
 
@@ -142,7 +140,8 @@ const S = {
 
         max-height: calc(
             100vh - 41px - (var(--layout-v-offset) * 2) -
-                (var(--container-v-padding) * 2) - 24px - var(--footer-height)
+                (var(--container-v-padding) * 2) - 24px -
+                var(--post-list-footer-height)
         );
         overflow-y: scroll;
 
@@ -163,7 +162,7 @@ const S = {
         justify-content: center;
         align-items: center;
         background-color: white;
-        height: var(--footer-height);
+        height: var(--post-list-footer-height);
 
         & nav {
             & li {

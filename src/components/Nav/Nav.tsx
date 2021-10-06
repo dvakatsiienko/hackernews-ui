@@ -3,7 +3,7 @@ import { useState } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import * as GUI from '@geist-ui/react';
-import { Aperture } from '@geist-ui/react-icons';
+import { Aperture, Edit3 } from '@geist-ui/react-icons';
 import styled from 'styled-components';
 
 /* Components */
@@ -62,16 +62,6 @@ export const Nav: React.FC = () => {
                         search
                     </S.BreadcrumbsItem>
                 </NextLink>
-
-                {isAuthenticated && (
-                    <GUI.Link onClick = { e => e.preventDefault() }>
-                        <S.BreadcrumbsItem
-                            onClick = { () => setDrawerState('open') }
-                        >
-                            publish
-                        </S.BreadcrumbsItem>
-                    </GUI.Link>
-                )}
             </GUI.Breadcrumbs>
 
             <GUI.Breadcrumbs>
@@ -111,6 +101,16 @@ export const Nav: React.FC = () => {
             >
                 <PublishPostForm closeDrawer = { closeDrawer } />
             </GUI.Drawer>
+
+            {isAuthenticated && (
+                <S.PublishPostButton
+                    auto
+                    iconRight = { <Edit3 /> }
+                    title = 'Publish a post...'
+                    type = 'secondary'
+                    onClick = { () => setDrawerState('open') }
+                />
+            )}
         </S.Container>
     );
 };
@@ -136,6 +136,15 @@ const S = {
     `,
     BreadcrumbsItem: styled(GUI.Breadcrumbs.Item)<TBreadcrumbsItemProps>`
         ${props => props.$active && `color: ${palette.link} !important;`}
+    `,
+    PublishPostButton: styled(GUI.Button)<GUI.ButtonProps>`
+        &&& {
+            position: absolute;
+        }
+
+        right: 15px;
+        bottom: calc(var(--post-list-footer-height) + 15px);
+        z-index: 1;
     `,
 };
 

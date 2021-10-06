@@ -32,6 +32,7 @@ const S = {
     Container: styled.section`
         --layout-h-offset: 100px;
         --layout-v-offset: 50px;
+        --post-list-footer-height: 45px;
 
         display: grid;
         grid-template-columns: minmax(5px, var(--layout-h-offset)) 1fr minmax(
