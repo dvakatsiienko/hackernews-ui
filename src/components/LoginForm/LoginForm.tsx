@@ -61,16 +61,31 @@ export const LoginForm: React.FC = () => {
             saveToken(data.signup);
         },
         onError(error) {
+            let fieldName = null;
+
             const fields: Array<keyof FormShape> = [
                 'name',
                 'email',
                 'password',
-                'confirmPassword',
             ];
 
             fields.forEach(field => {
-                form.setError(field, { message: error.message });
+                error.message.toLowerCase().includes(field)
+                    && (fieldName = field);
             });
+
+            createToast({ type: 'error', text: error.message, delay: 10000 });
+
+            if (fieldName) {
+                if (fieldName === 'password') {
+                    form.setError('password', { message: error.message });
+                    form.setError('confirmPassword', {
+                        message: error.message,
+                    });
+                } else {
+                    form.setError(fieldName, { message: error.message });
+                }
+            }
 
             createToast({ type: 'error', text: error.message, delay: 10000 });
         },
