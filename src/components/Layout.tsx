@@ -65,7 +65,7 @@ const S = {
         --container-v-padding: 7px;
 
         display: grid;
-        grid-template-rows: auto 1fr;
+        grid-template-rows: auto auto 1fr;
         gap: var(--container-gap);
         padding: var(--container-v-padding) 10px;
     `,

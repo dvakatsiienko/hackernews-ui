@@ -65,6 +65,10 @@ export const PostList: React.FC<PostListProps> = props => {
     }
 
     const getSortedPosts = () => {
+        if (props.postList) {
+            return props.postList;
+        }
+
         if (isPaginated) {
             return feedQuery.data?.feed.posts ?? [];
         }
@@ -188,6 +192,7 @@ interface PostListProps {
     isPaginated?: boolean;
     isSubscribed?: boolean;
     orderBy?: gql.OrderByInput;
+    postList: gql.PostFragment[];
 }
 
 interface ListProps {

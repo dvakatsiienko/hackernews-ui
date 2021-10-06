@@ -11,4 +11,5 @@ const schema: yup.SchemaOf<FormShape> = yup.object({
 
 export const resolver = yupResolver(schema);
 
-type FormShape = Pick<gql.FeedQueryVariables, 'filter'>;
+/* Types */
+export type FormShape = Pick<gql.FeedQueryVariables, 'filter'>;

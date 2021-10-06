@@ -1,64 +1,53 @@
 /* Core */
-import { useState, useEffect } from 'react';
-import { NetworkStatus } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import { Button } from '@geist-ui/react';
 import waait from 'waait';
 
 /* Components */
-import { Post } from '../PostList/Post';
 import { Fieldset, Input } from '../Form';
 
 /* Instruments */
 import * as gql from '@/graphql';
-import { resolver } from './resolver';
+import { resolver, FormShape } from './resolver';
 
-export const SearchPostForm: React.FC = () => {
-    const [ isRefetching, setIsRefetching ] = useState(false);
-    const form = useForm({
+export const SearchPostForm: React.FC<SearchPostForm> = props => {
+    const [ , feedQuery ] = props.feedLazyQuery;
+
+    const form = useForm<FormShape>({
         resolver,
         defaultValues: { filter: '' },
     });
 
-    const [ search, feedQuery ] = gql.useFeedLazyQuery({
-        notifyOnNetworkStatusChange: true,
-    });
-
-    useEffect(search, []);
-
-    const submit = form.handleSubmit(async values => {
-        setIsRefetching(true);
+    const search = form.handleSubmit(async values => {
+        props.setIsRefetching(true);
         await waait(1000);
         feedQuery.refetch(values);
-        setIsRefetching(false);
+        props.setIsRefetching(false);
     });
 
-    const isFirstFetch = feedQuery.networkStatus === NetworkStatus.loading;
-    const isDisabled = feedQuery.loading || isRefetching;
-
-    const postListJSX = feedQuery.data?.feed.posts.map((post, index) => {
-        return <Post key = { post.id } orderNumber = { index + 0 } post = { post } />;
-    }) ?? [];
-
     return (
-        <>
-            <form onSubmit = { submit }>
-                <Fieldset disabled = { isDisabled }>
-                    <h2 className = 'mv3'>Search for a post</h2>
-                    <Input
-                        formState = { form.formState }
-                        placeholder = 'Search...'
-                        register = { form.register('filter') }
-                    />
-                    &nbsp;
-                    <Button auto htmlType = 'submit'>
-                        GO
-                        {isRefetching && '⏳'}
-                    </Button>
-                </Fieldset>
-            </form>
-
-            {isFirstFetch ? <h5>Loading...</h5> : postListJSX}
-        </>
+        <form onSubmit = { search }>
+            <h2>Search for post</h2>
+            <Fieldset disabled = { props.isDisabled }>
+                <Input
+                    autoFocus
+                    formState = { form.formState }
+                    placeholder = 'Search...'
+                    register = { form.register('filter') }
+                />
+                &nbsp;
+                <Button disabled = { props.isDisabled } htmlType = 'submit'>
+                    GO
+                </Button>
+            </Fieldset>
+        </form>
     );
 };
+
+/* Types */
+interface SearchPostForm {
+    setIsRefetching: React.Dispatch<React.SetStateAction<boolean>>;
+    feedLazyQuery: gql.FeedLazyQueryHookResult;
+    isDisabled: boolean;
+    isRefetching: boolean;
+}
