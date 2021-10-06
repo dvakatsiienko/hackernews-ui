@@ -11,18 +11,14 @@ import * as gql from '@/graphql';
 const SearchPage: NextPage = () => {
     const [ isRefetching, setIsRefetching ] = useState(false);
     const feedLazyQuery = gql.useFeedLazyQuery({
+        fetchPolicy:                 'cache-and-network',
         notifyOnNetworkStatusChange: true,
         variables:                   { take: 6 },
     });
     const [ lazySearch, feedQuery ] = feedLazyQuery;
-
-    useEffect(lazySearch, []);
-
     const isDisabled = feedQuery.loading || isRefetching;
 
-    // const postListJSX = feedQuery.data?.feed.posts.map((post, index) => {
-    //     return <Post key = { post.id } orderNumber = { index + 0 } post = { post } />;
-    // }) ?? [];
+    useEffect(lazySearch, []);
 
     return (
         <>

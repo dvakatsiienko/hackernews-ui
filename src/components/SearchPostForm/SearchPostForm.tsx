@@ -36,7 +36,11 @@ export const SearchPostForm: React.FC<SearchPostForm> = props => {
                     register = { form.register('filter') }
                 />
                 &nbsp;
-                <Button disabled = { props.isDisabled } htmlType = 'submit'>
+                <Button
+                    disabled = { props.isDisabled }
+                    htmlType = 'submit'
+                    type = 'secondary'
+                >
                     GO
                 </Button>
             </Fieldset>

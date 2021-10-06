@@ -6,17 +6,19 @@ import * as gql from '@/graphql';
 
 const POSTS_PER_PAGE = Number(process.env.NEXT_PUBLIC_POSTS_PER_PAGE);
 
-export const useFeedVariables: UseFeedVariables = options => {
+export const useFeedVariables: UseFeedVariables = (
+    options = { orderBy: {} },
+) => {
     const router = useRouter();
 
     const page = parseInt(router.query.page as string);
 
-    const skip = options.isPaginated ? (page - 1) * POSTS_PER_PAGE : 0;
-    const take = options.isPaginated ? POSTS_PER_PAGE : 25;
+    const skip = (page - 1) * POSTS_PER_PAGE;
+    const take = POSTS_PER_PAGE;
 
     const orderBy: gql.OrderByInput = {
-        createdAt: options.orderBy?.createdAt,
-        voteCount: options.orderBy?.voteCount,
+        createdAt: options.orderBy.createdAt,
+        voteCount: options.orderBy.voteCount,
     };
 
     return {
@@ -32,8 +34,7 @@ export const useFeedVariables: UseFeedVariables = options => {
 
 /* Types */
 interface UseFeedVariablesOptions {
-    isPaginated: boolean;
-    orderBy?: gql.OrderByInput;
+    orderBy: gql.OrderByInput;
 }
 
 interface UseFeedVariablesReturn {
@@ -43,5 +44,5 @@ interface UseFeedVariablesReturn {
 }
 
 type UseFeedVariables = (
-    options: UseFeedVariablesOptions,
+    options?: UseFeedVariablesOptions,
 ) => UseFeedVariablesReturn;
