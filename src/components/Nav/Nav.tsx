@@ -66,7 +66,6 @@ export const Nav: React.FC = () => {
                 {isAuthenticated && (
                     <GUI.Link onClick = { e => e.preventDefault() }>
                         <S.BreadcrumbsItem
-                            $active = { get$Active(book.create) }
                             onClick = { () => setDrawerState('open') }
                         >
                             publish
@@ -76,6 +75,12 @@ export const Nav: React.FC = () => {
             </GUI.Breadcrumbs>
 
             <GUI.Breadcrumbs>
+                {isAuthenticated && (
+                    <NextLink href = { book.profile }>
+                        <S.BreadcrumbsItem nextLink>profile</S.BreadcrumbsItem>
+                    </NextLink>
+                )}
+
                 {isAuthenticated ? (
                     <NextLink href = '.'>
                         <S.BreadcrumbsItem nextLink onClick = { logout }>

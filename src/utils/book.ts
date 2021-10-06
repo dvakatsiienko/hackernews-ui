@@ -1,8 +1,8 @@
 export const book = {
     login:   '/login',
     new:     '/new',
+    newPage: '/new/:page',
     top:     '/top',
     search:  '/search',
-    create:  '/create',
-    newPage: '/new/:page',
+    profile: '/profile',
 };
