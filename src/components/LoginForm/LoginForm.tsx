@@ -24,7 +24,7 @@ export const LoginForm: React.FC = () => {
 
     const createToast = useToasts();
 
-    const form = useForm({
+    const form = useForm<FormShape>({
         resolver:      createResolver(isLogin),
         mode:          'all',
         defaultValues: {

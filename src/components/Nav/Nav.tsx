@@ -77,7 +77,12 @@ export const Nav: React.FC = () => {
             <GUI.Breadcrumbs>
                 {isAuthenticated && (
                     <NextLink href = { book.profile }>
-                        <S.BreadcrumbsItem nextLink>profile</S.BreadcrumbsItem>
+                        <S.BreadcrumbsItem
+                            nextLink
+                            $active = { get$Active(book.profile) }
+                        >
+                            profile
+                        </S.BreadcrumbsItem>
                     </NextLink>
                 )}
 

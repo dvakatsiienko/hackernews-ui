@@ -1,7 +1,6 @@
 /* Core */
-import {
-    Card, CardProps, Link, Themes
-} from '@geist-ui/react';
+import * as GUI from '@geist-ui/react';
+import NextLink from 'next/link';
 import styled from 'styled-components';
 
 /* Instruments */
@@ -22,14 +21,14 @@ export const Post: React.FC<PostProps> = props => {
         <S.Container>
             <S.Header>
                 <S.OrderNumber>{props.orderNumber}.</S.OrderNumber>
-                <Link
+                <GUI.Link
                     color
                     href = { props.post.url }
                     rel = 'noreferrer noopener'
                     target = '_blank'
                 >
                     {props.post.description}
-                </Link>
+                </GUI.Link>
             </S.Header>
 
             <S.Footer>
@@ -44,30 +43,33 @@ export const Post: React.FC<PostProps> = props => {
                     </S.Upvote>
                 )}
                 <span>
-                    <b>{props.post.votes.length}</b>&nbsp;
+                    {props.post.votes.length}
+                    &nbsp;
                 </span>
-                votes | by{' '}
-                {props.post.postedBy ? props.post.postedBy.name : 'Unknown'} |{' '}
-                {timeDifferenceForDate(props.post.createdAt)}
+                votes |&nbsp;
+                {props.post.postedBy ? (
+                    <NextLink href = { `/user/${props.post.postedBy.id}` }>
+                        <a>by {props.post.postedBy.name}</a>
+                    </NextLink>
+                ) : (
+                    'Unknown'
+                )}{' '}
+                | {timeDifferenceForDate(props.post.createdAt)}
             </S.Footer>
         </S.Container>
     );
 };
 
 /* Styles */
-const { palette } = Themes.getPresets()[ 0 ];
+const { palette } = GUI.Themes.getPresets()[ 0 ];
 
 const S = {
-    Container: styled(Card)<CardProps>`
+    Container: styled(GUI.Card)<GUI.CardProps>`
         --font-size: 15px;
 
         &&& {
             height: var(--post-height);
         }
-
-        /* &&:not(:last-child) {
-            margin-bottom: 7px;
-        } */
     `,
     Header: styled.header`
         display: flex;
@@ -101,6 +103,14 @@ const S = {
     Footer: styled.footer`
         color: ${palette.accents_5};
         font-size: 14px;
+
+        & a {
+            color: ${palette.accents_5} !important;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
     `,
 };
 

@@ -13,9 +13,7 @@ const MyProfilePage: NextPage = () => {
         variables: { token: getJwtToken() },
     });
 
-    return (
-        <UserProfile isEditable = { false } user = { authQuery.data?.authenticate } />
-    );
+    return <UserProfile isEditable user = { authQuery.data?.authenticate } />;
 };
 
 export default MyProfilePage;
