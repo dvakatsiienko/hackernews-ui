@@ -14,7 +14,7 @@ export const getApolloClient = (
     ctx?: GetServerSidePropsContext,
     initialState?: NormalizedCacheObject,
 ) => {
-    if (ctx?.req.cookies) {
+    if (ctx?.req?.cookies) {
         // console.log('COOKIES FOUND', ctx?.req.cookies);
         // const cookie = ctx.req.cookies[ KEYSTONE_COOKIE_NAME ];
         // headers.cookie = `${KEYSTONE_COOKIE_NAME}=${cookie}`;
