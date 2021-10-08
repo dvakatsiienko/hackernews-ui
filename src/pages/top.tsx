@@ -53,4 +53,10 @@ const TopPostsPage: NextPage = () => {
     );
 };
 
+export const getStaticProps = async ctx => {
+    return {
+        props: {}, // will be passed to the page component as props
+    };
+};
+
 export default TopPostsPage;

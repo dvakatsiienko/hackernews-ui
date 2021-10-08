@@ -15,12 +15,11 @@ export const getApolloClient = (
     initialState?: NormalizedCacheObject,
 ) => {
     if (ctx?.req.cookies) {
-        console.log('COOKIES FOUND', ctx?.req.cookies);
+        // console.log('COOKIES FOUND', ctx?.req.cookies);
         // const cookie = ctx.req.cookies[ KEYSTONE_COOKIE_NAME ];
-
         // headers.cookie = `${KEYSTONE_COOKIE_NAME}=${cookie}`;
     } else {
-        console.log('COOKIES NOT FOUND');
+        // console.log('COOKIES NOT FOUND');
     }
 
     const client = new ApolloClient({

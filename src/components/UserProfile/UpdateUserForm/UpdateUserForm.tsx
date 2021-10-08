@@ -32,7 +32,6 @@ export const UpdateUserForm: React.FC<UpdateUserFormProps> = props => {
             createToast({ text: 'Profile updated', delay: 10000 });
         },
         onError(error) {
-            console.log(error);
             let fieldName = null;
 
             error.message.toLowerCase().includes('name')
