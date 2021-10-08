@@ -3,12 +3,12 @@ import merge from 'deepmerge';
 import { isEqual } from 'lodash';
 
 /* Instruments */
-import { createApolloClient } from './createApolloClient';
+import { getApolloClient } from './getApolloClient';
 
 let apolloClient = null;
 
 export const initApollo = (initialState = null) => {
-    const _apolloClient = apolloClient ?? createApolloClient();
+    const _apolloClient = apolloClient ?? getApolloClient();
 
     /**
      * If your page has Next.js data fetching methods that use Apollo Client, the initial state
