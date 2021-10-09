@@ -12,7 +12,7 @@ export const UserProfile: React.FC<UserProfileProps> = props => {
         <GUI.Card>
             <GUI.Tabs initialValue = '1'>
                 <GUI.Tabs.Item
-                    label = { props.isEditable ? 'My Info' : 'User profile' }
+                    label = { props.isEditable ? 'My Info' : 'User' }
                     value = '1'
                 >
                     {props.isEditable && <h2>Welcome {props.user?.name}</h2>}

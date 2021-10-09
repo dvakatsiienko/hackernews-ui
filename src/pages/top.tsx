@@ -6,9 +6,7 @@ import { PostList } from '@/components';
 
 /* Instruments */
 import * as gql from '@/graphql';
-import { getApolloClient } from '@/lib/apollo/getApolloClient';
-
-const orderBy = { voteCount: gql.Order_By_Enum.Desc };
+import { getStaticAC } from '@/lib/apollo';
 
 const TopPostsPage: TopPostsPageProps = props => {
     // const feedQuery = gql.useFeedQuery({
@@ -16,44 +14,15 @@ const TopPostsPage: TopPostsPageProps = props => {
     //     fetchPolicy: 'cache-and-network',
     // });
 
-    // if (process.browser) {
-    //     feedQuery.subscribeToMore<gql.PostCreatedSubscription>({
-    //         document:    gql.PostCreatedDocument,
-    //         updateQuery: (prev, opts) => {
-    //             const { subscriptionData } = opts;
-
-    //             if (!subscriptionData.data) return prev;
-
-    //             const newPost = subscriptionData.data.postCreated;
-
-    //             const isExists = prev.feed.posts.find(
-    //                 post => post.id === newPost.id,
-    //             );
-
-    //             if (isExists) return prev;
-
-    //             const result = {
-    //                 ...prev,
-    //                 feed: {
-    //                     __typename: prev.feed.__typename,
-    //                     posts:      [ newPost, ...prev.feed.posts ],
-    //                     count:      prev.feed.count + 1,
-    //                 },
-    //             };
-
-    //             return result;
-    //         },
-    //     });
-    // }
-
     // const postList = feedQuery.data?.feed.posts ?? props.feed.posts ?? [];
 
     return <PostList orderBy = { orderBy } postList = { props.feed.posts } />;
 };
 
-export const getStaticProps: GetStaticProps = async ctx => {
-    // @ts-ignore
-    const apolloClient = getApolloClient(ctx);
+const orderBy = { voteCount: gql.Order_By_Enum.Desc };
+
+export const getStaticProps: GetStaticProps = async () => {
+    const apolloClient = getStaticAC();
 
     const feedQuery = await apolloClient.query<gql.FeedQuery>({
         variables: { take: 25, orderBy },

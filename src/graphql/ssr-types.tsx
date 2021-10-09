@@ -183,6 +183,45 @@ export const ssrPostVoted = {
 
     usePage: usePostVoted,
 };
+export async function getServerPageUsers(
+    options: Omit<Apollo.QueryOptions<Types.UsersQueryVariables>, 'query'>,
+    ctx?: any,
+) {
+    const apolloClient = getApolloClient(ctx);
+
+    const data = await apolloClient.query<Types.UsersQuery>({
+        ...options,
+        query: Operations.UsersDocument,
+    });
+
+    const apolloState = apolloClient.cache.extract();
+
+    return {
+        props: {
+            apolloState,
+            data:  data?.data,
+            error: data?.error ?? data?.errors ?? null,
+        },
+    };
+}
+export const useUsers = (
+    optionsFunc?: (
+        router: NextRouter,
+    ) => QueryHookOptions<Types.UsersQuery, Types.UsersQueryVariables>,
+) => {
+    const router = useRouter();
+    const options = optionsFunc ? optionsFunc(router) : {};
+    return useQuery(Operations.UsersDocument, options);
+};
+export type PageUsersComp = React.FC<{
+    data?: Types.UsersQuery;
+    error?: Apollo.ApolloError;
+}>;
+export const ssrUsers = {
+    getServerPage: getServerPageUsers,
+
+    usePage: useUsers,
+};
 export async function getServerPageUser(
     options: Omit<Apollo.QueryOptions<Types.UserQueryVariables>, 'query'>,
     ctx?: any,

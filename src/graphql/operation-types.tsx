@@ -120,6 +120,7 @@ export type Query = {
     feed: Feed;
     post: Post;
     user: User;
+    users: Array<User>;
 };
 
 export type QueryAuthenticateArgs = {
@@ -618,6 +619,52 @@ export type VoteFragment = {
         }>;
     };
     user: { __typename?: 'User'; id: string };
+};
+
+export type UsersQueryVariables = Exact<{ [key: string]: never }>;
+
+export type UsersQuery = {
+    __typename?: 'Query';
+    users: Array<{
+        __typename?: 'User';
+        id: string;
+        name: string;
+        email: string;
+        bio?: string | null | undefined;
+        posts: Array<{
+            __typename?: 'Post';
+            id: string;
+            url: string;
+            description: string;
+            createdAt: any;
+            isVotedByMe: boolean;
+            postedBy: { __typename?: 'User'; id: string; name: string };
+            votes: Array<{
+                __typename?: 'Vote';
+                id: string;
+                user: { __typename?: 'User'; id: string };
+            }>;
+        }>;
+        votes: Array<{
+            __typename?: 'Vote';
+            id: string;
+            post: {
+                __typename?: 'Post';
+                id: string;
+                url: string;
+                description: string;
+                createdAt: any;
+                isVotedByMe: boolean;
+                postedBy: { __typename?: 'User'; id: string; name: string };
+                votes: Array<{
+                    __typename?: 'Vote';
+                    id: string;
+                    user: { __typename?: 'User'; id: string };
+                }>;
+            };
+            user: { __typename?: 'User'; id: string };
+        }>;
+    }>;
 };
 
 export type UserQueryVariables = Exact<{
@@ -1226,6 +1273,54 @@ export type PostVotedSubscriptionHookResult = ReturnType<
 >;
 export type PostVotedSubscriptionResult =
     Apollo.SubscriptionResult<PostVotedSubscription>;
+export const UsersDocument = gql`
+    query Users {
+        users {
+            ...UserFragment
+        }
+    }
+    ${UserFragmentDoc}
+`;
+
+/**
+ * __useUsersQuery__
+ *
+ * To run a query within a React component, call `useUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUsersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUsersQuery(
+    baseOptions?: Apollo.QueryHookOptions<UsersQuery, UsersQueryVariables>,
+) {
+    const options = { ...defaultOptions, ...baseOptions };
+    return Apollo.useQuery<UsersQuery, UsersQueryVariables>(
+        UsersDocument,
+        options,
+    );
+}
+export function useUsersLazyQuery(
+    baseOptions?: Apollo.LazyQueryHookOptions<UsersQuery, UsersQueryVariables>,
+) {
+    const options = { ...defaultOptions, ...baseOptions };
+    return Apollo.useLazyQuery<UsersQuery, UsersQueryVariables>(
+        UsersDocument,
+        options,
+    );
+}
+export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>;
+export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
+export type UsersQueryResult = Apollo.QueryResult<
+    UsersQuery,
+    UsersQueryVariables
+>;
 export const UserDocument = gql`
     query User($id: ID!) {
         user(id: $id) {
@@ -1385,6 +1480,7 @@ export type QueryKeySpecifier = (
     | 'feed'
     | 'post'
     | 'user'
+    | 'users'
     | QueryKeySpecifier
 )[];
 export type QueryFieldPolicy = {
@@ -1392,6 +1488,7 @@ export type QueryFieldPolicy = {
     feed?: FieldPolicy<any> | FieldReadFunction<any>;
     post?: FieldPolicy<any> | FieldReadFunction<any>;
     user?: FieldPolicy<any> | FieldReadFunction<any>;
+    users?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type SubscriptionKeySpecifier = (
     | 'postCreated'

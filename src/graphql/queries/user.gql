@@ -1,4 +1,10 @@
 # Query
+query Users {
+    users {
+        ...UserFragment
+    }
+}
+
 query User($id: ID!) {
     user(id: $id) {
         ...UserFragment
