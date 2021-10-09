@@ -11,44 +11,44 @@ import { getApolloClient } from '@/lib/apollo/getApolloClient';
 const orderBy = { voteCount: gql.Order_By_Enum.Desc };
 
 const TopPostsPage: TopPostsPageProps = props => {
-    const feedQuery = gql.useFeedQuery({
-        variables:   { take: 25, orderBy },
-        fetchPolicy: 'cache-and-network',
-    });
+    // const feedQuery = gql.useFeedQuery({
+    //     variables:   { take: 25, orderBy },
+    //     fetchPolicy: 'cache-and-network',
+    // });
 
-    if (process.browser) {
-        feedQuery.subscribeToMore<gql.PostCreatedSubscription>({
-            document:    gql.PostCreatedDocument,
-            updateQuery: (prev, opts) => {
-                const { subscriptionData } = opts;
+    // if (process.browser) {
+    //     feedQuery.subscribeToMore<gql.PostCreatedSubscription>({
+    //         document:    gql.PostCreatedDocument,
+    //         updateQuery: (prev, opts) => {
+    //             const { subscriptionData } = opts;
 
-                if (!subscriptionData.data) return prev;
+    //             if (!subscriptionData.data) return prev;
 
-                const newPost = subscriptionData.data.postCreated;
+    //             const newPost = subscriptionData.data.postCreated;
 
-                const isExists = prev.feed.posts.find(
-                    post => post.id === newPost.id,
-                );
+    //             const isExists = prev.feed.posts.find(
+    //                 post => post.id === newPost.id,
+    //             );
 
-                if (isExists) return prev;
+    //             if (isExists) return prev;
 
-                const result = {
-                    ...prev,
-                    feed: {
-                        __typename: prev.feed.__typename,
-                        posts:      [ newPost, ...prev.feed.posts ],
-                        count:      prev.feed.count + 1,
-                    },
-                };
+    //             const result = {
+    //                 ...prev,
+    //                 feed: {
+    //                     __typename: prev.feed.__typename,
+    //                     posts:      [ newPost, ...prev.feed.posts ],
+    //                     count:      prev.feed.count + 1,
+    //                 },
+    //             };
 
-                return result;
-            },
-        });
-    }
+    //             return result;
+    //         },
+    //     });
+    // }
 
-    const postList = feedQuery.data?.feed.posts ?? props.feed.posts ?? [];
+    // const postList = feedQuery.data?.feed.posts ?? props.feed.posts ?? [];
 
-    return <PostList orderBy = { orderBy } postList = { postList } />;
+    return <PostList orderBy = { orderBy } postList = { props.feed.posts } />;
 };
 
 export const getStaticProps: GetStaticProps = async ctx => {
@@ -60,7 +60,7 @@ export const getStaticProps: GetStaticProps = async ctx => {
         query:     gql.FeedDocument,
     });
 
-    return { props: feedQuery.data, revalidate: 1 };
+    return { props: feedQuery.data, revalidate: 5 };
 };
 
 /* Types */
