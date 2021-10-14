@@ -41,7 +41,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         params: { userId: user.id },
     }));
 
-    return { paths, fallback: false };
+    return { paths, fallback: 'blocking' };
 };
 
 /* Types */

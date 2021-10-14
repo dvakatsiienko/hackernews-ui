@@ -5,7 +5,9 @@ import Router from 'next/router';
 import NProgress from 'nprogress';
 import { AppProps } from 'next/app';
 import { GeistProvider, CssBaseline } from '@geist-ui/react';
-import { ThemeProvider as StyledComponentsProvider } from 'styled-components';
+import styled, {
+    ThemeProvider as StyledComponentsProvider
+} from 'styled-components';
 
 /* Components */
 import { Authenticator, Layout } from '@/components';
