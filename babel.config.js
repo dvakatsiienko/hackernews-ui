@@ -12,7 +12,6 @@ module.exports = api => {
         plugins: [
             [ 'styled-components', { ssr: true }],
             [ 'transform-define', envConfig ],
-            'graphql-tag',
         ],
     };
 };

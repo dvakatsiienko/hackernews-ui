@@ -9,22 +9,27 @@ import { authLink } from './authLink';
 import { httpLink } from './httpLink';
 import { wsLink } from './wsLink';
 
-const baseLinks = [ loggerLink, errorLink ];
-const httpLinks = from([ ...baseLinks, authLink, httpLink ]);
-
 export const createIsomorphicLink = () => {
+    const baseLinks = [ errorLink ];
+    const httpLinks = [ ...baseLinks, authLink, httpLink ];
+
+    if (process.browser && __DEV__) {
+        baseLinks.unshift(loggerLink);
+        httpLinks.unshift(loggerLink);
+    }
+
     const link = split(
         operation => {
             const mainDefinition = getMainDefinition(operation.query);
 
             return (
                 process.browser
-                && mainDefinition.kind === 'OperationDefinition'
-                && mainDefinition.operation === 'subscription'
+                    && mainDefinition.kind === 'OperationDefinition'
+                    && mainDefinition.operation === 'subscription'
             );
         },
         from([ ...baseLinks, wsLink ]),
-        httpLinks,
+        from(httpLinks),
     );
 
     return link;
