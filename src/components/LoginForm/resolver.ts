@@ -1,6 +1,6 @@
 /* Core */
 import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 
 /* Instruments */
 import * as gql from '@/graphql';
