@@ -11,14 +11,14 @@ import * as gql from '@/graphql';
 import { resolver, FormShape } from './resolver';
 
 export const SearchPostForm: React.FC<SearchPostForm> = props => {
-    const [ , feedQuery ] = props.feedLazyQuery;
-
     const form = useForm<FormShape>({
         resolver,
         defaultValues: { filter: '' },
     });
 
     const search = form.handleSubmit(async values => {
+        const [ , feedQuery ] = props.feedLazyQuery;
+
         props.setIsRefetching(true);
         await waait(1000);
         feedQuery.refetch(values);
