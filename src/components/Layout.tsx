@@ -6,7 +6,7 @@ import styled from 'styled-components';
 /* Components */
 import { Nav } from '@/components';
 
-export const Layout: React.FC = props => {
+export const Layout: React.FC<Props> = props => {
     return (
         <S.Container>
             <Image.Browser
@@ -80,3 +80,8 @@ const S = {
         }
     `,
 };
+
+/* Types */
+interface Props {
+    children: React.ReactNode;
+}

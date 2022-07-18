@@ -14,7 +14,7 @@
     "@apollo/client": "3.5.5",
     "@geist-ui/react": "2.2.0",
     "@geist-ui/react-icons": "1.0.1",
-    "@hookform/resolvers": "2.8.3",
+    "@hookform/resolvers": "2.9.6",
     "debug": "4.3.3",
     "deepmerge": "4.2.2",
     "graphql": "16.0.1",
@@ -26,7 +26,7 @@
     "nprogress": "0.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "7.20.4",
+    "react-hook-form": "7.33.1",
     "sanitize.css": "13.0.0",
     "sass": "1.43.5",
     "styled-components": "5.3.3",
@@ -55,6 +55,6 @@
     "prettier-eslint": "13.0.0",
     "prettier-eslint-cli": "5.0.1",
     "release-it": "14.11.8",
-    "typescript": "4.5.2"
+    "typescript": "4.7.4"
   }
 }

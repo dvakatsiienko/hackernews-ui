@@ -18,6 +18,7 @@ const SearchPage: NextPage = () => {
     const [ lazySearch, feedQuery ] = feedLazyQuery;
     const isDisabled = feedQuery.loading || isRefetching;
 
+    // @ts-ignore
     useEffect(lazySearch, []);
 
     return (
