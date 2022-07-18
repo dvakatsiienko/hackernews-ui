@@ -18,9 +18,7 @@ export const PublishPostForm: React.FC<PublishPostFormProps> = props => {
         mode:          'all',
         defaultValues: {
             url:         __DEV__ ? 'https://www.prisma.io' : '',
-            description: __DEV__
-                ? 'Check out Prisma — the next-gen type-safe ORM'
-                : '',
+            description: __DEV__ ? 'Check out Prisma — the next-gen type-safe ORM' : '',
         },
     });
 
@@ -34,8 +32,7 @@ export const PublishPostForm: React.FC<PublishPostFormProps> = props => {
             let fieldName = null;
 
             error.message.toLowerCase().includes('url') && (fieldName = 'url');
-            error.message.toLowerCase().includes('description')
-                && (fieldName = 'description');
+            error.message.toLowerCase().includes('description') && (fieldName = 'description');
 
             if (fieldName) {
                 form.setError(fieldName, { message: error.message });
@@ -60,13 +57,17 @@ export const PublishPostForm: React.FC<PublishPostFormProps> = props => {
             <Fieldset>
                 <Input
                     autoFocus
+                    // @ts-ignore
                     formState = { form.formState }
                     placeholder = 'URL of the interesting stuff...'
+                    // @ts-ignore
                     register = { form.register('url') }
                 />
                 <Input
+                    // @ts-ignore
                     formState = { form.formState }
                     placeholder = 'Description...'
+                    // @ts-ignore
                     register = { form.register('description') }
                 />
 

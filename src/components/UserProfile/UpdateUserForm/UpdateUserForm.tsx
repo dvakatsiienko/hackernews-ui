@@ -34,10 +34,8 @@ export const UpdateUserForm: React.FC<UpdateUserFormProps> = props => {
         onError(error) {
             let fieldName = null;
 
-            error.message.toLowerCase().includes('name')
-                    && (fieldName = 'name');
-            error.message.toLowerCase().includes('email')
-                    && (fieldName = 'email');
+            error.message.toLowerCase().includes('name') && (fieldName = 'name');
+            error.message.toLowerCase().includes('email') && (fieldName = 'email');
 
             form.setError(fieldName, { message: error.message });
 
@@ -63,16 +61,19 @@ export const UpdateUserForm: React.FC<UpdateUserFormProps> = props => {
             <Fieldset css = 'max-width: 300px;' disabled = { isFetching }>
                 <Input
                     autoFocus
+                    // @ts-ignore
                     formState = { form.formState }
                     placeholder = 'Your name'
                     register = { form.register('name') }
                 />
                 <Input
+                    // @ts-ignore
                     formState = { form.formState }
                     placeholder = 'Your email address'
                     register = { form.register('email') }
                 />
                 <Input
+                    // @ts-ignore
                     formState = { form.formState }
                     placeholder = 'Tell something about you...'
                     register = { form.register('bio') }

@@ -31,16 +31,13 @@ export const SearchPostForm: React.FC<SearchPostForm> = props => {
             <Fieldset disabled = { props.isDisabled }>
                 <Input
                     autoFocus
+                    // @ts-ignore
                     formState = { form.formState }
                     placeholder = 'Search...'
                     register = { form.register('filter') }
                 />
                 &nbsp;
-                <Button
-                    disabled = { props.isDisabled }
-                    htmlType = 'submit'
-                    type = 'secondary'
-                >
+                <Button disabled = { props.isDisabled } htmlType = 'submit' type = 'secondary'>
                     GO
                 </Button>
             </Fieldset>

@@ -1,14 +1,7 @@
 /* Core */
-import type {
-    UseFormRegisterReturn,
-    FormState,
-    FieldValues
-} from 'react-hook-form';
+import type { UseFormRegisterReturn, FormState, FieldValues } from 'react-hook-form';
 import { Input as GeistInput, Dot } from '@geist-ui/react';
-import type {
-    InputProps as GeistInputProps,
-    InputPasswordProps
-} from '@geist-ui/react';
+import type { InputProps as GeistInputProps, InputPasswordProps } from '@geist-ui/react';
 import styled, { css } from 'styled-components';
 
 export const Input: React.FC<InputProps> = props => {
@@ -48,9 +41,8 @@ export const Input: React.FC<InputProps> = props => {
         <S.Container>
             {InputComponent}
             <S.ErrorMessage>
-                {props.formState.errors[ props.register.name ]?.message ?? (
-                    <>&nbsp;</>
-                )}
+                {/* @ts-ignore */}
+                {props.formState.errors[ props.register.name ]?.message ?? <>&nbsp;</>}
             </S.ErrorMessage>
         </S.Container>
     );

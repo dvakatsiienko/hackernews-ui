@@ -63,15 +63,10 @@ export const LoginForm: React.FC = () => {
         onError(error) {
             let fieldName = null;
 
-            const fields: Array<keyof FormShape> = [
-                'name',
-                'email',
-                'password',
-            ];
+            const fields: Array<keyof FormShape> = [ 'name', 'email', 'password' ];
 
             fields.forEach(field => {
-                error.message.toLowerCase().includes(field)
-                    && (fieldName = field);
+                error.message.toLowerCase().includes(field) && (fieldName = field);
             });
 
             createToast({ type: 'error', text: error.message, delay: 10000 });
@@ -117,6 +112,7 @@ export const LoginForm: React.FC = () => {
                 {!isLogin && (
                     <Input
                         autoFocus
+                        // @ts-ignore
                         formState = { form.formState }
                         placeholder = 'Your name'
                         register = { form.register('name') }
@@ -125,11 +121,13 @@ export const LoginForm: React.FC = () => {
 
                 <Input
                     autoFocus
+                    // @ts-ignore
                     formState = { form.formState }
                     placeholder = 'Your email address'
                     register = { form.register('email') }
                 />
                 <Input
+                    // @ts-ignore
                     formState = { form.formState }
                     placeholder = 'Choose a safe password'
                     register = { form.register('password') }
@@ -137,6 +135,7 @@ export const LoginForm: React.FC = () => {
                 />
                 {!isLogin && (
                     <Input
+                        // @ts-ignore
                         formState = { form.formState }
                         placeholder = 'Confirm password'
                         register = { form.register('confirmPassword') }
@@ -145,12 +144,7 @@ export const LoginForm: React.FC = () => {
                 )}
 
                 <S.Controls>
-                    <GUI.Button
-                        auto
-                        disabled = { isFetching }
-                        htmlType = 'submit'
-                        loading = { isFetching }
-                    >
+                    <GUI.Button auto disabled = { isFetching } htmlType = 'submit' loading = { isFetching }>
                         {isLogin ? 'login' : 'create account'}
                     </GUI.Button>
 
