@@ -11,7 +11,7 @@
     "release": "release-it --ci"
   },
   "dependencies": {
-    "@apollo/client": "3.5.5",
+    "@apollo/client": "3.6.9",
     "@geist-ui/react": "2.2.0",
     "@geist-ui/react-icons": "1.0.1",
     "@hookform/resolvers": "2.9.6",
