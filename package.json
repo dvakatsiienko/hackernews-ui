@@ -15,7 +15,7 @@
     "@geist-ui/react": "2.2.0",
     "@geist-ui/react-icons": "1.0.1",
     "@hookform/resolvers": "2.9.6",
-    "debug": "4.3.3",
+    "debug": "4.3.4",
     "deepmerge": "4.2.2",
     "graphql": "16.0.1",
     "graphql-codegen-apollo-next-ssr": "1.7.1",
