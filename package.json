@@ -48,7 +48,7 @@
     "@types/styled-components": "5.1.25",
     "apollo-link-logger": "2.0.0",
     "auto-changelog": "2.3.0",
-    "babel-plugin-styled-components": "2.0.1",
+    "babel-plugin-styled-components": "2.0.7",
     "babel-plugin-transform-define": "2.0.1",
     "eslint": "8.3.0",
     "eslint-config-dva": "0.0.16",
