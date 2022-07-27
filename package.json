@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "next",
-    "build": "next build",
+    "build": "NODE_OPTIONS='--inspect' next build",
     "serve": "next start",
     "codegen:graphql": "gql-gen -r dotenv/config --config \"./graphql-codegen.yml\"",
     "release": "release-it --ci"
