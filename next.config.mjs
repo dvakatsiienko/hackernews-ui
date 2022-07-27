@@ -1,5 +1,5 @@
 /* Instruments */
-import { envConfig } from './env-config.mjs';
+// import { envConfig } from './env-config.mjs';
 
 export async function redirects() {
     return [
@@ -22,6 +22,16 @@ export const compiler = {
         ssr:         true,
         fileName:    true,
     },
+};
+
+const { NODE_ENV } = process.env;
+
+export const envConfig = {
+    __ENV__:   NODE_ENV,
+    __DEV__:   NODE_ENV === 'development',
+    __STAGE__: NODE_ENV === 'stage',
+    __PROD__:  NODE_ENV === 'production',
+    __TEST__:  NODE_ENV === 'test',
 };
 
 export const webpack = (config, { webpack }) => {
