@@ -2,10 +2,11 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 import { FieldPolicy, FieldReadFunction, TypePolicies, TypePolicy } from '@apollo/client/cache';
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-const defaultOptions =  {}
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -78,10 +79,10 @@ export type MutationUpdatePostArgs = {
 
 
 export type MutationUpdateUserArgs = {
-  bio?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
+  bio?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
   id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -95,8 +96,8 @@ export enum Order_By_Enum {
 }
 
 export type OrderByInput = {
-  createdAt?: Maybe<Order_By_Enum>;
-  voteCount?: Maybe<Order_By_Enum>;
+  createdAt?: InputMaybe<Order_By_Enum>;
+  voteCount?: InputMaybe<Order_By_Enum>;
 };
 
 export type Post = {
@@ -126,10 +127,10 @@ export type QueryAuthenticateArgs = {
 
 
 export type QueryFeedArgs = {
-  filter?: Maybe<Scalars['String']>;
-  orderBy?: Maybe<OrderByInput>;
-  skip?: Maybe<Scalars['Int']>;
-  take?: Maybe<Scalars['Int']>;
+  filter?: InputMaybe<Scalars['String']>;
+  orderBy?: InputMaybe<OrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
 };
 
 
@@ -170,7 +171,7 @@ export type AuthenticateQueryVariables = Exact<{
 }>;
 
 
-export type AuthenticateQuery = { __typename?: 'Query', authenticate?: { __typename?: 'User', id: string, name: string, email: string, bio?: string | null | undefined, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } | null | undefined };
+export type AuthenticateQuery = { __typename?: 'Query', authenticate?: { __typename?: 'User', id: string, name: string, email: string, bio?: string | null, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } | null };
 
 export type SignupMutationVariables = Exact<{
   email: Scalars['String'];
@@ -179,7 +180,7 @@ export type SignupMutationVariables = Exact<{
 }>;
 
 
-export type SignupMutation = { __typename?: 'Mutation', signup?: { __typename?: 'AuthPayload', token?: string | null | undefined, user: { __typename?: 'User', id: string, name: string, email: string, bio?: string | null | undefined, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } } | null | undefined };
+export type SignupMutation = { __typename?: 'Mutation', signup?: { __typename?: 'AuthPayload', token?: string | null, user: { __typename?: 'User', id: string, name: string, email: string, bio?: string | null, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } } | null };
 
 export type LoginMutationVariables = Exact<{
   email: Scalars['String'];
@@ -187,17 +188,17 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'AuthPayload', token?: string | null | undefined, user: { __typename?: 'User', id: string, name: string, email: string, bio?: string | null | undefined, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } } | null | undefined };
+export type LoginMutation = { __typename?: 'Mutation', login?: { __typename?: 'AuthPayload', token?: string | null, user: { __typename?: 'User', id: string, name: string, email: string, bio?: string | null, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } } | null };
 
-export type AuthPayloadFragment = { __typename?: 'AuthPayload', token?: string | null | undefined, user: { __typename?: 'User', id: string, name: string, email: string, bio?: string | null | undefined, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } };
+export type AuthPayloadFragment = { __typename?: 'AuthPayload', token?: string | null, user: { __typename?: 'User', id: string, name: string, email: string, bio?: string | null, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } };
 
-export type UserFragment = { __typename?: 'User', id: string, name: string, email: string, bio?: string | null | undefined, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> };
+export type UserFragment = { __typename?: 'User', id: string, name: string, email: string, bio?: string | null, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> };
 
 export type FeedQueryVariables = Exact<{
-  filter?: Maybe<Scalars['String']>;
-  skip?: Maybe<Scalars['Int']>;
-  take?: Maybe<Scalars['Int']>;
-  orderBy?: Maybe<OrderByInput>;
+  filter?: InputMaybe<Scalars['String']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<OrderByInput>;
 }>;
 
 
@@ -242,24 +243,24 @@ export type VoteFragment = { __typename?: 'Vote', id: string, post: { __typename
 export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, name: string, email: string, bio?: string | null | undefined, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> }> };
+export type UsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: string, name: string, email: string, bio?: string | null, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> }> };
 
 export type UserQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', id: string, name: string, email: string, bio?: string | null | undefined, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } };
+export type UserQuery = { __typename?: 'Query', user: { __typename?: 'User', id: string, name: string, email: string, bio?: string | null, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } };
 
 export type UpdateUserMutationVariables = Exact<{
   id: Scalars['ID'];
-  name?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  bio?: Maybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']>;
+  bio?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, name: string, email: string, bio?: string | null | undefined, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } };
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, name: string, email: string, bio?: string | null, posts: Array<{ __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }>, votes: Array<{ __typename?: 'Vote', id: string, post: { __typename?: 'Post', id: string, url: string, description: string, createdAt: any, isVotedByMe: boolean, postedBy: { __typename?: 'User', id: string, name: string }, votes: Array<{ __typename?: 'Vote', id: string, user: { __typename?: 'User', id: string } }> }, user: { __typename?: 'User', id: string } }> } };
 
 export const PostFragmentDoc = gql`
     fragment PostFragment on Post {
