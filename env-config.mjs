@@ -1,9 +1,6 @@
-/* eslint-env node */
+const { NODE_ENV } = process.env;
 
-/* eslint-disable-next-line prefer-destructuring */
-const NODE_ENV = process.env.NODE_ENV;
-
-module.exports.envConfig = {
+export const envConfig = {
     __ENV__:   NODE_ENV,
     __DEV__:   NODE_ENV === 'development',
     __STAGE__: NODE_ENV === 'stage',
