@@ -2,7 +2,7 @@
 const { envConfig } = require('../env-config.js');
 
 declare const __ENV: string = envConfig.__ENV__;
-declare const __DEV__: boolean = envConfig.__DEV__;
-declare const __STAGE__: boolean = envConfig.__STAGE__;
-declare const __PROD__: boolean = envConfig.__PROD__;
-declare const __TEST__: boolean = envConfig.__TEST__;
+declare const { __DEV__ } = envConfig;
+declare const { __STAGE__ } = envConfig;
+declare const { __PROD__ } = envConfig;
+declare const { __TEST__ } = envConfig;
