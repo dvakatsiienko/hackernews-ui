@@ -26,7 +26,7 @@ export const compiler = {
 
 const { NODE_ENV } = process.env;
 
-export const envConfig = {
+const envConfig = {
     __ENV__:   NODE_ENV,
     __DEV__:   NODE_ENV === 'development',
     __STAGE__: NODE_ENV === 'stage',
