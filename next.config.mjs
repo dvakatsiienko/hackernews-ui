@@ -1,7 +1,7 @@
 /* Instruments */
 // import { envConfig } from './env-config.mjs';
 
-export async function redirects() {
+async function redirects() {
     return [
         {
             source:      '/user',
@@ -16,7 +16,7 @@ export async function redirects() {
     ];
 }
 
-export const compiler = {
+const compiler = {
     styledComponents: {
         displayName: true,
         ssr:         true,
@@ -34,8 +34,18 @@ const envConfig = {
     __TEST__:  NODE_ENV === 'test',
 };
 
-export const webpack = (config, { webpack }) => {
+const webpack = (config, { webpack }) => {
     config.plugins.push(new webpack.DefinePlugin({ ...envConfig }));
 
     return config;
 };
+
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
+    redirects,
+    compiler,
+    webpack,
+};
+export default nextConfig;
