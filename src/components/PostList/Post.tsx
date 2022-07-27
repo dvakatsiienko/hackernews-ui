@@ -21,12 +21,7 @@ export const Post: React.FC<PostProps> = props => {
         <S.Container>
             <S.Header>
                 <S.OrderNumber>{props.orderNumber}.</S.OrderNumber>
-                <GUI.Link
-                    color
-                    href = { props.post.url }
-                    rel = 'noreferrer noopener'
-                    target = '_blank'
-                >
+                <GUI.Link color href = { props.post.url } rel = 'noreferrer noopener' target = '_blank'>
                     {props.post.description}
                 </GUI.Link>
             </S.Header>
@@ -35,9 +30,7 @@ export const Post: React.FC<PostProps> = props => {
                 {isAuthenticated && (
                     <S.Upvote
                         $isVotedByMe = { props.post.isVotedByMe }
-                        onClick = { () => (props.post.isVotedByMe
-                            ? unvoteMutation()
-                            : voteMutation()) }
+                        onClick = { () => (props.post.isVotedByMe ? unvoteMutation() : voteMutation()) }
                     >
                         ▲
                     </S.Upvote>
